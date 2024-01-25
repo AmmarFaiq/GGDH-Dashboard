@@ -101,8 +101,9 @@ body {
   width: 100%;
   margin-top: 100px;
   padding: 40px 100px 10px 100px;
-  background-color: #001158;
-  color: #FFFFFF;
+  /* background: url("Line-invert.png") no-repeat 0px -250px; */
+  background-color: #aed8f5;
+  color: #001158;
   font-size: 14px;
   font-family: inherit;
   overflow: hidden;
@@ -114,16 +115,17 @@ body {
 }
 
 #footer a{
-  color: #FFFFFF;
+  color: #001158;
   text-decoration: none;
 }
 
 #footer img{
   display: inline-block;
   margin-top: 10px;
-  width: 100px;
-  height: 100px;
+  width: 120px;
+  height: 120px;
 }
+
 
 #footer h1{
   color: #4766e2;
@@ -134,12 +136,14 @@ body {
 }
 
 .footerelement{
-  width: 33%;
+  width: 20%;
   float: left;
+  margin: 10px 0 20px 0;
 }
 
 #partners{
   text-align: center;
+  width: 60%;
 }
 
 h1 {
@@ -299,6 +303,14 @@ h4 {
   border: 3px solid #F9F9F8;  
 }
 
+/* Position text in the middle */
+.middle {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  text-align: center;
+}
 
 /*!
  * Bootstrap v5.0.2 (https://getbootstrap.com/)

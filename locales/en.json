@@ -4,11 +4,11 @@
 "select variable": "Choose a variable to plot:",
 "select area": "Choose a region to plot:",
 "select neighbourhood": "Choose neighbourhood(s) to plot:",
-"select year": "Select year",
+"select year": "Select a year",
 "control panel": "Control Panel",
 
 "last update": "Updated in ",
-"neighbourhood": "neighbourhood",
+"neighbourhood": "Neighbourhood",
 "supply and demand": "Supply and Demand",
 "diabetes": "Diabetes",
 "palliative care": "Palliatieve care",
@@ -18,5 +18,8 @@
 "changelog": "Changelog",
 
 "YEAR": "YEAR",
-"Total_Population": "Total_Population"
+"Total_Population": "Total_Population",
+"%_Gender_Vrouwen": "%_Gender_Vrouwen",
+"%_0to20": "%_0to20",
+"%_21to40": "%_21to40"
 }

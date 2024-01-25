@@ -11,6 +11,8 @@ import util.translate as tr
 
 # style
 colorscale = ["#402580", "#38309F", "#3C50BF", "#4980DF", "#56B7FF", "#6ADDFF", "#7FFCFF", "#95FFF5", "#ABFFE8", "#C2FFE3", "#DAFFE6"]
+
+colorscale_inverted = ["#DAFFE6", "#C2FFE3", "#ABFFE8", "#95FFF5", "#7FFCFF", "#6ADDFF", "#56B7FF", "#4980DF", "#3C50BF", "#38309F", "#402580"]
 elan_cm = LinearSegmentedColormap.from_list("pretty_elan", colorscale, N=len(colorscale))
     
 style = {"fontsize": 12,
@@ -22,19 +24,6 @@ def get_colors(min_thresh: float, resample: int) -> list:
     step = (1 - min_thresh)/resample
     return [to_hex(elan_cm(i)) for i in np.arange(0, 1.0-min_thresh, step)] 
 # end style
-
-dash.register_page(__name__, path='/')
-
-
-path = '../data/'
-path = os.path.join(os.path.dirname(__file__), path).replace("\\","/")
-
-geo_df= gpd.read_file(path + 'wijk_2023_v0.shp')
-
-geo_df= geo_df.to_crs(epsg=4326)
-
-geo_df.rename(columns ={'WK_CODE':'WKC'}, inplace = True)
-
 
 values_haaglanden=["'s-Gravenhage",
         "Delft","Leidschendam-Voorburg",
@@ -51,10 +40,9 @@ values_roaz=["'s-Gravenhage", "Alphen aan den Rijn", "Bodegraven-Reeuwijk",
 
 values_all_regions = values_haaglanden + values_roaz
 
+
 # values_all_regions_gementee = [s + "Gemeente " for s in values_all_regions]
 # values_all_regions = [s + "Gemeente " for s in values_all_regions]
-
-geo_df = geo_df.query("GM_NAAM in @values_all_regions")
 
 
 values_hadoks= ("'s-Gravenhage", "Leidschendam-Voorburg", "Rijswijk", "Wassenaar")
@@ -64,9 +52,21 @@ values_hadoks= ("'s-Gravenhage", "Leidschendam-Voorburg", "Rijswijk", "Wassenaar
 #this way, we can always extend the number of special regions, without having to tamper with the rest of the code
 #could even be read in from a file or sth to keep it from being hardcoded.
 special_regions = {"Hadoks' area": values_hadoks}
- 
-# with open(path + 'wijkgeo_all_file.json') as f:
-#     geo_df_fff = json.load(f)
+
+
+dash.register_page(__name__, path='/')
+
+path = '../data/'
+path = os.path.join(os.path.dirname(__file__), path).replace("\\","/")
+
+geo_df= gpd.read_file(path + 'wijk_2023_v0.shp')
+
+geo_df= geo_df.to_crs(epsg=4326)
+
+geo_df.rename(columns ={'WK_CODE':'WKC'}, inplace = True)
+
+geo_df = geo_df.query("GM_NAAM in @values_all_regions")
+
 
 
 df_numeric = pd.read_csv(path + 'df_numeric_ver_3.csv', sep=',', encoding='latin-1')
@@ -74,14 +74,20 @@ df_count = pd.read_csv(path + 'df_count_ver_3.csv', sep=',',encoding= 'latin-1')
 df = df_count.merge(df_numeric, on=['WKC','Wijknaam','GMN','YEAR'])
 
 #cleaning up temp/dummy dataset
-df = df[df.YEAR < 2022]
+df = df[df.YEAR < 2023]
 df = df[df.YEAR > 2009]
 df = df[df.WKC != 'WK1916--']
-
 # REMOVE word "Wijk " if we found double the words in column Wijknaam (Wijk Wijk)
 df['Wijknaam'] = df['Wijknaam'].str.replace('Wijk Wijk ', 'Wijk ')
 # REMOVE word "Wijk " if we found double the words in column Wijknaam (Wijk Wijk)
 df['GMN'] = df['GMN'].str.replace('Gemeente ', '')
+
+# change negative values to 0
+cols = df.select_dtypes(include=np.number).columns
+df[cols] = df[cols].clip(lower=0)
+
+# remove column %_AGE_CAT_71to80 
+df.drop(['%_AGE_CAT_71to80'], axis=1, inplace=True)
 
 COSTS_COLUMN_NAME = ['ZVWKOSTENTOTAAL_MEAN', 'ZVWKHUISARTS_MEAN', 'ZVWKHUISARTS_NO_REG_MEAN', 
                      'ZVWKZIEKENHUIS_MEAN','ZVWKFARMACIE_MEAN', 'ZVWKFARMACIE_MEAN', 'ZVWKOSTENPSYCHO_MEAN',
@@ -110,24 +116,21 @@ df['%_Wanbet'] = df['%_Wanbet'].mask(( (df['YEAR'] <2010) | (df['YEAR'] >2021) )
 df['%_WLZ_user'] = df['%_WLZ_user'].mask(( (df['YEAR'] <2015) | (df['YEAR'] >2021) ) , np.nan)
 df['%_WMO_user'] = df['%_WMO_user'].mask(( (df['YEAR'] <2015) | (df['YEAR'] >2022) ) , np.nan)
 
+df['%_UniqueMed_Count_>=5'].mask(((df['YEAR'] <2009) | (df['YEAR'] >2021)), np.nan)
+df['%_UniqueMed_Count_>=10'].mask(((df['YEAR'] <2009) | (df['YEAR'] >2021)), np.nan)
 
-df['Income_MEAN'] = df['Income_MEAN'].mask(((df['YEAR'] <2011) | (df['YEAR'] >2021)), np.nan)
+df['%_JGDHULP_user'] = df['%_JGDHULP_user'].mask(((df['YEAR'] <2015) ), np.nan)
 
-df['%_WMO_user'] = df['%_WMO_user'].mask(((df['YEAR'] <2015) ), np.nan)
-df['%_WLZ_user'] = df['%_WLZ_user'].mask(((df['YEAR'] <2015) ), np.nan)
+df['%_SHNTAB'] = df['%_SHNTAB'].mask(((df['YEAR'] <2015) ), np.nan)
 
-df['ZVWKOSTENTOTAAL_MEAN'] = df['ZVWKOSTENTOTAAL_MEAN'].mask( (df['YEAR'] >2020), np.nan)
-df['ZVWKFARMACIE_MEAN'] = df['ZVWKFARMACIE_MEAN'].mask( (df['YEAR'] >2020), np.nan)
-df['ZVWKHUISARTS_MEAN'] = df['ZVWKHUISARTS_MEAN'].mask( (df['YEAR'] >2020), np.nan)
-df['ZVWKHUISARTS_NO_REG_MEAN'] = df['ZVWKHUISARTS_NO_REG_MEAN'].mask( (df['YEAR'] >2020), np.nan)
-df['ZVWKZIEKENHUIS_MEAN'] = df['ZVWKZIEKENHUIS_MEAN'].mask( (df['YEAR'] >2020), np.nan)
-df['ZVWKFARMACIE_MEAN'] = df['ZVWKFARMACIE_MEAN'].mask( (df['YEAR'] >2020), np.nan)
-df['ZVWKOSTENPSYCHO_MEAN'] = df['ZVWKOSTENPSYCHO_MEAN'].mask( (df['YEAR'] >2020), np.nan)
+df['%_HBOPL_Low'] = df['%_HBOPL_Low'].mask(((df['YEAR'] <2013) ), np.nan)
+df['%_HBOPL_Mid'] = df['%_HBOPL_Mid'].mask(((df['YEAR'] <2013) ), np.nan)
+df['%_HBOPL_High'] = df['%_HBOPL_High'].mask(((df['YEAR'] <2013) ), np.nan)
 
-df['%_ZVWKHUISARTS_user'] = df['%_ZVWKHUISARTS_user'].mask( (df['YEAR'] >2020), np.nan)
-df['%_ZVWKFARMACIE_user'] = df['%_ZVWKFARMACIE_user'].mask( (df['YEAR'] >2020), np.nan)
-df['%_ZVWKZIEKENHUIS_user'] = df['%_ZVWKZIEKENHUIS_user'].mask( (df['YEAR'] >2020), np.nan)
-df['%_ZVWKOSTENPSYCHO_user'] = df['%_ZVWKOSTENPSYCHO_user'].mask( (df['YEAR'] >2020), np.nan)
+df['%_HGOPL_Low'] = df['%_HGOPL_Low'].mask(((df['YEAR'] <2013) ), np.nan)
+df['%_HGOPL_Mid'] = df['%_HGOPL_Mid'].mask(((df['YEAR'] <2013) ), np.nan)
+df['%_HGOPL_High'] = df['%_HGOPL_High'].mask(((df['YEAR'] <2013) ), np.nan)
+
 
 # End clean-up
 
@@ -152,11 +155,11 @@ drop_municipality = dcc.Dropdown(
         searchable=False, 
         # below could be improved as well eventually, by extracting all regions from the data + the special_regions
         options=[
-            {'label': "Hadoks' area", 'value': "Hadoks' area"},
             {'label': "'s-gravenhage", 'value': "'s-Gravenhage"},
             {'label': "Rijswijk", 'value': "Rijswijk"},
             {'label': 'Leidschendam-Voorburg', 'value': 'Leidschendam-Voorburg'},
             {'label': 'Wassenaar', 'value': 'Wassenaar'},
+            {'label': "Hadoks' area", 'value': "Hadoks' area"},
             # {'label': 'Roaz', 'value': 'Roaz'},
             # {'label': "Haaglanden", 'value': 'Haaglanden'},
             # {'label': 'Leiden', 'value': 'Leiden'},
@@ -184,7 +187,7 @@ layout = html.Div([
                                 )
                             ], id='select_neighbourhoods'),
                             html.Div([
-                                html.P("Select year of interest", id='select_year'),
+                                html.P("Select a year", id='select_year'),
                                 dcc.Slider(step=1, id = 'slider_select_year'),
                                 dcc.Dropdown( id = 'drop_select_year', className= "custom_select") #when resolution is small, slider is no longer practical
                             ],  id= 'sliderContainer')
@@ -297,6 +300,7 @@ def update_slider(xaxis_column_name, municipality, drop_value):
          temp_df = df.query("GMN in @special_regions[@municipality]").copy()
     else:
         temp_df = df[df.GMN == municipality].copy()
+
     temp_df.dropna(subset=xaxis_column_name, inplace= True)
     
     min = temp_df[tr.translate("YEAR")].min()
@@ -305,10 +309,8 @@ def update_slider(xaxis_column_name, municipality, drop_value):
     marks = {str(i):str(i) for i in [str(i) for i in range(min, max +1)]}
 
     value = max
-    if (drop_value):
-        value = drop_value
 
-    return min, max, marks, value, list(range(min, max)), value
+    return min, max, marks, value, list(range(min, max)), value 
 
 
 @callback(
@@ -369,21 +371,14 @@ def update_graph_bar(year_value, xaxis_column_name, wijk_name, wijk_spec):
         fig.update_xaxes(showticklabels=False)
         fig.update_yaxes(showticklabels=False)
         
-        return "No neighbourhood selected", fig
-
-    elif len(wijk_spec) < 3:
-        dff = dff.query("Wijknaam in @wijk_spec")
-        dff = dff.sort_values(by=[xaxis_column_name], ascending=False).reset_index()    
-        fig = px.bar(dff, xaxis_column_name, 'Wijknaam',
-                hover_name='Wijknaam', color_discrete_sequence=get_colors(0, 1))
-        
+        return "No neighbourhood selected", fig    
     else:
         dff = dff.query("Wijknaam in @wijk_spec")
         dff = dff.sort_values(by=[xaxis_column_name], ascending=False).reset_index()   
-        # dff['group'] = pd.qcut(dff[xaxis_column_name], 3, labels=['Low', 'Medium', 'High'])
 
-        fig = px.bar(dff, xaxis_column_name, 'Wijknaam',# color= 'group',
-                hover_name='Wijknaam', color_discrete_sequence=get_colors(0.2, 3))
+        fig = px.bar(dff, xaxis_column_name, 'Wijknaam', color= xaxis_column_name,
+                hover_name='Wijknaam', color_continuous_scale=colorscale
+                )
         
 
     fig.update_traces(hovertemplate=
@@ -393,14 +388,17 @@ def update_graph_bar(year_value, xaxis_column_name, wijk_name, wijk_spec):
     fig.update_layout(hovermode="y")
         
     title = '{} - {} - {} '.format(xaxis_column_name, wijk_name, year_value)   
-    fig.update_yaxes(title=xaxis_column_name)
-    fig.update_xaxes(title=wijk_name)
+    # fig.update_yaxes(title=xaxis_column_name)
+    # fig.update_xaxes(title=wijk_name)
     fig.update_layout(geo= {'bgcolor': 'rgba(0,0,0,0)'},
                       autosize= False,
                       font = {"size": style["fontsize"], "color": style["color"]},
                       paper_bgcolor='white', 
                       yaxis={'categoryorder':'total ascending'}
+                    #   showlegend=False
                       )
+    fig.update_coloraxes(showscale=False)
+    
 
     return title, fig
 
@@ -427,8 +425,9 @@ def update_graph(clickData,
         return "No neighbourhood selected", fig    
     
     dff = df.query("Wijknaam in @wijk_spec")
-    
-    fig = px.line(dff, x=tr.translate('YEAR'), y=  xaxis_column_name, color='Wijknaam', color_discrete_sequence=colorscale)
+    dff = dff.sort_values(by=[tr.translate('YEAR'), xaxis_column_name], ascending=False).reset_index()
+
+    fig = px.line(dff, x=tr.translate('YEAR'), y=  xaxis_column_name, color='Wijknaam', color_discrete_sequence=colorscale_inverted)
 
     fig.update_layout(xaxis={
         "rangeslider":{"visible": True},

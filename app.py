@@ -25,8 +25,8 @@ navbar = dbc.Navbar(
                     [dcc.Link('Neighbourhood', href= '/'),
                     dcc.Link('Supply and Demand', href='/supplydemand'),
                     dcc.Link("Diabetes", href="/diabetes"),
-                    dcc.Link("Palliative care", href="/palliative"),
-                    dcc.Link("Pedriatric care", href="/young")],
+                    dcc.Link("Palliative Care", href="/palliative"),
+                    dcc.Link("Pedriatric Care", href="/palliative")],
                     className="ms-auto",
                     id= "navmenu"
                 ),
@@ -40,26 +40,28 @@ navbar = dbc.Navbar(
     id= 'header',
     className="mb-5"
 )
-# test
+# Health Campus Den Haag
+# Turfmarkt 99, 3de etage
+# 2511 DP Den Haag
 footer = html.Div([
                 html.Div([
                     html.P([
-                        html.H1('Health Campus Den Haag'),'Turfmarkt 99', html.Br(), '3rd floor', html.Br(), '2511 DP, Den Haag'], id="footerleft")
+                        html.H6('Health Campus Den Haag'), html.Br(),'Turfmarkt 99', html.Br(), '3rd floor', html.Br(), '2511 DP, Den Haag'], id="footerleft")
                 ], className= 'footerelement'), 
                 html.Div([
-                    html.Ul([html.Li(dcc.Link('About', href= '/about')), html.Li(dcc.Link('changelog', href= '/changelog')), html.Li("link to Elan?")])
+                    html.Ul([html.H6(html.Li(dcc.Link('About Us', href= '/about'))), html.H6(html.Li(dcc.Link('Variables Explanation', href= '/changelog'))), html.H6(html.Li(dcc.Link('Data Availability', href= '/changelog'))), html.H6(html.Li(dcc.Link('Changelog', href= '/changelog')))])
                 ], className= 'footerelement'),
                 html.Div([
                     html.H1('Partners'),
-                    html.A([html.Img(src=app.get_asset_url('lumc-1-500x500.jpg'))], href='https://www.lumc.nl/en/'),
-                    html.A([html.Img(src=app.get_asset_url('uni_leiden-500x500.jpg'))], href='https://www.universiteitleiden.nl/en'),
-                    html.A([html.Img(src=app.get_asset_url('hhs-500x500.jpg'))], href='https://www.dehaagsehogeschool.nl/'),                                                   
-                    html.A([html.Img(src=app.get_asset_url('hmc-1-500x500.jpg'))], href='https://www.haaglandenmc.nl/'),  
-                    html.A([html.Img(src=app.get_asset_url('haga_ziekenhuis-500x500.jpg'))], href='https://www.hagaziekenhuis.nl/home/'),
-                    html.A([html.Img(src=app.get_asset_url('hadoks-1-500x500.jpg'))], href='https://www.hadoks.nl/'),
-                    html.A([html.Img(src=app.get_asset_url('parnassia-500x500.jpg'))], href='https://www.parnassia.nl/'),
-                    html.A([html.Img(src=app.get_asset_url('rienier_de_graaf-500x500.jpg'))], href='https://reinierdegraaf.nl/'),
-                    html.A([html.Img(src=app.get_asset_url('gemeente_dh-500x500.jpg'))], href='https://www.denhaag.nl/nl.htm'),
+                    html.A([html.Img(src=app.get_asset_url('logo lumc_PMS_ENG.svg'))], href='https://www.lumc.nl/en/'),
+                    html.A([html.Img(src=app.get_asset_url('UL - Algemeen internationaal - CMYK.svg'))], href='https://www.universiteitleiden.nl/en'),
+                    html.A([html.Img(src=app.get_asset_url('hhs_nl_groen_fc-2018.svg'))], href='https://www.dehaagsehogeschool.nl/'),                                                   
+                    html.A([html.Img(src=app.get_asset_url('HMC_logo.svg'))], href='https://www.haaglandenmc.nl/'),  
+                    html.A([html.Img(src=app.get_asset_url('Haga_logo.svg'))], href='https://www.hagaziekenhuis.nl/home/'),
+                    html.A([html.Img(src=app.get_asset_url('hadoks_logo.svg'))], href='https://www.hadoks.nl/'),
+                    html.A([html.Img(src=app.get_asset_url('PAR_Groep+po_line_01_CMYK_FC.svg'))], href='https://www.parnassia.nl/'),
+                    html.A([html.Img(src=app.get_asset_url('logo RDGG + slogan 2021.svg'))], href='https://reinierdegraaf.nl/'),
+                    html.A([html.Img(src=app.get_asset_url('Compact_Logo_gemeente_Den_Haag.svg'))], href='https://www.denhaag.nl/nl.htm'),
                     ], id = 'partners', className = 'footerelement'),
             ], id = 'footer')
 
@@ -118,7 +120,7 @@ def localise(language):
             dcc.Link(tr.translate('Supply and Demand'), href='/supplydemand'),
             dcc.Link(tr.translate("Diabetes"), href="/diabetes"),
             dcc.Link(tr.translate("Palliative care"), href="/palliative"),
-            dcc.Link(tr.translate("Pedriatric care"), href="/young")]
+            dcc.Link(tr.translate("Pedriatric care"), href="/pedriatric")]
     footer = html.P([html.H1('Health Campus Den Haag'),'Turfmarkt 99', html.Br(),
                      tr.translate('3rd floor'), html.Br(), '2511 DP, Den Haag'])
     return last_update, nav, footer

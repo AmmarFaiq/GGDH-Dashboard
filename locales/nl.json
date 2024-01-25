@@ -4,7 +4,7 @@
 "select variable": "Selecteer een categorie:",
 "select area": "Selecteer een gebied:",
 "select neighbourhood": "Selecteer één of meerdere wijken:",
-"select year": "Selecteer jaar",
+"select year": "Selecteer een jaar",
 "control panel": "Controlepaneel",
 
 "last update": "Bijgewerkt in ",
@@ -18,5 +18,8 @@
 "changelog": "Changelog",
 
 "YEAR": "jaar",
-"Total_Population": "totale bevolking"
+"Total_Population": "Totale Bevolking",
+"%_Gender_Vrouwen": "%_Geslacht_Vrouwen",
+"%_0to20": "%_0naar20",
+"%_21to40": "%_21naar40"
 }
