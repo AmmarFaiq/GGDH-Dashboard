@@ -496,6 +496,8 @@ def update_graph_map_hadoks(
     title = 'Clustering of Neighbourhoods in ' + wijk_name + ' in ' + str(cluster_year)
         
     dff = df_demand_CLUSTERED_Year.query("Wijknaam in @wijk_spec")
+    dff = dff[dff.YEAR == cluster_year]
+                     
     dff['Cluster Name'] = dff['Cluster_Reworked'].map({
                                                         '1':'1 - Higher Care Cost - Lower SES - Younger Population - Higher Ethnic Minority', 
                                                        '2':'2 - Higher Care Cost-Higher SES - Older Population - Lower Ethnic Minority', 
@@ -505,7 +507,7 @@ def update_graph_map_hadoks(
                                                        })
 
 
-    fig = px.choropleth_mapbox(dff[dff.YEAR == cluster_year], geojson=geo_df, color="Cluster Name",
+    fig = px.choropleth_mapbox(, geojson=geo_df, color="Cluster Name",
                                     locations="WKC", featureidkey="properties.WKC", opacity = 0.4,
                                     center={"lat": 52.1, "lon": 4.24},
                                     mapbox_style="carto-positron", zoom=9.5,hover_name="Wijknaam", 
