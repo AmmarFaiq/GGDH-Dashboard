@@ -1,6 +1,7 @@
 GGDH Dashboard Ver 1.0
-Link :
 
+Link :
+https://ggdh-dashboard.onrender.com 
 
 This is one of the ongoing dashboard project for GGDH-ELAN from the department of public health and primary care at LUMC / Health Campus the Hague. In the current version, there are few notes that we need to be aware of :
 
