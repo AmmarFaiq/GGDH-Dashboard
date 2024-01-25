@@ -507,7 +507,7 @@ def update_graph_map_hadoks(
                                                        })
 
 
-    fig = px.choropleth_mapbox(, geojson=geo_df, color="Cluster Name",
+    fig = px.choropleth_mapbox(dff, geojson=geo_df, color="Cluster Name",
                                     locations="WKC", featureidkey="properties.WKC", opacity = 0.4,
                                     center={"lat": 52.1, "lon": 4.24},
                                     mapbox_style="carto-positron", zoom=9.5,hover_name="Wijknaam", 
