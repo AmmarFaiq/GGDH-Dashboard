@@ -1,18 +1,25 @@
 from pathlib import Path
 import json
 from datetime import date
-import locale
 from enum import Enum
 
 class Language(Enum):  
     NL = 'nl'
     EN = 'en'
 
-localedic= {Language.NL.value: 'nl_NL.UTF8', Language.EN.value: 'en_US.UTF8'}
-
 localedir = str(Path(__file__).resolve().parent.parent / "locales")
 dictionary = {}
 lang = Language.NL
+
+monthsdic = {
+    Language.NL.value: ["januari", "februari", "maart", " april", "maart", "april",
+                  "mei", "juni", "juli", "augustus", "september", "oktober",
+                  "november", "december"],
+    Language.EN.value: ["January", "February" , "March", "April", "May", "June",
+                  "Juli", "August", "September", "October", "November",
+                  "December"]
+    
+}
 
 def change_language(language=lang):
     global dictionary
@@ -36,10 +43,8 @@ def translate(key):
 def translate_list(mylist):
     return [translate(value) for value in mylist]
 
-def translate_date(year, month, day):
-    d = date(year, month, day)
-    locale.setlocale(locale.LC_ALL, localedic[lang])
-    return d.strftime("%B %Y")
+def translate_date(month):
+    return monthsdic[lang][month-1]
     
 
 
