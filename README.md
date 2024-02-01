@@ -23,3 +23,18 @@ This is one of the ongoing dashboard projects for GGDH-ELAN from the Department 
 5. Utility pages still work in progress (About Us, Variables Explanation, Data Availability, Changelog)
 
 -- Ammar, Lisette, Marcel
+
+What we can do to improve :
+
+1. Use parquet for faster and lighter data 
+
+2. hack and slash: server separated for different function, data processing in other server, and visualization on the other
+
+3. Use more standard web tools besides dash so it is more flexible in web visualization (maybe jquery).
+
+4. Remove wijk number (end user is not needed)
+
+5. Name of rijswijk Wijk : https://www.rijswijk.nl/de-wijken-van-rijswijk
+
+
+
