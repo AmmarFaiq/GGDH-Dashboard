@@ -30,7 +30,7 @@ def change_language(language=lang):
     
     # I assume people only change the language once. Otherwise, it would
     # be better to open all dictionaries in the parent scope!
-    with open(localedir + '\\' + language, 'r',  encoding='utf8') as f:
+    with open(localedir + '/' + language, 'r',  encoding='utf8') as f:
         dictionary = json.load(f)
     
 def translate(key):
