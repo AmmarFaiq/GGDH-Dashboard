@@ -7,6 +7,7 @@ import util.bivariate_plot
 app = dash.Dash(__name__, use_pages= True)
 
 server = app.server
+app._favicon = "favicon.svg"
         
 navbar = dbc.Navbar(
     dbc.Container(
