@@ -333,7 +333,7 @@ h4 {
   background-color: white;
   margin: 5px 5px 25px 5px;
   padding: 20px;
-  box-shadow: 2px 2px 2px #aed8f5;
+  /* box-shadow: 2px 2px 2px #aed8f5; */
 }
 
 .drop_var_id {

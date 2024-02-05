@@ -54,7 +54,7 @@ footer = html.Div([
                 ], className= 'footerelement'),
                 html.Div([
                     html.H1('Partners'),
-                    html.A([html.Img(src=app.get_asset_url('logo lumc_PMS_NL_withwhite.svg'))], href='https://www.lumc.nl/en/'),
+                    html.A([html.Img(src=app.get_asset_url('logo lumc_PMS_NL.svg'))], href='https://www.lumc.nl/en/'),
                     html.A([html.Img(src=app.get_asset_url('UL - Algemeen - RGB-Kleur.svg'))], href='https://www.universiteitleiden.nl/en'),
                     html.A([html.Img(src=app.get_asset_url('hhs_nl_groen_fc-2018.svg'))], href='https://www.dehaagsehogeschool.nl/'),                                                   
                     html.A([html.Img(src=app.get_asset_url('HMC_logo.svg'))], href='https://www.haaglandenmc.nl/'),  

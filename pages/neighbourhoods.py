@@ -254,11 +254,11 @@ def localise(language):
     control_panel = (tr.translate('control panel'))
     
     #updating visualisations + dropdown menus
-    drop_var = tr.translate_list(orig_columns)
+    drop_var =orig_columns
     # ugly
-    drop_var_value = tr.translate('Total_Population')
+    drop_var_value = 'Total_Population'
     columns = drop_var
-    df.columns = tr.translate_list(headers)
+    
     return linechart_expl, geospat_expl, choose_variable, choose_area, \
         choose_neighborhoud, select_year, control_panel, drop_var, drop_var_value
 
@@ -266,24 +266,28 @@ def localise(language):
     Output('drop_municipality_spec_id', 'options'),
     Output('drop_municipality_spec_id', 'value'),
     Input('drop_municipality', 'value'),
-    Input('clear_me_button', 'n_clicks') # custom clear feature
+    Input('clear_me_button', 'n_clicks') # custom clear feature (event trigger)
 )
-def update_select_neighbourhoods(wijk_name, clear_click):
+def update_select_neighbourhoods(munipality, clear_click):
     '''
     Present the neighbourhoods of the selected region to the user
     '''      
     
-    if wijk_name in special_regions.keys():    
-        dff = df.query("GMN in @special_regions[@wijk_name]")
-        options = list(dff.Wijknaam.unique()) 
+    if munipality in special_regions.keys():    
+        dff = df.query("GMN in @special_regions[@munipality]")
     else:
-        dff = df[df.GMN == wijk_name]
-        options = list(dff.Wijknaam.unique())
-        
+        dff = df[(df.GMN == munipality)] #TODO: maybe change to GMcode?
+
+    dff = dff[dff["YEAR"] == 2022] #YEAR gets translated by the translate feature to jaar. fixed. TODO: fix translations of data. (labels)
+  
+    options = list(dff.WKC)
+    labels = list(dff.Wijknaam)
+    labels = {options[i]: labels[i] for i in range(len(options))}
+    
     if (dash.callback_context.triggered_id == "clear_me_button"):
-        return options, []
+        return labels, []
        
-    return options, options
+    return labels, options
 
 @callback(
     Output('slider_select_year', 'min'),
@@ -309,8 +313,8 @@ def update_slider(xaxis_column_name, municipality, drop_value):
 
     temp_df.dropna(subset=xaxis_column_name, inplace= True)
     
-    min = temp_df[tr.translate("YEAR")].min()
-    max = temp_df[tr.translate("YEAR")].max()
+    min = temp_df["YEAR"].min()
+    max = temp_df["YEAR"].max()
     
     marks = {str(i):str(i) for i in [str(i) for i in range(min, max +1)]}
 
@@ -332,16 +336,21 @@ def update_graph_map(year_value, xaxis_column_name, wijk_name, wijk_spec):
     '''
     Select the appropriate data to display in the map fig
     '''
-    dff = df[df[tr.translate('YEAR')] == year_value]
+    dff = df[df['YEAR'] == year_value]
 
     title = '{} - {} - {} '.format(xaxis_column_name, wijk_name, year_value)
+
         
-    dff = dff.query("Wijknaam in @wijk_spec")
+    dff = dff.query("WKC in @wijk_spec")
 
     fig = px.choropleth_mapbox(dff, geojson=geo_df, color=xaxis_column_name,
-                            locations=tr.translate("WKC"), featureidkey="properties.WKC", opacity = 0.5,
+                            locations="WKC", featureidkey="properties.WKC", opacity = 0.5,
                             center={"lat": 52.0705, "lon": 4.3003}, color_continuous_scale=colorscale,
-                            mapbox_style="carto-positron", zoom=10, hover_name="Wijknaam")
+                            mapbox_style="carto-positron", zoom=10, hover_name="Wijknaam",
+                            custom_data=[xaxis_column_name])
+    
+    fig.update_traces(hovertemplate='<b>%{hovertext}</b>' +'<br><b>Waarde</b>: %{customdata[0]}<br>')  
+
     
     fig.update_layout(geo=dict(bgcolor= 'rgba(0,0,0,0)', lakecolor='#4E5D6C'),
                                 autosize=False,
@@ -368,7 +377,7 @@ def update_graph_bar(year_value, xaxis_column_name, wijk_name, wijk_spec):
     '''
     Update the bar chart based on new values
     '''
-    dff = df[df[tr.translate('YEAR')] == year_value]
+    dff = df[df['YEAR'] == year_value]
     
     if len(wijk_spec) == 0:
         fig = px.bar(x=[0, 10],
@@ -377,20 +386,17 @@ def update_graph_bar(year_value, xaxis_column_name, wijk_name, wijk_spec):
         fig.update_xaxes(showticklabels=False)
         fig.update_yaxes(showticklabels=False)
         
-        return "No neighbourhood selected", fig    
+        return ["No neighbourhood selected"], fig    
     else:
-        dff = dff.query("Wijknaam in @wijk_spec")
+        dff = dff.query("WKC in @wijk_spec")
         dff = dff.sort_values(by=[xaxis_column_name], ascending=False).reset_index()   
         
         fig = px.bar(dff, xaxis_column_name, 'Wijknaam', color= xaxis_column_name,
                 hover_name='Wijknaam', color_continuous_scale=colorscale,
                 height= max(500, 30 * dff.shape[0]))
-        
-    fig.update_traces(width= 0.8,
-        hovertemplate='<b>%{hovertext}</b>:' +'<br><b>Value</b>: %{x}<br>'
-    )  
 
-    title = '{} - {} - {} '.format(xaxis_column_name, wijk_name, year_value)   
+    #title = '{} - {} - {} '.format(xaxis_column_name, wijk_name, year_value)   
+    title= tr.translate("Bargraph title")
     # fig.update_yaxes(title=xaxis_column_name)
     # fig.update_xaxes(title=wijk_name)
     fig.update_layout(geo= {'bgcolor': 'rgba(0,0,0,0)'},
@@ -401,8 +407,12 @@ def update_graph_bar(year_value, xaxis_column_name, wijk_name, wijk_spec):
                       hovermode='closest'
                     #   showlegend=False
                       )
-    fig.update_coloraxes(showscale=False)
     
+    fig.update_coloraxes(showscale=False)
+       
+    fig.update_traces(width= 0.8,
+        hovertemplate='<b>%{hovertext}</b>' +'<br><b>Value</b>: %{x}<br>'
+    )  
 
     return title, fig
 
@@ -430,7 +440,10 @@ def update_line_menu(select_munic, select_wijken, map_values):
             selected_wijken.add(map_values)
         else:
             selected_wijken.remove(map_values)
-            
+           
+    select_wijken = df[df.WKC.isin(select_wijken) & (df.YEAR == 2022)].set_index("WKC").to_dict()["Wijknaam"]
+    
+    #select_wijken = {df[df.WKC == select_wijken[i]].Wijknaam: select_wijken[i] for i in range(len(select_wijken))} 
     return select_wijken, list(selected_wijken)
 
 @callback(
@@ -459,6 +472,8 @@ def change_button_style(n_clicks, buttonClass):
     prevent_initial_call=False
     )
 #TODO: CLEANUP
+#TODO: use WKC instead of Wijknaam. What if you're plotting neighbourhoods
+# with the same new from different cities?
 def update_graph(mapData, menu_data,
                  xaxis_column_name, wijk_name, wijk_spec):
     '''
@@ -477,12 +492,16 @@ def update_graph(mapData, menu_data,
         selected_wijken = set()
         return "No neighbourhood selected", fig, []    
     
-    dff = df.query("Wijknaam in @wijk_spec")
-    dff = dff.sort_values(by=[tr.translate('YEAR'), xaxis_column_name], ascending=False).reset_index()
+    dff = df.query("WKC in @wijk_spec")
+
+    dff = dff.sort_values(by=['YEAR', xaxis_column_name], ascending=False).reset_index()
 
     # fig = px.line(dff, x=tr.translate('YEAR'), y=  xaxis_column_name, color='Wijknaam', color_discrete_sequence=colorscale_inverted)
-    fig = px.line(dff, x=tr.translate('YEAR'), y=  xaxis_column_name, color='Wijknaam', color_discrete_sequence=px.colors.qualitative.Alphabet)
+    fig = px.line(dff, x='YEAR', y= xaxis_column_name, color='WKC', custom_data=['Wijknaam'],
+                  color_discrete_sequence=px.colors.qualitative.Alphabet)
     
+    fig.update_traces(hovertemplate='<b>%{customdata[0]}</b>' +'<br><b>Jaar</b>: %{x|%Y}<br><b>Waarde:</b> %{y}')
+
     fig.update_layout(
         showlegend = False,
         plot_bgcolor='rgba(0, 0, 0, 0)',
@@ -505,6 +524,8 @@ def update_graph(mapData, menu_data,
         linecolor='white',
         gridcolor='lightgrey'
     )
+
+
   
     if mapData is None: #change chart based on selection from the select
         title = '{}'.format(xaxis_column_name) # TODO
@@ -548,9 +569,13 @@ def update_graph(mapData, menu_data,
     
     #use to make custom (non-interactive) legend
     legend = []
+    
+    
+    look_up = df[df.WKC.isin(selected_wijken) & (df.YEAR == 2022)].set_index("WKC").to_dict()["Wijknaam"]
+    
     for wijk in fig.data:
         if wijk.visible:
-            legend.append(html.Div([html.Div(className="legendcolor", style={'background-color': wijk.line.color}),wijk.legendgroup], className="legenditem"))
+            legend.append(html.Div([html.Div(className="legendcolor", style={'background-color': wijk.line.color}),look_up[wijk.legendgroup]], className="legenditem"))
                                     
     return title, fig, legend
     
