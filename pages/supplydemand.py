@@ -412,7 +412,7 @@ layout = html.Div([
 
                         ], className='box', style={'position':'relative'})  
                     ]),           
-                ], style={'width': '100%', 'float': 'left', 'box-sizing': 'border-box'}),
+                ], style={'width': '100%', 'box-sizing': 'border-box'}),
             ], style={'display': 'block'}),      
     ], className='main'),
         

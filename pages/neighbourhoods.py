@@ -215,7 +215,7 @@ layout = html.Div([
                 html.Div([
                     html.Div([   
                         html.H1(id='title_bar'),           
-                        dcc.Graph(id='bar_fig', config={"displayModeBar": False}), 
+                        dcc.Graph(id='bar_fig', config={"displayModeBar": False, "scrollZoom": False}), 
                     ], className='box')                    
                 ], id= 'rightcell')
             ], id="graphContainer")
@@ -393,7 +393,7 @@ def update_graph_bar(year_value, xaxis_column_name, wijk_name, wijk_spec):
         
         fig = px.bar(dff, xaxis_column_name, 'Wijknaam', color= xaxis_column_name,
                 hover_name='Wijknaam', color_continuous_scale=colorscale,
-                height= max(500, 30 * dff.shape[0]))
+                height= max(500, 30 * dff.shape[0]), text='Wijknaam')
 
     #title = '{} - {} - {} '.format(xaxis_column_name, wijk_name, year_value)   
     title= tr.translate("Bargraph title")
@@ -404,7 +404,10 @@ def update_graph_bar(year_value, xaxis_column_name, wijk_name, wijk_spec):
                       font = {"size": style["fontsize"], "color": style["color"]},
                       paper_bgcolor='white', 
                       yaxis={'categoryorder':'total ascending'},
-                      hovermode='closest'
+                      xaxis_title=None,
+                      yaxis_title=None,
+                      hovermode='closest',
+                      margin=dict(l=0, r=0, t=20, b=20),
                     #   showlegend=False
                       )
     
@@ -413,6 +416,7 @@ def update_graph_bar(year_value, xaxis_column_name, wijk_name, wijk_spec):
     fig.update_traces(width= 0.8,
         hovertemplate='<b>%{hovertext}</b>' +'<br><b>Value</b>: %{x}<br>'
     )  
+    fig.update_yaxes(showticklabels=False)
 
     return title, fig
 
@@ -508,6 +512,7 @@ def update_graph(mapData, menu_data,
         paper_bgcolor='rgba(0, 0, 0, 0)',
         xaxis={"rangeslider":{"visible": True}, "type": "date"},
         font = {"size": style["fontsize"], "color": style["color"]},
+        margin=dict(l=0, r=0, t=20, b=20)
     )
   
     fig.update_xaxes(
@@ -524,7 +529,6 @@ def update_graph(mapData, menu_data,
         linecolor='white',
         gridcolor='lightgrey'
     )
-
 
   
     if mapData is None: #change chart based on selection from the select
