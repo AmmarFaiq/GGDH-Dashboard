@@ -1,6 +1,5 @@
 import dash
 from dash import dcc, html, Input, Output, State, callback
-import dash_bootstrap_components as dbc
 import numpy as np
 import pandas as pd
 import plotly.express as px
@@ -170,8 +169,8 @@ drop_municipality = dcc.Dropdown(
 
 layout = html.Div([
             html.Div(
-                dbc.Accordion([
-                    dbc.AccordionItem([
+                html.Div([html.Button("Variable, Region and Year Selection :", id="accordionbutton", className="accordionbutton_open"), 
+                    html.Div([
                         html.Div([
                             html.Div([html.Label('Choose a variable to plot:', id= 'choose_variable', htmlFor= 'drop_var_id'), drop_var], id= 'select_variable'),
                             html.Div([html.Label('Choose a region to plot:', id='choose_area', htmlFor= 'drop_municipality'), drop_municipality], id = 'select_region'),
@@ -192,8 +191,8 @@ layout = html.Div([
                                 dcc.Dropdown( id = 'drop_select_year', className= "custom_select") #when resolution is small, slider is no longer practical
                             ],  id= 'sliderContainer')
                         ], id= 'select_container'),
-                    ], title="Variable, Region and Year Selection :", id="control_panel")
-                ], className = 'box'), id = "dashnav"
+                    ], id="control_panel", className="accordeon_open")
+                ], id="accordionheader", className = 'box'), id = "dashnav"
             ),
             html.Div([
                 html.Div([
@@ -222,6 +221,22 @@ layout = html.Div([
         ], id="dataContainer")      
 
 #------------------------------------------------------ Callbacks ------------------------------------------------------
+#Custom accordeon
+@callback(
+    Output("control_panel", "className"),
+    Output("accordionbutton", "className"),
+    [Input("accordionbutton", "n_clicks")],
+    [State("control_panel", "className")],
+    prevent_initial_call=True
+)
+
+def toggle_navbar_collapse(n, classname):
+    if classname == "accordeon_open":
+        return "accordeon_collapsed", "accordionbutton_closed"
+    return "accordeon_open", "accordionbutton_open"
+
+
+
 # Getting the language from the session, and changing the class of the dataContainer
 @callback(
     Output('dataContainer', 'className'),
@@ -238,7 +253,7 @@ def get_language(data):
     Output('choose_area', 'children'),
     Output('choose_wijk', 'children'),
     Output('select_year', 'children'),
-    Output('control_panel', 'title'),
+    Output('accordionbutton', 'children'),
     Output('drop_var_id', 'options'),
     Output('drop_var_id', 'value'),
     Input('session', 'data')
@@ -261,7 +276,7 @@ def localise(language):
     
     return linechart_expl, geospat_expl, choose_variable, choose_area, \
         choose_neighborhoud, select_year, control_panel, drop_var, drop_var_value
-
+    
 @callback(
     Output('drop_municipality_spec_id', 'options'),
     Output('drop_municipality_spec_id', 'value'),
@@ -345,7 +360,7 @@ def update_graph_map(year_value, xaxis_column_name, wijk_name, wijk_spec):
 
     fig = px.choropleth_mapbox(dff, geojson=geo_df, color=xaxis_column_name,
                             locations="WKC", featureidkey="properties.WKC", opacity = 0.5,
-                            center={"lat": 52.0705, "lon": 4.3003}, color_continuous_scale=colorscale,
+                            center={"lat": 52.0705, "lon": 4.3003}, color_continuous_scale=colorscale_inverted,
                             mapbox_style="carto-positron", zoom=10, hover_name="Wijknaam",
                             custom_data=[xaxis_column_name])
     
@@ -385,6 +400,10 @@ def update_graph_bar(year_value, xaxis_column_name, wijk_name, wijk_spec):
                 )
         fig.update_xaxes(showticklabels=False)
         fig.update_yaxes(showticklabels=False)
+        fig.update_layout(
+            plot_bgcolor='rgba(0, 0, 0, 0)',
+            paper_bgcolor='rgba(0, 0, 0, 0)'
+        )        
         
         return ["No neighbourhood selected"], fig    
     else:
@@ -392,14 +411,14 @@ def update_graph_bar(year_value, xaxis_column_name, wijk_name, wijk_spec):
         dff = dff.sort_values(by=[xaxis_column_name], ascending=False).reset_index()   
         
         fig = px.bar(dff, xaxis_column_name, 'Wijknaam', color= xaxis_column_name,
-                hover_name='Wijknaam', color_continuous_scale=colorscale,
+                hover_name='Wijknaam', color_continuous_scale=colorscale_inverted,
                 height= max(500, 30 * dff.shape[0]), text='Wijknaam')
 
-    #title = '{} - {} - {} '.format(xaxis_column_name, wijk_name, year_value)   
-    title= tr.translate("Bargraph title")
+    title = '{} - {} - {} '.format(xaxis_column_name, wijk_name, year_value)   
+    #title = tr.translate("Bargraph title")
     # fig.update_yaxes(title=xaxis_column_name)
     # fig.update_xaxes(title=wijk_name)
-    fig.update_layout(geo= {'bgcolor': 'rgba(0,0,0,0)'},
+    fig.update_layout(geo= {'bgcolor': 'red'},
                       autosize= True,
                       font = {"size": style["fontsize"], "color": style["color"]},
                       paper_bgcolor='white', 
@@ -407,6 +426,7 @@ def update_graph_bar(year_value, xaxis_column_name, wijk_name, wijk_spec):
                       xaxis_title=None,
                       yaxis_title=None,
                       hovermode='closest',
+                      plot_bgcolor='rgba(0, 0, 0, 0)',
                       margin=dict(l=0, r=0, t=20, b=20),
                     #   showlegend=False
                       )
@@ -417,8 +437,9 @@ def update_graph_bar(year_value, xaxis_column_name, wijk_name, wijk_spec):
         hovertemplate='<b>%{hovertext}</b>' +'<br><b>Value</b>: %{x}<br>'
     )  
     fig.update_yaxes(showticklabels=False)
+    fig.update_xaxes(gridcolor='rgba(0,126,255,.24)')
 
-    return title, fig
+    return [title], fig
 
 selected_wijken = set()
 
@@ -494,6 +515,7 @@ def update_graph(mapData, menu_data,
             paper_bgcolor='rgba(0, 0, 0, 0)'
         )        
         selected_wijken = set()
+        #TODO: change the class to hide the graph + make the "Show menu button" loud
         return "No neighbourhood selected", fig, []    
     
     dff = df.query("WKC in @wijk_spec")
@@ -504,7 +526,7 @@ def update_graph(mapData, menu_data,
     fig = px.line(dff, x='YEAR', y= xaxis_column_name, color='WKC', custom_data=['Wijknaam'],
                   color_discrete_sequence=px.colors.qualitative.Alphabet)
     
-    fig.update_traces(hovertemplate='<b>%{customdata[0]}</b>' +'<br><b>Jaar</b>: %{x|%Y}<br><b>Waarde:</b> %{y}')
+    fig.update_traces(hovertemplate='<b>%{customdata[0]}</b>' +'<br><b>Jaar</b>: %{x|%Y}<br><b>Waarde:</b> %{y}', name="")
 
     fig.update_layout(
         showlegend = False,
