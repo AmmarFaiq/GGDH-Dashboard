@@ -6,12 +6,12 @@ body {
 }
 
 #main {
-  font-size: 15px; 
-  padding: 20px 50px;
-  padding-left: 5%;
-  padding-right: 5%;
+  font-size: 15px;
+  margin: 0 auto;
+  padding: 10px 0 0 0;
   color:#001158;
   position: relative;
+  max-width: 70%;
 }
 
 #header{
@@ -32,7 +32,7 @@ body {
 
 #headercontent{
   position: relative;
-  max-width: 90%;
+  max-width: 80%;
   width: 100%;
   margin: 0 auto;
 }
@@ -231,12 +231,13 @@ body {
 #footercontent{
   margin: 0 auto;
   padding: 0;
-  max-width: 90%;
+  max-width: 70%;
 }
 
 #footer ul{
   list-style-type: none;
   line-height: 200%;
+  padding: 0;
 }
 
 #footer a{
@@ -252,6 +253,9 @@ body {
   margin: 0 5px 0 5px;
 }
 
+#footer .bigfootimg{
+  height: 80px;
+}
 
 #footer h1{
   color: #4766e2;
@@ -269,6 +273,10 @@ body {
 
 #partners{
   text-align: center;
+  width: 100%;
+  clear: both;
+  background-color: #FFF;
+  padding: 10px 0 50px 0;
 }
 
 h1 {
@@ -405,12 +413,8 @@ h1 {
   }
 }
 
-@media only screen and (max-width: 1240px) {
+@media only screen and (max-width: 840px) {
   .footerelement{
-    width: 50%;
-  }
-
-  #partners{
     width: 100%;
   }
 }

@@ -34,28 +34,34 @@ navbar = html.Div(
 # Health Campus Den Haag
 # Turfmarkt 99, 3de etage
 # 2511 DP Den Haag
-footer = html.Div(html.Div([
-                html.Div([
-                    html.P([
-                        html.H1('Health Campus Den Haag'), html.Br(),'Turfmarkt 99', html.Br(), '3rd floor', html.Br(), '2511 DP, Den Haag'], id="footerleft")
-                ], className= 'footerelement'), 
-                html.Div([
-                    html.Ul([html.Li(dcc.Link('About Us', href= '/about')), html.Li(dcc.Link('Variables Explanation', href= '/changelog')), 
-                             html.Li(dcc.Link('Data Availability', href= '/changelog')), html.Li(dcc.Link('Changelog', href= '/changelog'))])
-                ], className= 'footerelement'),
-                html.Div([
-                    html.H1('Partners'),
-                    html.A([html.Img(src=app.get_asset_url('logo lumc_PMS_NL.svg'))], href='https://www.lumc.nl/en/'),
-                    html.A([html.Img(src=app.get_asset_url('UL - Algemeen - RGB-Kleur.svg'))], href='https://www.universiteitleiden.nl/en'),
-                    html.A([html.Img(src=app.get_asset_url('hhs_nl_groen_fc-2018.svg'))], href='https://www.dehaagsehogeschool.nl/'),                                                   
-                    html.A([html.Img(src=app.get_asset_url('HMC_logo.svg'))], href='https://www.haaglandenmc.nl/'),  
-                    html.A([html.Img(src=app.get_asset_url('Haga_logo.svg'))], href='https://www.hagaziekenhuis.nl/home/'),
-                    html.A([html.Img(src=app.get_asset_url('hadoks_logo.svg'))], href='https://www.hadoks.nl/'),
-                    html.A([html.Img(src=app.get_asset_url('PAR_Groep+po_line_01_CMYK_FC.svg'))], href='https://www.parnassia.nl/'),
-                    html.A([html.Img(src=app.get_asset_url('logo1-rgb.svg'))], href='https://reinierdegraaf.nl/'),
-                    html.A([html.Img(src=app.get_asset_url('Compact_Logo_gemeente_Den_Haag.svg'))], href='https://www.denhaag.nl/nl.htm'),
-                    ], id = 'partners', className = 'footerelement'),
-            ], id = 'footercontent'), id="footer")
+footer = html.Div([
+    html.Div(html.Div([
+        html.Div([
+            html.Ul(["idk"])
+        ], className= 'footerelement'),
+        html.Div([
+            html.Ul([html.Li(dcc.Link('About Us', href= '/about')), html.Li(dcc.Link('Variables Explanation', href= '/changelog')),
+                     html.Li(dcc.Link('Data Availability', href= '/changelog')), html.Li(dcc.Link('Changelog', href= '/changelog')),
+                     html.Li(dcc.Link('Terms and conditions', href= '/changelog'))])
+        ], className= 'footerelement'),
+        html.Div([
+            html.H1('Health Campus Den Haag'), 
+            html.P(['Turfmarkt 99', html.Br(), '3rd floor', html.Br(), '2511 DP, Den Haag'])
+        ], className= 'footerelement', id="contactdetails"),
+        ], id = 'footercontent')),
+    html.Div([
+        html.H1('Partners'),
+        html.A([html.Img(src=app.get_asset_url('logo lumc_PMS_NL.svg'))], href='https://www.lumc.nl/en/'),
+        html.A([html.Img(src=app.get_asset_url('UL - Algemeen - RGB-Kleur.svg'), className="bigfootimg")], href='https://www.universiteitleiden.nl/en'),
+        html.A([html.Img(src=app.get_asset_url('hhs_nl_groen_fc-2018.svg'))], href='https://www.dehaagsehogeschool.nl/'),                                                   
+        html.A([html.Img(src=app.get_asset_url('HMC_logo.svg'))], href='https://www.haaglandenmc.nl/'),  
+        html.A([html.Img(src=app.get_asset_url('Haga_logo.svg'))], href='https://www.hagaziekenhuis.nl/home/'),
+        html.A([html.Img(src=app.get_asset_url('hadoks_logo.svg'))], href='https://www.hadoks.nl/'),
+        html.A([html.Img(src=app.get_asset_url('PAR_Groep+po_line_01_CMYK_FC.svg'))], href='https://www.parnassia.nl/'),
+        html.A([html.Img(src=app.get_asset_url('logo1-rgb.svg'))], href='https://reinierdegraaf.nl/'),
+        html.A([html.Img(src=app.get_asset_url('Compact_Logo_gemeente_Den_Haag.svg'), className="bigfootimg")], href='https://www.denhaag.nl/nl.htm'),
+    ], id = 'partners')
+], id="footer")
 
 
 app.layout = html.Div([dcc.Store(id='session', storage_type='session'), navbar,    
@@ -103,7 +109,7 @@ def update_language(value, clicks):
 @app.callback(
     Output('last_update', 'children'),
     Output('navmenu', 'children'),
-    Output('footerleft', 'children'),
+    Output('contactdetails', 'children'),
     Input('session', 'data')
 )
 def localise(language):
@@ -113,8 +119,9 @@ def localise(language):
             dcc.Link(tr.translate("Diabetes"), href="/diabetes"),
             dcc.Link(tr.translate("Palliative care"), href="/palliative"),
             dcc.Link(tr.translate("Pedriatric care"), href="/pedriatric")]
-    footer = html.P([html.H1('Health Campus Den Haag'),'Turfmarkt 99', html.Br(),
-                     tr.translate('3rd floor'), html.Br(), '2511 DP, Den Haag'])
+    footer = [html.H1('Health Campus Den Haag'), html.P(['Turfmarkt 99', html.Br(),
+                     tr.translate('3rd floor'), html.Br(), '2511 DP, Den Haag', 
+                     html.Br(), "Copyright © 2024 | All rights reserved"])]
     return last_update, nav, footer
 
 
