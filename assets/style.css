@@ -516,7 +516,7 @@ h1 {
   display: none;
 }
 
-#accordionbutton{
+#accordionbutton, #accordionbutton_sd{
   width: 100%;
   text-align: left;
   border-radius: 10px 10px 0 0;

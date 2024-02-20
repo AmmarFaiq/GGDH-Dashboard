@@ -65,7 +65,6 @@ app.layout = html.Div([dcc.Store(id='session', storage_type='session'), navbar,
 
 
 #------------------------------------------------------ Callbacks ------------------------------------------------------
-
 # navigation
 @app.callback(
     Output("navmenu", "className"),
