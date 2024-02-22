@@ -37,18 +37,16 @@ navbar = html.Div(
 footer = html.Div([
     html.Div(html.Div([
         html.Div([
-            html.Ul(["idk"])
-        ], className= 'footerelement'),
+            html.Img(src= app.get_asset_url('hc-dh-logo.svg')), 
+            html.P(['Turfmarkt 99', html.Br(), '3rd floor', html.Br(), '2511 DP, Den Haag'])
+        ], className= 'footerelement', id="contactdetails"),
         html.Div([
             html.Ul([html.Li(dcc.Link('About Us', href= '/about')), html.Li(dcc.Link('Variables Explanation', href= '/changelog')),
                      html.Li(dcc.Link('Data Availability', href= '/changelog')), html.Li(dcc.Link('Changelog', href= '/changelog')),
-                     html.Li(dcc.Link('Terms and conditions', href= '/changelog'))])
-        ], className= 'footerelement'),
-        html.Div([
-            html.H1('Health Campus Den Haag'), 
-            html.P(['Turfmarkt 99', html.Br(), '3rd floor', html.Br(), '2511 DP, Den Haag'])
-        ], className= 'footerelement', id="contactdetails"),
+                     html.Li(dcc.Link('Terms and Conditions', href= '/changelog'))])
+        ], className= 'footerelement', id="footerlinks"),
         ], id = 'footercontent')),
+    html.Div(["Copyright © 2024 | All rights reserved"], id="footercopyright" ),
     html.Div([
         html.H1('Partners'),
         html.A([html.Img(src=app.get_asset_url('logo lumc_PMS_NL.svg'))], href='https://www.lumc.nl/en/'),
@@ -119,9 +117,8 @@ def localise(language):
             dcc.Link(tr.translate("Diabetes"), href="/diabetes"),
             dcc.Link(tr.translate("Palliative care"), href="/palliative"),
             dcc.Link(tr.translate("Pedriatric care"), href="/pedriatric")]
-    footer = [html.H1('Health Campus Den Haag'), html.P(['Turfmarkt 99', html.Br(),
-                     tr.translate('3rd floor'), html.Br(), '2511 DP, Den Haag', 
-                     html.Br(), "Copyright © 2024 | All rights reserved"])]
+    footer = [html.Img(src= app.get_asset_url('hc-dh-logo.svg')), html.P(['Turfmarkt 99', html.Br(),
+                     tr.translate('3rd floor'), html.Br(), '2511 DP, Den Haag'])]
     return last_update, nav, footer
 
 

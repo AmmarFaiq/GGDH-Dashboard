@@ -217,14 +217,16 @@ body {
 #footer {
   position: relative;
   max-width: 100%;
-  margin-top: 50px 0 0 0;
-  padding: 0;
+  margin: 50px 0 0 0;
+  padding: 200px 0 0 0;
   /* background: url("Line-invert.png") no-repeat 0px -250px; */
-  background-color: #aed8f5;
+  /* background-color: #aed8f5; */
+  background-image: url("footer_background.svg");
+  background-repeat: no-repeat;
+  background-size: cover;
   color: #001158;
   font-size: 14px;
   font-family: inherit;
-  overflow: hidden;
   clear: both;
 }
 
@@ -232,12 +234,14 @@ body {
   margin: 0 auto;
   padding: 0;
   max-width: 70%;
+  position: relative;
+  overflow: visible;
 }
 
 #footer ul{
   list-style-type: none;
-  line-height: 200%;
   padding: 0;
+  margin: 0;
 }
 
 #footer a{
@@ -245,7 +249,25 @@ body {
   text-decoration: none;
 }
 
-#footer img{
+#contactdetails{
+  position: flex;
+  float: left;
+  width: 300px;
+}
+
+#contactdetails img{
+  float: left;
+  height: 100px;
+  padding-right: 10px;
+}
+
+#footerlinks{
+  position: flex;
+  float: right;
+  text-align: right;
+}
+
+#partners img{
   display: inline-block;
   margin-top: 10px;
   width: auto;
@@ -266,9 +288,14 @@ body {
 }
 
 .footerelement{
-  width: 33%;
-  float: left;
+  max-width: 35%;
+  line-height: 200%;
   margin: 10px 0 20px 0;
+}
+
+#footercopyright{
+  clear: both;
+  padding: 5px 15% 10px 15%;
 }
 
 #partners{
@@ -410,6 +437,18 @@ h1 {
   #drop_municipality_spec_id{
     max-height: 300px;
     overflow-y: scroll;
+  }
+
+  .footerelement{
+    max-width: 100%;
+  }
+
+  #footerlinks{
+    text-align: left;
+  }
+
+  #contactdetails{
+    width: 100%;
   }
 }
 
