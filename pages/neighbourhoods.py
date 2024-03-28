@@ -1,6 +1,5 @@
 import dash
 from dash import dcc, html, Input, Output, State, callback
-import dash_bootstrap_components as dbc
 import numpy as np
 import pandas as pd
 import plotly.express as px
@@ -78,7 +77,7 @@ df = df[df.YEAR < 2023]
 df = df[df.YEAR > 2009]
 df = df[df.WKC != 'WK1916--']
 # REMOVE word "Wijk " if we found double the words in column Wijknaam (Wijk Wijk)
-df['Wijknaam'] = df['Wijknaam'].str.replace('Wijk Wijk ', 'Wijk ')
+df['Wijknaam'] = df['Wijknaam'].str.replace('Wijk Wijk ', '')
 # REMOVE word "Wijk " if we found double the words in column Wijknaam (Wijk Wijk)
 df['GMN'] = df['GMN'].str.replace('Gemeente ', '')
 
@@ -148,7 +147,6 @@ drop_var = dcc.Dropdown(
         className = "custom_select"
     )
 
-
 drop_municipality = dcc.Dropdown(
         id = 'drop_municipality',
         clearable=False, 
@@ -171,8 +169,8 @@ drop_municipality = dcc.Dropdown(
 
 layout = html.Div([
             html.Div(
-                dbc.Accordion([
-                    dbc.AccordionItem([
+                html.Div([html.Button("Variable, Region and Year Selection :", id="accordionbutton", className="accordionbutton_open"), 
+                    html.Div([
                         html.Div([
                             html.Div([html.Label('Choose a variable to plot:', id= 'choose_variable', htmlFor= 'drop_var_id'), drop_var], id= 'select_variable'),
                             html.Div([html.Label('Choose a region to plot:', id='choose_area', htmlFor= 'drop_municipality'), drop_municipality], id = 'select_region'),
@@ -180,11 +178,12 @@ layout = html.Div([
                                 dcc.Dropdown(
                                     columns,
                                     id = 'drop_municipality_spec_id',
-                                    clearable=True,
+                                    clearable=False,
                                     searchable=True, 
                                     multi=True,
-                                    className= "custom_select"
-                                )
+                                    className="custom_select"
+                                ),
+                                html.Div(html.Button('Clear', id="clear_me_button"), className="clear_me")
                             ], id='select_neighbourhoods'),
                             html.Div([
                                 html.P("Select a year", id='select_year'),
@@ -192,33 +191,52 @@ layout = html.Div([
                                 dcc.Dropdown( id = 'drop_select_year', className= "custom_select") #when resolution is small, slider is no longer practical
                             ],  id= 'sliderContainer')
                         ], id= 'select_container'),
-                    ], title="Variable, Region and Year Selection :", id="control_panel")
-                ], className = 'box'), id = "dashnav"
+                    ], id="control_panel", className="accordeon_open")
+                ], id="accordionheader", className = 'box'), id = "dashnav"
             ),
             html.Div([
                 html.Div([
                     html.Div([
                         html.H1(id='title_map'),
                         html.P('Click on a tile to see the trendline!', id='geospat_expl'), 
-                        dcc.Graph(id='map')
+                        dcc.Graph(id='map', config={"displayModeBar": False})
                     ], className='box'),
                     html.Div([
                         html.H1(id='wijk_trend_label'),
                         html.P('Click the button and legends to know more!', id='linechart_expl'),
                         
-                        dcc.Graph(id='wijk_trend_fig'),
+                        dcc.Graph(id='wijk_trend_fig', config={"displayModeBar": False}),
+                        html.Div(id="line_legend"),
+                        dcc.Checklist( id= 'line_menu', className= "line_menu_hidden",
+                                       inline=True), html.Button('Show menu', id="line_menu_button") 
                     ], className='box')                        
                 ], id= 'leftcell'),    
                 html.Div([
                     html.Div([   
                         html.H1(id='title_bar'),           
-                        dcc.Graph(id='bar_fig'), 
+                        dcc.Graph(id='bar_fig', config={"displayModeBar": False, "scrollZoom": False}), 
                     ], className='box')                    
                 ], id= 'rightcell')
             ], id="graphContainer")
         ], id="dataContainer")      
 
 #------------------------------------------------------ Callbacks ------------------------------------------------------
+#Custom accordeon
+@callback(
+    Output("control_panel", "className"),
+    Output("accordionbutton", "className"),
+    [Input("accordionbutton", "n_clicks")],
+    [State("control_panel", "className")],
+    prevent_initial_call=True
+)
+
+def toggle_navbar_collapse(n, classname):
+    if classname == "accordeon_open":
+        return "accordeon_collapsed", "accordionbutton_closed"
+    return "accordeon_open", "accordionbutton_open"
+
+
+
 # Getting the language from the session, and changing the class of the dataContainer
 @callback(
     Output('dataContainer', 'className'),
@@ -235,7 +253,7 @@ def get_language(data):
     Output('choose_area', 'children'),
     Output('choose_wijk', 'children'),
     Output('select_year', 'children'),
-    Output('control_panel', 'title'),
+    Output('accordionbutton', 'children'),
     Output('drop_var_id', 'options'),
     Output('drop_var_id', 'value'),
     Input('session', 'data')
@@ -251,32 +269,40 @@ def localise(language):
     control_panel = (tr.translate('control panel'))
     
     #updating visualisations + dropdown menus
-    drop_var = tr.translate_list(orig_columns)
+    drop_var =orig_columns
     # ugly
-    drop_var_value = tr.translate('Total_Population')
+    drop_var_value = 'Total_Population'
     columns = drop_var
-    df.columns = tr.translate_list(headers)
+    
     return linechart_expl, geospat_expl, choose_variable, choose_area, \
         choose_neighborhoud, select_year, control_panel, drop_var, drop_var_value
-
-
+    
 @callback(
     Output('drop_municipality_spec_id', 'options'),
     Output('drop_municipality_spec_id', 'value'),
-    Input('drop_municipality', 'value')
+    Input('drop_municipality', 'value'),
+    Input('clear_me_button', 'n_clicks') # custom clear feature (event trigger)
 )
-def update_select_neighbourhoods(wijk_name):
+def update_select_neighbourhoods(munipality, clear_click):
     '''
     Present the neighbourhoods of the selected region to the user
-    '''
-    if wijk_name in special_regions.keys():    
-        dff = df.query("GMN in @special_regions[@wijk_name]")
-        options = list(dff.Wijknaam.unique()) 
+    '''      
+    
+    if munipality in special_regions.keys():    
+        dff = df.query("GMN in @special_regions[@munipality]")
     else:
-        dff = df[df.GMN == wijk_name]
-        options = list(dff.Wijknaam.unique())
-        
-    return options, options
+        dff = df[(df.GMN == munipality)] #TODO: maybe change to GMcode?
+
+    dff = dff[dff["YEAR"] == 2022] #YEAR gets translated by the translate feature to jaar. fixed. TODO: fix translations of data. (labels)
+  
+    options = list(dff.WKC)
+    labels = list(dff.Wijknaam)
+    labels = {options[i]: labels[i] for i in range(len(options))}
+    
+    if (dash.callback_context.triggered_id == "clear_me_button"):
+        return labels, []
+       
+    return labels, options
 
 @callback(
     Output('slider_select_year', 'min'),
@@ -289,7 +315,6 @@ def update_select_neighbourhoods(wijk_name):
     Input('drop_municipality', 'value'),
     Input('drop_select_year', 'value')
 )
-
 def update_slider(xaxis_column_name, municipality, drop_value):
     '''
     Sets the slider to values corresponding the data of the chosen region.
@@ -303,8 +328,8 @@ def update_slider(xaxis_column_name, municipality, drop_value):
 
     temp_df.dropna(subset=xaxis_column_name, inplace= True)
     
-    min = temp_df[tr.translate("YEAR")].min()
-    max = temp_df[tr.translate("YEAR")].max()
+    min = temp_df["YEAR"].min()
+    max = temp_df["YEAR"].max()
     
     marks = {str(i):str(i) for i in [str(i) for i in range(min, max +1)]}
 
@@ -322,28 +347,33 @@ def update_slider(xaxis_column_name, municipality, drop_value):
     Input('drop_municipality_spec_id', 'value')
     )
 
-def update_graph_map(year_value, xaxis_column_name, wijk_name, wijk_spec
-                 ):
+def update_graph_map(year_value, xaxis_column_name, wijk_name, wijk_spec):
     '''
     Select the appropriate data to display in the map fig
     '''
-    dff = df[df[tr.translate('YEAR')] == year_value]
+    dff = df[df['YEAR'] == year_value]
 
     title = '{} - {} - {} '.format(xaxis_column_name, wijk_name, year_value)
+
         
-    dff = dff.query("Wijknaam in @wijk_spec")
+    dff = dff.query("WKC in @wijk_spec")
 
     fig = px.choropleth_mapbox(dff, geojson=geo_df, color=xaxis_column_name,
-                            locations=tr.translate("WKC"), featureidkey="properties.WKC", opacity = 0.5,
-                            center={"lat": 52.0705, "lon": 4.3003}, color_continuous_scale=colorscale,
-                            mapbox_style="carto-positron", zoom=10, hover_name="Wijknaam")
+                            locations="WKC", featureidkey="properties.WKC", opacity = 0.5,
+                            center={"lat": 52.0705, "lon": 4.3003}, color_continuous_scale=colorscale_inverted,
+                            mapbox_style="carto-positron", zoom=10, hover_name="Wijknaam",
+                            custom_data=[xaxis_column_name])
+    
+    fig.update_traces(hovertemplate='<b>%{hovertext}</b>' +'<br><b>Waarde</b>: %{customdata[0]}<br>')  
+
     
     fig.update_layout(geo=dict(bgcolor= 'rgba(0,0,0,0)', lakecolor='#4E5D6C'),
                                 autosize=False,
-                                  font = {"size": 9, "color":"black"},
-                                  margin={"r":0,"t":10,"l":10,"b":50},
-                                  paper_bgcolor='white'
-                                  )
+                                font = {"size": 9, "color":"black"},
+                                margin={"r":0,"t":10,"l":10,"b":50},
+                                paper_bgcolor='white',
+                                showlegend=True
+                            )
     
     return fig, title
 
@@ -362,7 +392,7 @@ def update_graph_bar(year_value, xaxis_column_name, wijk_name, wijk_spec):
     '''
     Update the bar chart based on new values
     '''
-    dff = df[df[tr.translate('YEAR')] == year_value]
+    dff = df[df['YEAR'] == year_value]
     
     if len(wijk_spec) == 0:
         fig = px.bar(x=[0, 10],
@@ -370,110 +400,209 @@ def update_graph_bar(year_value, xaxis_column_name, wijk_name, wijk_spec):
                 )
         fig.update_xaxes(showticklabels=False)
         fig.update_yaxes(showticklabels=False)
+        fig.update_layout(
+            plot_bgcolor='rgba(0, 0, 0, 0)',
+            paper_bgcolor='rgba(0, 0, 0, 0)'
+        )        
         
-        return "No neighbourhood selected", fig    
+        return ["No neighbourhood selected"], fig    
     else:
-        dff = dff.query("Wijknaam in @wijk_spec")
+        dff = dff.query("WKC in @wijk_spec")
         dff = dff.sort_values(by=[xaxis_column_name], ascending=False).reset_index()   
-
+        
         fig = px.bar(dff, xaxis_column_name, 'Wijknaam', color= xaxis_column_name,
-                hover_name='Wijknaam', color_continuous_scale=colorscale
-                )
-        
+                hover_name='Wijknaam', color_continuous_scale=colorscale_inverted,
+                height= max(500, 30 * dff.shape[0]), text='Wijknaam')
 
-    fig.update_traces(hovertemplate=
-                  '<b>%{hovertext}</b>:' +
-                  '<br><b>Value</b>: %{x}<br>')  
-
-    fig.update_layout(hovermode="y")
-        
     title = '{} - {} - {} '.format(xaxis_column_name, wijk_name, year_value)   
+    #title = tr.translate("Bargraph title")
     # fig.update_yaxes(title=xaxis_column_name)
     # fig.update_xaxes(title=wijk_name)
-    fig.update_layout(geo= {'bgcolor': 'rgba(0,0,0,0)'},
-                      autosize= False,
+    fig.update_layout(geo= {'bgcolor': 'red'},
+                      autosize= True,
                       font = {"size": style["fontsize"], "color": style["color"]},
                       paper_bgcolor='white', 
-                      yaxis={'categoryorder':'total ascending'}
+                      yaxis={'categoryorder':'total ascending'},
+                      xaxis_title=None,
+                      yaxis_title=None,
+                      hovermode='closest',
+                      plot_bgcolor='rgba(0, 0, 0, 0)',
+                      margin=dict(l=0, r=0, t=20, b=20),
                     #   showlegend=False
                       )
-    fig.update_coloraxes(showscale=False)
     
+    fig.update_coloraxes(showscale=False)
+       
+    fig.update_traces(width= 0.8,
+        hovertemplate='<b>%{hovertext}</b>' +'<br><b>Value</b>: %{x}<br>'
+    )  
+    fig.update_yaxes(showticklabels=False)
+    fig.update_xaxes(gridcolor='rgba(0,126,255,.24)')
 
-    return title, fig
+    return [title], fig
+
+selected_wijken = set()
+
+@callback(
+    Output('line_menu', 'options'),
+    Output('line_menu', 'value'),
+    Input('drop_municipality', 'value'),
+    Input('drop_municipality_spec_id', 'value'),
+    Input('map', 'clickData')
+)
+def update_line_menu(select_munic, select_wijken, map_values):
+    '''
+    Custom legend/menu for line chart
+    '''
+    global selected_wijken
+        
+    #when user selects a new region
+    if (dash.callback_context.triggered_id == "drop_municipality"):
+        selected_wijken = set()
+    elif map_values is not None:
+        map_values = map_values['points'][0]['hovertext']
+        if map_values not in selected_wijken:
+            selected_wijken.add(map_values)
+        else:
+            selected_wijken.remove(map_values)
+           
+    select_wijken = df[df.WKC.isin(select_wijken) & (df.YEAR == 2022)].set_index("WKC").to_dict()["Wijknaam"]
+    
+    #select_wijken = {df[df.WKC == select_wijken[i]].Wijknaam: select_wijken[i] for i in range(len(select_wijken))} 
+    return select_wijken, list(selected_wijken)
+
+@callback(
+    Output('line_menu', 'className'),
+    Output('line_menu_button', 'children'),
+    Input('line_menu_button', 'n_clicks'),
+    State('line_menu', 'className'),
+    prevent_initial_call=True
+    )
+def change_button_style(n_clicks, buttonClass):
+    # will only get triggered if button is pressed
+    if buttonClass == "line_menu_visible":
+        return "line_menu_hidden", "Show menu"
+    else:
+        return "line_menu_visible", "Hide menu"
 
 @callback(
     Output('wijk_trend_label', 'children'),
     Output('wijk_trend_fig', 'figure'),
+    Output('line_legend', 'children'),
     Input('map', 'clickData'),
+    Input('line_menu', 'value'),
     Input('drop_var_id', 'value'),
     Input('drop_municipality', 'value'),
     Input('drop_municipality_spec_id', 'value'),
     prevent_initial_call=False
     )
-
-def update_graph(clickData, 
+#TODO: CLEANUP
+#TODO: use WKC instead of Wijknaam. What if you're plotting neighbourhoods
+# with the same new from different cities?
+def update_graph(mapData, menu_data,
                  xaxis_column_name, wijk_name, wijk_spec):
     '''
     Update line graph 
     '''
-    if len(wijk_spec) == 0:
+    global selected_wijken
+    
+    if len(selected_wijken) == 0 and (dash.callback_context.triggered_id != "line_menu"):
         fig = px.line(x=[0, 10], y=[0, 0])
-        fig.update_xaxes(showticklabels=False)
-        fig.update_yaxes(showticklabels=False)
-        
-        return "No neighbourhood selected", fig    
+        fig.update_xaxes(showticklabels=False, visible=False)
+        fig.update_yaxes(showticklabels=False, visible=False)
+        fig.update_layout(
+            plot_bgcolor='rgba(0, 0, 0, 0)',
+            paper_bgcolor='rgba(0, 0, 0, 0)'
+        )        
+        selected_wijken = set()
+        #TODO: change the class to hide the graph + make the "Show menu button" loud
+        return "No neighbourhood selected", fig, []    
     
-    dff = df.query("Wijknaam in @wijk_spec")
-    dff = dff.sort_values(by=[tr.translate('YEAR'), xaxis_column_name], ascending=False).reset_index()
+    dff = df.query("WKC in @wijk_spec")
 
-    fig = px.line(dff, x=tr.translate('YEAR'), y=  xaxis_column_name, color='Wijknaam', color_discrete_sequence=colorscale_inverted)
+    dff = dff.sort_values(by=['YEAR', xaxis_column_name], ascending=False).reset_index()
 
-    fig.update_layout(xaxis={
-        "rangeslider":{"visible": True},
-        "type": "date"
-        },font = {"size": style["fontsize"], "color": style["color"]} 
+    # fig = px.line(dff, x=tr.translate('YEAR'), y=  xaxis_column_name, color='Wijknaam', color_discrete_sequence=colorscale_inverted)
+    fig = px.line(dff, x='YEAR', y= xaxis_column_name, color='WKC', custom_data=['Wijknaam'],
+                  color_discrete_sequence=px.colors.qualitative.Alphabet)
+    
+    fig.update_traces(hovertemplate='<b>%{customdata[0]}</b>' +'<br><b>Jaar</b>: %{x|%Y}<br><b>Waarde:</b> %{y}', name="")
+
+    fig.update_layout(
+        showlegend = False,
+        plot_bgcolor='rgba(0, 0, 0, 0)',
+        paper_bgcolor='rgba(0, 0, 0, 0)',
+        xaxis={"rangeslider":{"visible": True}, "type": "date"},
+        font = {"size": style["fontsize"], "color": style["color"]},
+        margin=dict(l=0, r=0, t=20, b=20)
     )
-    
-    fig.update_layout(dict(updatemenus=[
-                        dict(
-                            type = "buttons",
-                            direction = "left",
-                            buttons=list([
-                                
-                                dict(
-                                    args=["visible", True],
-                                    label="Select All",
-                                    method="restyle"
-                                ),
-                                dict(
-                                    args=[{'visible':'legendonly'} ],
-                                    label="Remove All",
-                                    method="restyle"
-                                )
-                            ]),
-                            pad={"r": 0, "t": -20},
-                            showactive=False,
-                            x=1,
-                            xanchor="right",
-                            y=1.1,
-                            yanchor="top"
-                        )
-                    ]
-              ))
-    
-    if clickData is None: #change chart based on selection from the select
-        title = '{} - {}'.format(xaxis_column_name, dff["Wijknaam"].unique()[0])
+  
+    fig.update_xaxes(
+        mirror=True,
+        ticks='outside',
+        showline=True,
+        linecolor='white',
+        gridcolor='lightgrey'
+    )
+    fig.update_yaxes(
+        mirror=True,
+        ticks='outside',
+        showline=True,
+        linecolor='white',
+        gridcolor='lightgrey'
+    )
+
+  
+    if mapData is None: #change chart based on selection from the select
+        title = '{}'.format(xaxis_column_name) # TODO
         
         fig.update_traces(visible="legendonly")
 
-        fig.data[0].visible=True 
+        selected_wijken = set()
 
-    else: #User can click on neighbourhoods in the map to affect the linechart. 
-        title = '{} - {}'.format(xaxis_column_name, clickData['points'][0]['hovertext'])
-        fig.update_traces(visible="legendonly") 
-        fig.data[clickData['points'][0]['pointIndex']].visible=True 
+    elif mapData is not None: #User can click on neighbourhoods in the map to affect the linechart.
+        clicked_name = mapData['points'][0]['hovertext']
+        title = '{} - {}'.format(xaxis_column_name, clicked_name) #TODO
+        
+        #note that in this specific case, selected_wijken is already being 
+        # updated in the line_menu function
+    
 
-    return title, fig
+    if (dash.callback_context.triggered_id == "line_menu"):
+        menu_data = set(menu_data)
+        difference = selected_wijken.difference(menu_data)
+        if difference:
+            selected_wijken -= difference
+        else:
+            selected_wijken.update(menu_data)
+        
+    #This is performed every time now.
+    for wijk in fig.data:
+        if wijk.legendgroup in selected_wijken:
+            wijk.visible= True
+        else:
+            wijk.visible= False
+   
+   #SO UGLY
+    if len(selected_wijken) == 0:
+        fig = px.line(x=[0, 10], y=[0, 0])
+        fig.update_xaxes(showticklabels=False, visible=False)
+        fig.update_yaxes(showticklabels=False, visible=False)
+        fig.update_layout(
+            plot_bgcolor='rgba(0, 0, 0, 0)',
+            paper_bgcolor='rgba(0, 0, 0, 0)'
+        )        
+    
+    #use to make custom (non-interactive) legend
+    legend = []
+    
+    
+    look_up = df[df.WKC.isin(selected_wijken) & (df.YEAR == 2022)].set_index("WKC").to_dict()["Wijknaam"]
+    
+    for wijk in fig.data:
+        if wijk.visible:
+            legend.append(html.Div([html.Div(className="legendcolor", style={'background-color': wijk.line.color}),look_up[wijk.legendgroup]], className="legenditem"))
+                                    
+    return title, fig, legend
     
 
