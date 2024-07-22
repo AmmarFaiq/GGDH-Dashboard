@@ -46,8 +46,9 @@ def get_colors(min_thresh: float, resample: int) -> list:
 
 dash.register_page(__name__)
 
-path = '../data/'
-path = os.path.join(os.path.dirname(__file__), path).replace("\\","/")
+# path = '../data/'
+# path = os.path.join(os.path.dirname(__file__), path).replace("\\","/")
+path= "https://raw.githubusercontent.com/AmmarFaiq/GGDH-Dashboard/main/data/"
 
 geo_df= gpd.read_file(path + 'wijk_2023_v0.shp')
 
