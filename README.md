@@ -1,4 +1,4 @@
-GGDH Dashboard Ver 1.0
+GGDH Dashboard Ver 1.5
 
 Link :
 https://ggdh-dashboard.onrender.com 
@@ -7,16 +7,55 @@ This is one of the ongoing dashboard projects for GGDH-ELAN from the Department 
 
 1. Area coverage (will increase in the future):
 
-- ''s-Gravenhage
-- Leidschendam-Voorburg
-- Rijswijk
-- Wassenaar
-- Hadoks Area (all of the above Gementee)
+ELAN covered area :
+
+- Den Haag and other
+s-Gravenhage
+Leidschendam-Voorburg
+Rijswijk
+Wassenaar
+
+- Leiden and other
+Alphen aan den Rijn
+Hillegom
+Kaag en Braassem
+Katwijk
+Leiden
+Leiderdorp
+Lisse
+Nieuwkoop
+Noordwijk
+Oegstgeest
+Teylingen
+Voorschoten
+Zoeterwoude
+
+- Delft and other
+Delft
+Midden-Delfland
+Pijnacker-Nootdorp
+Westland
+
+Zoetermeer
+
+- additional :
+Waddinxveen
+Bodegraven-Reeuwijk
+
+- Hadoks Area :
+'s-Gravenhage
+Leidschendam-Voorburg
+Rijswijk
+Wassenaar
+
+
+
  
 2. Working pages are :
 
-- Neighbourhood: contain infographics of current and past variables per Neighbourhood.
-- Supply and Demand: contains clustering and projection of selected variables per Neighbourhood in Collaboration with Hadoks
+- Neighbourhood: contains infographics of current and past variables per Neighbourhood.
+- Supply and Demand: contains a clustering and projection of selected variables per Neighbourhood in Collaboration with Hadoks
+- Opioid: contains infographics of a selection of variables related to substance abuse. 
 
 3. Multiple pages still "work-in-progress" (Diabetes, Palliative care and Pedriatic care)
 4. Language options are still a work in progress
@@ -28,13 +67,13 @@ What we can do to improve :
 
 1. Use parquet for faster and lighter data 
 
-2. hack and slash: server separated for different function, data processing in other server, and visualization on the other
+2. hack and slash: server separated for different functions, data processing in other server, and visualization on the other
 
 3. Use more standard web tools besides dash so it is more flexible in web visualization (maybe jquery).
 
-4. Remove wijk number (end user is not needed)
+4. Name of rijswijk Wijk : https://www.rijswijk.nl/de-wijken-van-rijswijk (proabbly not changing the name since it is cjust combination of buurt name)
 
-5. Name of rijswijk Wijk : https://www.rijswijk.nl/de-wijken-van-rijswijk
+5. There are duplicated Wijk name if we go include the whole ELAN region (e.g. Centrum is duplicated)
 
 
 
