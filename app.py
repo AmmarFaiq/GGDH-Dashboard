@@ -16,14 +16,14 @@ navbar = html.Div(
         [
 
             html.Div(html.A(html.Img(src= app.get_asset_url('hc-dh-logo.svg')), href= 'https://healthcampusdenhaag.nl/nl/'), id="headerlogo"),
-            html.Div([html.H1("ELAN Neighbourhood Dashboard"), html.P('Last updated January 2024', id="last_update")], id= 'headersub'),
+            html.Div([html.H1("Gezond en Gelukkig Den Haag Dashboard"), html.P('Last updated June 2024', id="last_update")], id= 'headersub'),
             html.Div(html.Button('Menu', id="menu_button"), id="icon"),
             html.Div(
                     [dcc.Link('Neighbourhood', href= '/'),
                     dcc.Link('Supply and Demand', href='/supplydemand'),
-                    dcc.Link("Diabetes", href="/diabetes"),
-                    dcc.Link("Palliative Care", href="/palliative"),
-                    dcc.Link("Pedriatric Care", href="/palliative"),
+                    dcc.Link("Opioid", href="/opioid"),
+                    dcc.Link("Cardiovascular Care", href="/palliative"),
+                    dcc.Link("Maternity Care", href="/palliative"),
                     ], id= "navmenu", className="nav_closed"),
             html.Div(html.Img(src=app.get_asset_url('flag-EN.svg'), alt=tr.Language.EN.value,  id='select_language'), id='lang_select_parent')
         ], id ="headercontent"),
@@ -114,9 +114,9 @@ def localise(language):
     last_update = (tr.translate("last update") + tr.translate_date(1))
     nav =  [dcc.Link(tr.translate('Neighbourhood'), href= '/'),
             dcc.Link(tr.translate('Supply and Demand'), href='/supplydemand'),
-            dcc.Link(tr.translate("Diabetes"), href="/diabetes"),
-            dcc.Link(tr.translate("Palliative care"), href="/palliative"),
-            dcc.Link(tr.translate("Pedriatric care"), href="/pedriatric")]
+            dcc.Link(tr.translate("Opioid"), href="/opioid"),
+            dcc.Link(tr.translate("Cardiovascular Disease Care"), href="/palliative"),
+            dcc.Link(tr.translate("Maternity Care"), href="/pedriatric")]
     footer = [html.Img(src= app.get_asset_url('hc-dh-logo.svg')), html.P(['Turfmarkt 99', html.Br(),
                      tr.translate('3rd floor'), html.Br(), '2511 DP, Den Haag'])]
     return last_update, nav, footer
