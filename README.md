@@ -55,11 +55,11 @@ Wassenaar
 
 - Neighbourhood: contains infographics of current and past variables per Neighbourhood.
 - Supply and Demand: contains a clustering and projection of selected variables per Neighbourhood in Collaboration with Hadoks
-- Opioid: contains infographics of a selection of variables related to substance abuse. 
-
+- heartfailure: contains infographics of heart failure patients
+- Language options are working only on Neighbourhood (main page)
+  
 3. Multiple pages still "work-in-progress" (Diabetes, Palliative care and Pedriatic care)
-4. Language options are still a work in progress
-5. Utility pages still work in progress (About Us, Variables Explanation, Data Availability, Changelog)
+4. Utility pages still work in progress (About Us, Variables Explanation, Data Availability, Changelog)
 
 -- Ammar, Lisette, Marcel
 
@@ -71,9 +71,8 @@ What we can do to improve :
 
 3. Use more standard web tools besides dash so it is more flexible in web visualization (maybe jquery).
 
-4. Name of rijswijk Wijk : https://www.rijswijk.nl/de-wijken-van-rijswijk (proabbly not changing the name since it is cjust combination of buurt name)
+4. Name of rijswijk Wijk : https://www.rijswijk.nl/de-wijken-van-rijswijk (proabbly not changing the name since it is just combination of buurt name)
 
-5. There are duplicated Wijk name if we go include the whole ELAN region (e.g. Centrum is duplicated)
 
 
 
