@@ -472,7 +472,7 @@ def update_graph_map(year_value, xaxis_column_name, wijk_name, wijk_spec, langua
     fig = px.choropleth_mapbox(dff, geojson=geo_df, color=xaxis_column_name,
                             locations="WKC", featureidkey="properties.WKC", opacity = 0.5,
                             center={"lat": 52.0705, "lon": 4.3003}, color_continuous_scale=colorscale_inverted,
-                            mapbox_style="carto-positron", zoom=10, hover_name="WKN",
+                            mapbox_style="carto-positron", zoom=9, hover_name="WKN",
                             custom_data=['GMN', xaxis_column_name,total_pop])
     
     fig.update_traces(hovertemplate='<b>%{hovertext}</b>'+ '<br><b>%{customdata[0]}</b><br>' +'<br><b>Waarde</b>: %{customdata[1]}<br>' +'<b>Bevolking</b>: %{customdata[2]}')  
