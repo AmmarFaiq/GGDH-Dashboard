@@ -4,6 +4,7 @@ import util.translate as tr
 
 external_stylesheets = [
     'https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&display=swap',
+    dbc.themes.BOOTSTRAP
 ]
 app = dash.Dash(__name__, use_pages= True, title="Gezond en Gelukkig Den Haag",
                 external_stylesheets=external_stylesheets)
@@ -21,9 +22,9 @@ navbar = html.Div(
             html.Div(
                     [dcc.Link('Neighbourhood', href= '/'),
                     dcc.Link('Supply and Demand', href='/supplydemand'),
-                    dcc.Link("Opioid", href="/opioid"),
-                    dcc.Link("Cardiovascular Care", href="/palliative"),
-                    dcc.Link("Maternity Care", href="/palliative"),
+                    # dcc.Link("Opioid", href="/opioid"),
+                    dcc.Link("Heart Failure", href="/hartfalen"),
+                    # dcc.Link("Maternity Care", href="/palliative"),
                     ], id= "navmenu", className="nav_closed"),
             html.Div(html.Img(src=app.get_asset_url('flag-EN.svg'), alt=tr.Language.EN.value,  id='select_language'), id='lang_select_parent')
         ], id ="headercontent"),
@@ -111,12 +112,13 @@ def update_language(value, clicks):
     Input('session', 'data')
 )
 def localise(language):
-    last_update = (tr.translate("last update") + tr.translate_date(1))
-    nav =  [dcc.Link(tr.translate('Neighbourhood'), href= '/'),
-            dcc.Link(tr.translate('Supply and Demand'), href='/supplydemand'),
-            dcc.Link(tr.translate("Opioid"), href="/opioid"),
-            dcc.Link(tr.translate("Cardiovascular Disease Care"), href="/palliative"),
-            dcc.Link(tr.translate("Maternity Care"), href="/pedriatric")]
+    last_update = (tr.translate("last update") + tr.translate_date(8))
+    nav =  [dcc.Link(tr.translate('neighbourhood'), href= '/'),
+            dcc.Link(tr.translate('supply and demand'), href='/supplydemand'),
+            # dcc.Link(tr.translate("opioid"), href="/opioid"),
+            dcc.Link(tr.translate("hartfalen"), href="/hartfalen")
+            # dcc.Link(tr.translate("Pedriatric care"), href="/pedriatric")
+           ]
     footer = [html.Img(src= app.get_asset_url('hc-dh-logo.svg')), html.P(['Turfmarkt 99', html.Br(),
                      tr.translate('3rd floor'), html.Br(), '2511 DP, Den Haag'])]
     return last_update, nav, footer
