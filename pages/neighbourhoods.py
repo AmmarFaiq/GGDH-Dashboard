@@ -350,7 +350,7 @@ def localise(themes, language):
     #updating visualisations + dropdown menus
     drop_var = tr.translate_list(choosen_columns)
     # ugly
-    drop_var_value = tr.translate('Total_Population')
+    drop_var_value = tr.translate('Total_ICPCPat_Pop')
     columns = drop_var
     df.columns = tr.translate_list(headers)
     
