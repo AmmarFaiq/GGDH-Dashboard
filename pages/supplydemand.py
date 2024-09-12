@@ -861,9 +861,9 @@ def update_graph_bivariate_map_hadoks(
 
     # Override some variables
     conf['plot_title'] = ''
-    conf['width'] = 1450  # Width of the final map container
+    conf['width'] = 1100  # Width of the final map container
     conf['ratio'] = 0.5  # Ratio of height to width
-    conf['height'] = 300 #conf['width'] * conf['ratio']  # Width of the final map container
+    conf['height'] = 350 #conf['width'] * conf['ratio']  # Width of the final map container
     conf['center_lat'] = 52.1  # Latitude of the center of the map
     conf['center_lon'] = 4.24  # Longitude of the center of the map
     conf['map_zoom'] = 9  # Zoom factor of the map
@@ -918,7 +918,7 @@ def update_graph_bivariate_map_hadoks(
     fig.update_layout(geo=dict(bgcolor= 'rgba(0,0,0,0)', lakecolor='#4E5D6C'),
                                 autosize=False,
                                   font = {"size": 9, "color":"black"},
-                                  margin={"r":0,"t":10,"l":10,"b":50},
+                                  margin={"r":0,"t":10,"l":10,"b":10},
                                   paper_bgcolor='white'
                                   )
     
