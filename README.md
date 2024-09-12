@@ -1,4 +1,4 @@
-GGDH Dashboard Ver 1.5
+GGDH Dashboard Ver 1.6
 
 Link :
 https://ggdh-dashboard.onrender.com 
