@@ -133,21 +133,27 @@ body {
 
 
 .custom_select{
-  margin: 4px;
+  margin: 1px;
 
-  border-radius: 5px;
+  border-radius: 2px;
 }
 
 #select_variable{
   width: 30%;
+  
+}
+
+#select_theme{
+  width: 70%;
+  float: right;
 }
 
 #select_region{
-  width: 15%;
+  width: 30%;
 }
 
 #select_neighbourhoods{
-  width: 55%;
+  width: 70%;
   float: right;
 }
 
@@ -320,6 +326,12 @@ h1 {
   display: flex;
 }
 
+#variableContainer{
+  margin: 0 0 3% 0;
+  /* padding: 1%; */
+  width: 100%;
+}
+
 #sliderContainer{
   margin: 0 5% 0 5%;
   padding: 1%;
@@ -378,6 +390,10 @@ h1 {
 
   #rightcell{
     width: 100%;
+  }
+
+  #select_theme{
+    width: 50%;
   }
 
   #select_variable{
@@ -477,11 +493,11 @@ h1 {
 }
 
 #line_menu > label{
-  margin: 0 2px 0 2px;
+  margin: 10px 5px 10px 10px;
   white-space: nowrap;
   overflow: hidden !important;
   text-overflow: ellipsis;
-  max-width: 85px;
+  max-width: 100%;
 }
 
 
@@ -495,8 +511,20 @@ h1 {
   /* box-shadow: 2px 2px 2px #aed8f5; */
 }
 
+.drop_var_theme_id {
+  margin: 10px;
+  box-shadow: 0px 0px #ebb36a;
+  border-color: #ebb36a;
+}
+
 .drop_var_id {
-  margin: 4px;
+  margin: 10px;
+  box-shadow: 0px 0px #ebb36a;
+  border-color: #ebb36a;
+}
+
+.drop_pop_id {
+  margin: 1px;
   box-shadow: 0px 0px #ebb36a;
   border-color: #ebb36a;
 }
@@ -559,7 +587,7 @@ h1 {
   display: none;
 }
 
-#accordionbutton, #accordionbutton_sd{
+#accordionbutton, #accordionbutton_sd, #accordionbutton_opioid, #accordionbutton_hartfalen{
   width: 100%;
   text-align: left;
   border-radius: 10px 10px 0 0;
