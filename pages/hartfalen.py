@@ -48,19 +48,25 @@ DT_COMB_Gender_Age = pd.read_excel(open(path + ('Primary_and_Secondary_Care_Data
 DT_COMB_Gender_Age_Ethnicity = pd.read_excel(open(path + ('Primary_and_Secondary_Care_Data_version_1.xlsx'), 'rb'), sheet_name='DT_Gender_Age_Ethnicity')
 DT_COMB_Gender_Age_SES = pd.read_excel(open(path + ('Primary_and_Secondary_Care_Data_version_1.xlsx'), 'rb'), sheet_name='DT_Gender_Age_SES')
 
-drop_data = dcc.Dropdown(
-        id = 'data_id_hartfalen',
-        clearable=False, 
-        searchable=False, 
-        # below could be improved as well eventually, by extracting all regions from the data + the special_regions
-        options=[
-            {'label': "ELAN-H", 'value': "ELAN-H"},
-            {'label': 'ELAN-GGDH', 'value': 'ELAN-GGDH'},
-            {'label': "ELAN-H-GGDH", 'value': "ELAN-H-GGDH"}
-            ],
-        value="ELAN-H", 
-        className = "custom_select"
-    )
+drop_data = html.Div(
+    [
+        dbc.Label("Select dataset"),
+        dcc.Dropdown(
+            id = 'data_id_hartfalen',
+            clearable=False, 
+            searchable=False, 
+            # below could be improved as well eventually, by extracting all regions from the data + the special_regions
+            options=[
+                {'label': "ELAN-H", 'value': "ELAN-H"},
+                {'label': 'ELAN-GGDH', 'value': 'ELAN-GGDH'},
+                {'label': "ELAN-H-GGDH", 'value': "ELAN-H-GGDH"}
+                ],
+            value="ELAN-H", 
+            className = "custom_select"
+        )
+    ],  className="mb-4",
+)
+
 
 year_dropdown = html.Div(
     [
@@ -69,20 +75,25 @@ year_dropdown = html.Div(
     ],  className="mb-4",
 )
 
-drop_area = dcc.Dropdown(
-        id = 'area_id_hartfalen',
-        clearable=False, 
-        searchable=False, 
-        # below could be improved as well eventually, by extracting all regions from the data + the special_regions
-        options=[
-            {'label': "'s-gravenhage en omstreken", 'value': "'s-gravenhage en omstreken"},
-            {'label': "Leiden en omstreken", 'value': 'Leiden en omstreken'},
-            # {'label': 'Delft en omstreken', 'value': 'Delft en omstreken'},
-            {'label': 'Zoetermeer', 'value': 'Zoetermeer'}
-            ],
-        value="Leiden en omstreken", 
-        className = "custom_select"
-    )
+drop_area = html.Div(
+    [
+        dbc.Label("Select area"),
+        dcc.Dropdown(
+            id = 'area_id_hartfalen',
+            clearable=False, 
+            searchable=False, 
+            # below could be improved as well eventually, by extracting all regions from the data + the special_regions
+            options=[
+                {'label': "'s-gravenhage en omstreken", 'value': "'s-gravenhage en omstreken"},
+                {'label': "Leiden en omstreken", 'value': 'Leiden en omstreken'},
+                # {'label': 'Delft en omstreken', 'value': 'Delft en omstreken'},
+                {'label': 'Zoetermeer', 'value': 'Zoetermeer'}
+                ],
+            value="Leiden en omstreken", 
+            className = "custom_select"
+        )
+    ],  className="mb-4",
+)
 
 
 ELANH_card = dcc.Markdown(
