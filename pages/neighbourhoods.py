@@ -37,20 +37,24 @@ values_roaz=["'s-Gravenhage", "Alphen aan den Rijn", "Bodegraven-Reeuwijk",
         "Pijnacker-Nootdorp","Rijswijk","Teylingen","Voorschoten", "Waddinxveen",
         "Wassenaar","Westland","Zoetermeer","Zoeterwoude","Zuidplas"]
 
+Delft_region = ('Westland', 'Delft', 'Pijnacker-Nootdorp', 'Midden-Delfland')
+Denhaag_region = ('Leidschendam-Voorburg', "'s-Gravenhage", 'Wassenaar', 'Rijswijk')
+Leiden_region = ('Alphen aan den Rijn', 'Leiden', 'Hillegom', 'Lisse', 'Noordwijk', 'Oegstgeest', 'Katwijk', 'Kaag en Braassem', 'Nieuwkoop', 'Teylingen', 'Leiderdorp', 'Voorschoten', 'Zoeterwoude')
+ELAN_region = ("'s-Gravenhage", "Leidschendam-Voorburg", "Rijswijk", "Wassenaar", 
+             "Alphen aan den Rijn", "Hillegom", "Kaag en Braassem", "Katwijk", 
+             "Leiden","Leiderdorp", "Lisse", "Nieuwkoop","Noordwijk","Oegstgeest",
+             "Teylingen", "Voorschoten", "Zoeterwoude", "Delft", "Midden-Delfland", 
+             "Pijnacker-Nootdorp", "Westland", "Zoetermeer", "Waddinxveen", "Bodegraven-Reeuwijk"
+             )
+Hadoks_region = ("'s-Gravenhage", "Leidschendam-Voorburg", "Rijswijk", "Wassenaar")
+
 values_all_regions = values_haaglanden + values_roaz
-
-
-# values_all_regions_gementee = [s + "Gemeente " for s in values_all_regions]
-# values_all_regions = [s + "Gemeente " for s in values_all_regions]
-
-
-values_hadoks= ("'s-Gravenhage", "Leidschendam-Voorburg", "Rijswijk", "Wassenaar")
 
 # values_values_hadoks_gementee = [s + "Gemeente " for s in values_hadoks]
 
 #this way, we can always extend the number of special regions, without having to tamper with the rest of the code
 #could even be read in from a file or sth to keep it from being hardcoded.
-special_regions = {"Hadoks' area": values_hadoks}
+special_regions = {"Hadoks' area": Hadoks_region, 'Delft en omstreken':Delft_region, 'Leiden en omstreken':Leiden_region, "'s-gravenhage en omstreken":Denhaag_region, 'ELAN area':ELAN_region}
 
 
 dash.register_page(__name__, path='/')
@@ -66,81 +70,138 @@ geo_df.rename(columns ={'WK_CODE':'WKC'}, inplace = True)
 
 geo_df = geo_df.query("GM_NAAM in @values_all_regions")
 
+df_numeric = pd.read_csv(path + 'df_numeric_ver_5.csv', sep=',', encoding='latin-1')
+df_numeric.rename(columns ={'gem_name':'GMN'}, inplace = True)
+df_count = pd.read_csv(path + 'df_count_ver_5.csv', sep=',',encoding= 'latin-1')
+df_count.rename(columns ={'Total_All_Pop':'Total_Population'}, inplace = True)
+df = df_count.merge(df_numeric, on=['WKC','WKN','GMN','YEAR'])
+# df = df_count.copy()
+df = df.astype({"YEAR": int})
 
+var_def_dict = {}
+with open(path + 'Variables_Definition.txt', mode='r') as f2:
+    for line in f2:
+        s = line.split(':')
+        var_def_dict[s[0]] = s[1].split('\n')[0]
 
-df_numeric = pd.read_csv(path + 'df_numeric_ver_3.csv', sep=',', encoding='latin-1')
-df_count = pd.read_csv(path + 'df_count_ver_3.csv', sep=',',encoding= 'latin-1')
-df = df_count.merge(df_numeric, on=['WKC','Wijknaam','GMN','YEAR'])
+var_def_NL_dict = {}
+with open(path + 'Variables_Definition_NL.txt', mode='r') as f2:
+    for line in f2:
+        s = line.split(':')
+        var_def_NL_dict[s[0]] = s[1].split('\n')[0]
 
-#cleaning up temp/dummy dataset
-df = df[df.YEAR < 2023]
-df = df[df.YEAR > 2009]
-df = df[df.WKC != 'WK1916--']
-# REMOVE word "Wijk " if we found double the words in column Wijknaam (Wijk Wijk)
-df['Wijknaam'] = df['Wijknaam'].str.replace('Wijk Wijk ', '')
-# REMOVE word "Wijk " if we found double the words in column Wijknaam (Wijk Wijk)
-df['GMN'] = df['GMN'].str.replace('Gemeente ', '')
+var_def_data_dict = {}
+with open(path + 'Variables_Data_Sources.txt', mode='r') as f2:
+    for line in f2:
+        s = line.split(':')
+        var_def_data_dict[s[0]] = s[1].split('\n')[0]
+
+var_def_label_dict = {}
+with open(path + 'Variables_Label.txt', mode='r') as f2:
+    for line in f2:
+        s = line.split(':')
+        var_def_label_dict[s[0]] = s[1].split('\n')[0]
+
+var_def_label_NL_dict = {}
+with open(path + 'Variables_Label_NL.txt', mode='r') as f2:
+    for line in f2:
+        s = line.split(':')
+        var_def_label_NL_dict[s[0]] = s[1].split('\n')[0]
+
+def method_trans_dict(dict_var, trans_label):
+    return [value for value,label in dict_var.items() if label == trans_label]
 
 # change negative values to 0
 cols = df.select_dtypes(include=np.number).columns
 df[cols] = df[cols].clip(lower=0)
 
-# remove column %_AGE_CAT_71to80 
-df.drop(['%_AGE_CAT_71to80'], axis=1, inplace=True)
-
-COSTS_COLUMN_NAME = ['ZVWKOSTENTOTAAL_MEAN', 'ZVWKHUISARTS_MEAN', 'ZVWKHUISARTS_NO_REG_MEAN', 
-                     'ZVWKZIEKENHUIS_MEAN','ZVWKFARMACIE_MEAN', 'ZVWKFARMACIE_MEAN', 'ZVWKOSTENPSYCHO_MEAN',
-                     '%_ZVWKHUISARTS_user', '%_ZVWKFARMACIE_user', '%_ZVWKZIEKENHUIS_user', '%_ZVWKOSTENPSYCHO_user'
-                     ]
-
-MEDICATION_COLUMN_NAME = ['UniqueMed_Count_MEAN', 'UniqueMed_Count_SD', '%_HVZ_Medication_user','%_DIAB_Medication_user','%_BLOEDDRUKV_Medication_user', '%_CHOL_Medication_user',
-                      '%_UniqueMed_Count_>=5', '%_UniqueMed_Count_>=10', 
-                     ]
-   
-INCOME_COLUMN_NAME = ['Income_MEAN', '%_Employee', '%_Unemployment_benefit_user', '%_Welfare_benefit_user',
-                      '%_Other_social_benefit_user', '%_Sickness_benefit_user','%_Pension_benefit_user',
-                      '%_Low_Income', '%_Debt_Mortgage',
-                     ]
-
-for med in MEDICATION_COLUMN_NAME:
-    df[med] = df[med].mask(((df['YEAR'] <2009) | (df['YEAR'] >2021)), np.nan)
-    
-for cost in COSTS_COLUMN_NAME:
-    df[cost] = df[cost].mask(((df['YEAR'] <2009) | (df['YEAR'] >2020)), np.nan)
-    
-for income in INCOME_COLUMN_NAME:
-    df[income] = df[income].mask(((df['YEAR'] <2011) | (df['YEAR'] >2021)), np.nan)
-    
-df['%_Wanbet'] = df['%_Wanbet'].mask(( (df['YEAR'] <2010) | (df['YEAR'] >2021) ) , np.nan)
-df['%_WLZ_user'] = df['%_WLZ_user'].mask(( (df['YEAR'] <2015) | (df['YEAR'] >2021) ) , np.nan)
-df['%_WMO_user'] = df['%_WMO_user'].mask(( (df['YEAR'] <2015) | (df['YEAR'] >2022) ) , np.nan)
-
-df['%_UniqueMed_Count_>=5'].mask(((df['YEAR'] <2009) | (df['YEAR'] >2021)), np.nan)
-df['%_UniqueMed_Count_>=10'].mask(((df['YEAR'] <2009) | (df['YEAR'] >2021)), np.nan)
-
-df['%_JGDHULP_user'] = df['%_JGDHULP_user'].mask(((df['YEAR'] <2015) ), np.nan)
-
-df['%_SHNTAB'] = df['%_SHNTAB'].mask(((df['YEAR'] <2015) ), np.nan)
-
-df['%_HBOPL_Low'] = df['%_HBOPL_Low'].mask(((df['YEAR'] <2013) ), np.nan)
-df['%_HBOPL_Mid'] = df['%_HBOPL_Mid'].mask(((df['YEAR'] <2013) ), np.nan)
-df['%_HBOPL_High'] = df['%_HBOPL_High'].mask(((df['YEAR'] <2013) ), np.nan)
-
-df['%_HGOPL_Low'] = df['%_HGOPL_Low'].mask(((df['YEAR'] <2013) ), np.nan)
-df['%_HGOPL_Mid'] = df['%_HGOPL_Mid'].mask(((df['YEAR'] <2013) ), np.nan)
-df['%_HGOPL_High'] = df['%_HGOPL_High'].mask(((df['YEAR'] <2013) ), np.nan)
-
-
 # End clean-up
 
 #headers and orig_columns are here to support i18n
 headers = df.columns.to_list().copy()
-columns = [col for col in headers if col not in ['WKC', 'GMN', 'Wijknaam', 'YEAR']]
+columns = [col for col in headers if col not in ['WKC', 'GMN', 'WKN', 'YEAR']]
 orig_columns = columns.copy()
 
+df[columns] = df[columns].round(2)
+
+
+Person_var = ['AGE_MEAN', '%_Gender_Mannen',
+                '%_Gender_Vrouwen', '%_0to20', '%_21to40', '%_41to60', '%_61to80',
+                '%_Above80', '%_MajorEthnicity_Native Dutch',
+                '%_MajorEthnicity_Western', '%_MajorEthnicity_Non-Western',
+                '%_MinorEthnicity_Marokko', '%_MinorEthnicity_Suriname',
+                '%_MinorEthnicity_Turkije','%_MinorEthnicity_Voormalige Nederlandse Antillen en Aruba']
+
+Huishouden_var = ['%_Multiperson_Household', '%_HouseholdType_Institutional', '%_Moving_count_above_1', '%_Lifeevents_count_above_2','Moving_Count_MEAN', 'Lifeevents_Count_MEAN']
+Socioecon_var = ['Income_MEAN', '%_Low_Income', '%_Debt_Mortgage', '%_Debt_Poor', '%_Wanbet', 
+                 '%_Employee', '%_Unemployment_benefit_user', '%_Welfare_benefit_user', '%_Other_social_benefit_user', '%_Sickness_benefit_user', '%_Pension_benefit_user',
+                 '%_WMO_user', '%_WLZ_user']
+
+Zorgkosten_var = ['ZVWKOSTENTOTAAL_MEAN', 'ZVWKHUISARTS_MEAN', 'ZVWKHUISARTS_NO_REG_MEAN', 'ZVWKZIEKENHUIS_MEAN', 'ZVWKFARMACIE_MEAN', 'ZVWKOSTENPSYCHO_MEAN',
+                  '%_ZVWKHUISARTS_user', '%_ZVWKFARMACIE_user', '%_ZVWKZIEKENHUIS_user', '%_ZVWKOSTENPSYCHO_user']
+
+Medicatie_var = ['UniqueMed_Count_MEAN', '%_UniqueMed_Count_>=5', '%_UniqueMed_Count_>=10',
+                '%_HVZ_Medication_user', '%_DIAB_Medication_user', '%_BLOEDDRUKV_Medication_user',
+                '%_CHOL_Medication_user', '%_DIURETICS_Medication_user', '%_DIURETICS_RAAS_BETA_Medication_user', 
+                '%_OPIOID_Medication_user',
+                '%_Opioid_user_no_death', '%_Opioid_user_2Years_no_death']
+
+Eerstelijns_var = ['%_Opioid_user_no_death_primary','%_Opioid_user_2Years_no_death_primary', '%_ICPC_Hartfalen_patients', 
+                '%_Medication_Dependency_patients', '%_Medication_Dependency_3Years_patients','%_Medication_Dependency_5Years_patients',
+                '%_Alcohol_Dependency_patients', '%_Alcohol_Dependency_3Years_patients', '%_Alcohol_Dependency_5Years_patients', 
+                '%_Loneliness_patients', '%_Loneliness_3Years_patients', '%_Loneliness_5Years_patients', 
+                '%_ICPC_Obesitas_patients', '%_BMI_NormalWeight', '%_BMI_Obese', '%_BMI_OverWeight', '%_BMI_UnderWeight']
+
+Secundaire_var = ['%_Hypertensie_patients', '%_COPD_patients', 
+                '%_Diabetes_I_patients', '%_Diabetes_II_patients',
+                '%_Hartfalen_patients', 
+                '%_OMA_patients', '%_Morbus_Parkinson_patients',
+                '%_Heupfractuur_patients', '%_BMIUP45_patients',
+                '%_Lung_Cancer_patients', '%_Colon_Cancer_patients',
+                '%_Back_pain_patients']
+
+Eerstelijns_Secundaire_var = ['%_Opioid_user_no_death_comb', '%_Opioid_user_2Years_no_death_comb', '%_Hartfalen_PrimarynSecondary_patients', 
+                '%_Primary_care_patients_in_Secondary_care','%_Proxy_Primary_care_refer_to_Secondary_care']
+
+Ander_var = ['%_JGDHULP_user', '%_GEDETINEERDENTAB', '%_SHNTAB', '%_HBOPL_Low', '%_HBOPL_Mid', '%_HBOPL_High', '%_HGOPL_Low', '%_HGOPL_Mid', '%_HGOPL_High']
+
+var_dict = {'Person':Person_var,
+             'Huishouden':Huishouden_var,
+             'Socioecon':Socioecon_var,
+             'Zorgkosten':Zorgkosten_var,
+             'Medicatie':Medicatie_var,
+             'Eerstelijns zorg':Eerstelijns_var,
+             'Secundaire zorg':Secundaire_var,
+             'Eerstelijns en Secundaire zorg':Eerstelijns_Secundaire_var,
+             'Ander':Ander_var
+             }
+            
+
+drop_var_theme = dcc.Dropdown(
+        id = 'drop_var_theme_id',
+        clearable=True, 
+        searchable=True, 
+        multi=True,
+        # below could be improved as well eventually, by extracting all regions from the data + the special_regions
+        options=[
+            {'label': "Person", 'value': "Person"},
+            {'label': 'Huishouden', 'value': 'Huishouden'},
+            {'label': "Socioecon", 'value': "Socioecon"},
+            {'label': 'Zorgkosten', 'value': 'Zorgkosten'},
+            {'label': 'Medicatie', 'value': 'Medicatie'},
+            {'label': 'Eerstelijns zorg', 'value': 'Eerstelijns zorg'},
+            {'label': "Secundaire zorg", 'value': "Secundaire zorg"},
+            {'label': "Eerstelijns en Secundaire zorg", 'value': 'Eerstelijns en Secundaire zorg'},
+            {'label': 'Ander', 'value': 'Ander'}
+            ],
+        value=["Person","Huishouden", "Socioecon", "Zorgkosten", "Medicatie", "Eerstelijns zorg", "Secundaire zorg", "Eerstelijns en Secundaire zorg", "Ander"], 
+        className = "custom_select"
+    )
+
 drop_var = dcc.Dropdown(
-        columns,
-        'Total_Population',
+    # make display variable different than value label
+        options=[{'label': var_label, 'value': var_value} for var_value, var_label in var_def_label_dict.items()],
+        value = 'Total_Population',
         id = 'drop_var_id',
         clearable=False,
         searchable=False,
@@ -154,14 +215,16 @@ drop_municipality = dcc.Dropdown(
         # below could be improved as well eventually, by extracting all regions from the data + the special_regions
         options=[
             {'label': "'s-gravenhage", 'value': "'s-Gravenhage"},
-            {'label': "Rijswijk", 'value': "Rijswijk"},
+            {'label': 'Leiden', 'value': 'Leiden'},
+            {'label': "Lisse", 'value': "Lisse"},
             {'label': 'Leidschendam-Voorburg', 'value': 'Leidschendam-Voorburg'},
             {'label': 'Wassenaar', 'value': 'Wassenaar'},
-            {'label': "Hadoks' area", 'value': "Hadoks' area"},
-            # {'label': 'Roaz', 'value': 'Roaz'},
-            # {'label': "Haaglanden", 'value': 'Haaglanden'},
-            # {'label': 'Leiden', 'value': 'Leiden'},
-            # {'label': 'Delft', 'value': 'Delft'}
+            {'label': 'Zoetermeer', 'value': 'Zoetermeer'},
+            {'label': "'s-gravenhage en omstreken", 'value': "'s-gravenhage en omstreken"},
+            {'label': "Leiden en omstreken", 'value': 'Leiden en omstreken'},
+            {'label': 'Delft en omstreken', 'value': 'Delft en omstreken'},
+            {'label': 'ELAN area', 'value': 'ELAN area'},
+            {'label': "Hadoks' area", 'value': "Hadoks' area"}
             ],
         value="'s-Gravenhage", 
         className = "custom_select"
@@ -172,7 +235,11 @@ layout = html.Div([
                 html.Div([html.Button("Variable, Region and Year Selection :", id="accordionbutton", className="accordionbutton_open"), 
                     html.Div([
                         html.Div([
-                            html.Div([html.Label('Choose a variable to plot:', id= 'choose_variable', htmlFor= 'drop_var_id'), drop_var], id= 'select_variable'),
+                        
+                            html.Div([html.Div([html.Label('Choose variable theme(s) to choose:', id= 'choose_theme', htmlFor= 'drop_var_theme_id'), drop_var_theme], id= 'select_theme'),
+                                      html.Div([html.Label('Choose a variable to plot:', id= 'choose_variable', htmlFor= 'drop_var_id'), drop_var], id= 'select_variable'),
+                                      ], id= 'variableContainer'),
+                            
                             html.Div([html.Label('Choose a region to plot:', id='choose_area', htmlFor= 'drop_municipality'), drop_municipality], id = 'select_region'),
                             html.Div([html.Label('Choose neighbourhoods to plot:', id= 'choose_wijk', htmlFor= 'drop_municipality_spec_id'),
                                 dcc.Dropdown(
@@ -194,6 +261,12 @@ layout = html.Div([
                     ], id="control_panel", className="accordeon_open")
                 ], id="accordionheader", className = 'box'), id = "dashnav"
             ),
+            html.Div([
+                        html.H1(id='title_var_def'),
+                        html.P('Definition : Total population of neighbourhood on the year choosen', id='var_def_expl'), 
+                        html.P('Data sources :', id='var_def_data'),
+                        html.P('Source Code : Github (Work in Progress)', id='var_def_code'),
+                    ], className='box'),
             html.Div([
                 html.Div([
                     html.Div([
@@ -249,6 +322,7 @@ def get_language(data):
 @callback(
     Output('linechart_expl', 'children'),
     Output('geospat_expl', 'children'),
+    Output('choose_theme', 'children'),
     Output('choose_variable', 'children'),
     Output('choose_area', 'children'),
     Output('choose_wijk', 'children'),
@@ -256,48 +330,58 @@ def get_language(data):
     Output('accordionbutton', 'children'),
     Output('drop_var_id', 'options'),
     Output('drop_var_id', 'value'),
+    Input('drop_var_theme_id','value'),
     Input('session', 'data')
 )
-def localise(language):
+def localise(themes, language):
+
     global columns
     linechart_expl = (tr.translate("linechart explanation"))
     geospat_expl = (tr.translate('geospat explanation'))
+    choose_theme = (tr.translate('select theme'))
     choose_variable = (tr.translate('select variable'))
     choose_area = (tr.translate('select area'))
     choose_neighborhoud = (tr.translate('select neighbourhood'))
     select_year = (tr.translate('select year'))
     control_panel = (tr.translate('control panel'))
-    
+
+    choosen_columns = ['Total_Population','Total_ICPCPat_Pop']+ sum([var_dict.get(key) for key in themes],[])
+
     #updating visualisations + dropdown menus
-    drop_var =orig_columns
+    drop_var = tr.translate_list(choosen_columns)
     # ugly
-    drop_var_value = 'Total_Population'
+    drop_var_value = tr.translate('Total_Population')
     columns = drop_var
+    df.columns = tr.translate_list(headers)
     
-    return linechart_expl, geospat_expl, choose_variable, choose_area, \
-        choose_neighborhoud, select_year, control_panel, drop_var, drop_var_value
-    
+    return linechart_expl, geospat_expl, choose_theme, choose_variable, choose_area, choose_neighborhoud, select_year, control_panel, drop_var, drop_var_value
+  
 @callback(
     Output('drop_municipality_spec_id', 'options'),
     Output('drop_municipality_spec_id', 'value'),
     Input('drop_municipality', 'value'),
-    Input('clear_me_button', 'n_clicks') # custom clear feature (event trigger)
+    Input('clear_me_button', 'n_clicks'), # custom clear feature (event trigger)
+    Input('session', 'data')
 )
-def update_select_neighbourhoods(munipality, clear_click):
+def update_select_neighbourhoods(munipality, clear_click, language):
     '''
     Present the neighbourhoods of the selected region to the user
     '''      
-    
+    if language == tr.Language.EN.value:
+        year = 'YEAR'
+    else:
+        year = 'Jaar'
+
     if munipality in special_regions.keys():    
         dff = df.query("GMN in @special_regions[@munipality]")
     else:
         dff = df[(df.GMN == munipality)] #TODO: maybe change to GMcode?
 
-    dff = dff[dff["YEAR"] == 2022] #YEAR gets translated by the translate feature to jaar. fixed. TODO: fix translations of data. (labels)
-  
-    options = list(dff.WKC)
-    labels = list(dff.Wijknaam)
-    labels = {options[i]: labels[i] for i in range(len(options))}
+    dff = dff[dff[year] == 2022] #YEAR gets translated by the translate feature to jaar. fixed. TODO: fix translations of data. (labels)
+    # labels = list(dff.WKN)
+    # labels = {options[i]: labels[i] for i in range(len(options))}
+    labels = dict(zip(dff.WKC, dff.WKN))
+    options = [*labels]
     
     if (dash.callback_context.triggered_id == "clear_me_button"):
         return labels, []
@@ -311,11 +395,15 @@ def update_select_neighbourhoods(munipality, clear_click):
     Output('slider_select_year', 'value'),
     Output('drop_select_year', 'options'),
     Output('drop_select_year', 'value'),
+    Output('title_var_def', 'children'),
+    Output('var_def_expl', 'children'),
+    Output('var_def_data', 'children'),
     Input('drop_var_id', 'value'),
     Input('drop_municipality', 'value'),
-    Input('drop_select_year', 'value')
+    Input('drop_select_year', 'value'),
+    Input('select_language', 'alt')
 )
-def update_slider(xaxis_column_name, municipality, drop_value):
+def update_slider(xaxis_column_name, municipality, drop_value, language):
     '''
     Sets the slider to values corresponding the data of the chosen region.
     The drop_select_year dropdown menu and the drop_value variable were added for responsive web design.
@@ -326,16 +414,30 @@ def update_slider(xaxis_column_name, municipality, drop_value):
     else:
         temp_df = df[df.GMN == municipality].copy()
 
-    temp_df.dropna(subset=xaxis_column_name, inplace= True)
+    title_def = '{}'.format(xaxis_column_name)
+
+    if language == 'en':
+        year = 'YEAR'
+        variable_name= method_trans_dict(var_def_label_dict, xaxis_column_name)[0]
+        var_def = 'Defintion : {}'.format(var_def_dict.get(variable_name))
+        var_def_data = 'Data Sources : {}'.format(var_def_data_dict.get(variable_name))
+    else:
+        year = 'Jaar'
+        variable_name = method_trans_dict(var_def_label_NL_dict, xaxis_column_name)[0]
+        var_def = 'Definitie : {}'.format(var_def_NL_dict.get(variable_name))
+        var_def_data = 'Gegevensbronnen : {}'.format(var_def_data_dict.get(variable_name))
     
-    min = temp_df["YEAR"].min()
-    max = temp_df["YEAR"].max()
+    temp_df.dropna(subset=xaxis_column_name, inplace= True)
+
+    min = temp_df[year].min()
+    max = temp_df[year].max()
     
     marks = {str(i):str(i) for i in [str(i) for i in range(min, max +1)]}
 
     value = max
 
-    return min, max, marks, value, list(range(min, max)), value 
+    return min, max, marks, value, list(range(min, max)), value, title_def, var_def, var_def_data
+
 
 
 @callback(
@@ -344,27 +446,36 @@ def update_slider(xaxis_column_name, municipality, drop_value):
     Input('slider_select_year', 'value'),
     Input('drop_var_id', 'value'),
     Input('drop_municipality', 'value'),
-    Input('drop_municipality_spec_id', 'value')
+    Input('drop_municipality_spec_id', 'value'),
+    Input('select_language', 'alt')
     )
 
-def update_graph_map(year_value, xaxis_column_name, wijk_name, wijk_spec):
+def update_graph_map(year_value, xaxis_column_name, wijk_name, wijk_spec, language):
     '''
     Select the appropriate data to display in the map fig
     '''
-    dff = df[df['YEAR'] == year_value]
 
-    title = '{} - {} - {} '.format(xaxis_column_name, wijk_name, year_value)
-
+    if language == 'en':
+        year = 'YEAR'
+        total_pop = 'Total Population'
         
+    else:
+        year = 'Jaar'
+        total_pop = 'Totale bevolking'
+        
+    dff = df[df[year] == year_value]
+
+    title = '{} - {} - {}'.format(xaxis_column_name, wijk_name, year_value)
+
     dff = dff.query("WKC in @wijk_spec")
 
     fig = px.choropleth_mapbox(dff, geojson=geo_df, color=xaxis_column_name,
                             locations="WKC", featureidkey="properties.WKC", opacity = 0.5,
                             center={"lat": 52.0705, "lon": 4.3003}, color_continuous_scale=colorscale_inverted,
-                            mapbox_style="carto-positron", zoom=10, hover_name="Wijknaam",
-                            custom_data=[xaxis_column_name])
+                            mapbox_style="carto-positron", zoom=10, hover_name="WKN",
+                            custom_data=['GMN', xaxis_column_name,total_pop])
     
-    fig.update_traces(hovertemplate='<b>%{hovertext}</b>' +'<br><b>Waarde</b>: %{customdata[0]}<br>')  
+    fig.update_traces(hovertemplate='<b>%{hovertext}</b>'+ '<br><b>%{customdata[0]}</b><br>' +'<br><b>Waarde</b>: %{customdata[1]}<br>' +'<b>Bevolking</b>: %{customdata[2]}')  
 
     
     fig.update_layout(geo=dict(bgcolor= 'rgba(0,0,0,0)', lakecolor='#4E5D6C'),
@@ -374,6 +485,8 @@ def update_graph_map(year_value, xaxis_column_name, wijk_name, wijk_spec):
                                 paper_bgcolor='white',
                                 showlegend=True
                             )
+    # get value with keys 
+    
     
     return fig, title
 
@@ -385,14 +498,23 @@ def update_graph_map(year_value, xaxis_column_name, wijk_name, wijk_spec):
     Input('slider_select_year', 'value'),
     Input('drop_var_id', 'value'),
     Input('drop_municipality', 'value'),
-    Input('drop_municipality_spec_id', 'value')
+    Input('drop_municipality_spec_id', 'value'),
+    Input('select_language', 'alt')
     )
 
-def update_graph_bar(year_value, xaxis_column_name, wijk_name, wijk_spec):
+def update_graph_bar(year_value, xaxis_column_name, wijk_name, wijk_spec, language):
     '''
     Update the bar chart based on new values
     '''
-    dff = df[df['YEAR'] == year_value]
+
+    if language == 'en':
+        year = 'YEAR'
+        variable = method_trans_dict(var_def_label_dict, xaxis_column_name)[0]
+    else:
+        year = 'Jaar'
+        variable = method_trans_dict(var_def_label_NL_dict, xaxis_column_name)[0]
+
+    dff = df[df[year] == year_value]
     
     if len(wijk_spec) == 0:
         fig = px.bar(x=[0, 10],
@@ -408,13 +530,14 @@ def update_graph_bar(year_value, xaxis_column_name, wijk_name, wijk_spec):
         return ["No neighbourhood selected"], fig    
     else:
         dff = dff.query("WKC in @wijk_spec")
-        dff = dff.sort_values(by=[xaxis_column_name], ascending=False).reset_index()   
+        dff = dff.sort_values(by=[xaxis_column_name], ascending=False).reset_index()
+        dff = dff.drop_duplicates(subset='WKN', keep="last")
         
-        fig = px.bar(dff, xaxis_column_name, 'Wijknaam', color= xaxis_column_name,
-                hover_name='Wijknaam', color_continuous_scale=colorscale_inverted,
-                height= max(500, 30 * dff.shape[0]), text='Wijknaam')
+        fig = px.bar(dff, xaxis_column_name, 'WKN', color= xaxis_column_name,
+                hover_name='WKN', color_continuous_scale=colorscale_inverted,
+                height= max(500, 30 * dff.shape[0]), text='WKN', custom_data=['GMN'])
 
-    title = '{} - {} - {} '.format(xaxis_column_name, wijk_name, year_value)   
+    title = '{} - {} - {}'.format((xaxis_column_name), wijk_name, year_value,variable)   
     #title = tr.translate("Bargraph title")
     # fig.update_yaxes(title=xaxis_column_name)
     # fig.update_xaxes(title=wijk_name)
@@ -434,7 +557,7 @@ def update_graph_bar(year_value, xaxis_column_name, wijk_name, wijk_spec):
     fig.update_coloraxes(showscale=False)
        
     fig.update_traces(width= 0.8,
-        hovertemplate='<b>%{hovertext}</b>' +'<br><b>Value</b>: %{x}<br>'
+        hovertemplate='<b>%{hovertext}</b>'+ '<br><b>%{customdata[0]}</b><br>' +'<br><b>Value</b>: %{x}<br>'
     )  
     fig.update_yaxes(showticklabels=False)
     fig.update_xaxes(gridcolor='rgba(0,126,255,.24)')
@@ -448,14 +571,22 @@ selected_wijken = set()
     Output('line_menu', 'value'),
     Input('drop_municipality', 'value'),
     Input('drop_municipality_spec_id', 'value'),
-    Input('map', 'clickData')
+    Input('map', 'clickData'),
+    Input('select_language', 'alt')
+
 )
-def update_line_menu(select_munic, select_wijken, map_values):
+def update_line_menu(select_munic, select_wijken, map_values,language):
     '''
     Custom legend/menu for line chart
     '''
     global selected_wijken
+
+    if language == 'en':
+        year = 'YEAR'
         
+    else:
+        year = 'Jaar'
+
     #when user selects a new region
     if (dash.callback_context.triggered_id == "drop_municipality"):
         selected_wijken = set()
@@ -466,9 +597,9 @@ def update_line_menu(select_munic, select_wijken, map_values):
         else:
             selected_wijken.remove(map_values)
            
-    select_wijken = df[df.WKC.isin(select_wijken) & (df.YEAR == 2022)].set_index("WKC").to_dict()["Wijknaam"]
+    select_wijken = df[df.WKC.isin(select_wijken) & (df[year] == 2022)].set_index("WKC").to_dict()["WKN"]
     
-    #select_wijken = {df[df.WKC == select_wijken[i]].Wijknaam: select_wijken[i] for i in range(len(select_wijken))} 
+    #select_wijken = {df[df.WKC == select_wijken[i]].WKN: select_wijken[i] for i in range(len(select_wijken))} 
     return select_wijken, list(selected_wijken)
 
 @callback(
@@ -494,18 +625,27 @@ def change_button_style(n_clicks, buttonClass):
     Input('drop_var_id', 'value'),
     Input('drop_municipality', 'value'),
     Input('drop_municipality_spec_id', 'value'),
+    Input('select_language', 'alt'),
     prevent_initial_call=False
     )
 #TODO: CLEANUP
 #TODO: use WKC instead of Wijknaam. What if you're plotting neighbourhoods
 # with the same new from different cities?
 def update_graph(mapData, menu_data,
-                 xaxis_column_name, wijk_name, wijk_spec):
+                 xaxis_column_name, wijk_name, wijk_spec, language):
     '''
     Update line graph 
     '''
     global selected_wijken
-    
+    if language == 'en':
+        year = 'YEAR'
+        variable = method_trans_dict(var_def_label_dict, xaxis_column_name)[0]
+        no_wijk_label = "No neighbourhood selected"
+    else:
+        year = 'Jaar'
+        variable = method_trans_dict(var_def_label_NL_dict, xaxis_column_name)[0]
+        no_wijk_label = "Geen buurt geselecteerd"
+
     if len(selected_wijken) == 0 and (dash.callback_context.triggered_id != "line_menu"):
         fig = px.line(x=[0, 10], y=[0, 0])
         fig.update_xaxes(showticklabels=False, visible=False)
@@ -516,15 +656,15 @@ def update_graph(mapData, menu_data,
         )        
         selected_wijken = set()
         #TODO: change the class to hide the graph + make the "Show menu button" loud
-        return "No neighbourhood selected", fig, []    
+        return no_wijk_label, fig, []    
     
     dff = df.query("WKC in @wijk_spec")
-
-    dff = dff.sort_values(by=['YEAR', xaxis_column_name], ascending=False).reset_index()
-
-    # fig = px.line(dff, x=tr.translate('YEAR'), y=  xaxis_column_name, color='Wijknaam', color_discrete_sequence=colorscale_inverted)
-    fig = px.line(dff, x='YEAR', y= xaxis_column_name, color='WKC', custom_data=['Wijknaam'],
-                  color_discrete_sequence=px.colors.qualitative.Alphabet)
+    # dff = dff.drop_duplicates(subset=['WKN','YEAR'], keep="last")
+    
+    fig = px.line(dff, x=year, y= xaxis_column_name, color='WKC', custom_data=['WKN'],
+                  color_discrete_sequence=px.colors.qualitative.Alphabet
+                #   height= max(150, 30 * dff.shape[0]),
+                  )
     
     fig.update_traces(hovertemplate='<b>%{customdata[0]}</b>' +'<br><b>Jaar</b>: %{x|%Y}<br><b>Waarde:</b> %{y}', name="")
 
@@ -554,7 +694,7 @@ def update_graph(mapData, menu_data,
 
   
     if mapData is None: #change chart based on selection from the select
-        title = '{}'.format(xaxis_column_name) # TODO
+        title = '{}'.format(var_def_label_dict.get(xaxis_column_name)) # TODO
         
         fig.update_traces(visible="legendonly")
 
@@ -562,7 +702,7 @@ def update_graph(mapData, menu_data,
 
     elif mapData is not None: #User can click on neighbourhoods in the map to affect the linechart.
         clicked_name = mapData['points'][0]['hovertext']
-        title = '{} - {}'.format(xaxis_column_name, clicked_name) #TODO
+        title = '{} - {}'.format(var_def_label_dict.get(xaxis_column_name), clicked_name) #TODO
         
         #note that in this specific case, selected_wijken is already being 
         # updated in the line_menu function
@@ -578,11 +718,16 @@ def update_graph(mapData, menu_data,
         
     #This is performed every time now.
     for wijk in fig.data:
-        if wijk.legendgroup in selected_wijken:
+        if set(dff[(dff.WKC == wijk.legendgroup) & (dff[year] == 2022)].WKN.unique()).issubset(selected_wijken):
+        # if (wijk.legendgroup) in (selected_wijken):
             wijk.visible= True
+            
         else:
             wijk.visible= False
-   
+        
+        
+
+    # title= '{} - {} - {} '.format(wijk.legendgroup, type(selected_wijken), wijk)
    #SO UGLY
     if len(selected_wijken) == 0:
         fig = px.line(x=[0, 10], y=[0, 0])
@@ -596,9 +741,12 @@ def update_graph(mapData, menu_data,
     #use to make custom (non-interactive) legend
     legend = []
     
+    look_up = dff[dff.WKN.isin(selected_wijken) & (dff[year] == 2022)].set_index("WKC").to_dict()["WKN"]
     
-    look_up = df[df.WKC.isin(selected_wijken) & (df.YEAR == 2022)].set_index("WKC").to_dict()["Wijknaam"]
-    
+    # look_up = dff[dff.WKC.isin(selected_wijken) & (dff.YEAR == 2022)].set_index("WKC").to_dict()["WKN"]
+
+    # title = '{} - {} - {} - {}'.format(wijk.legendgroup, selected_wijken, look_up, set(dff[(dff.WKC == wijk.legendgroup) & (dff.YEAR == 2022)].WKN.unique()) )
+    title= '{} - {}'.format(xaxis_column_name, list(look_up.values()))
     for wijk in fig.data:
         if wijk.visible:
             legend.append(html.Div([html.Div(className="legendcolor", style={'background-color': wijk.line.color}),look_up[wijk.legendgroup]], className="legenditem"))
