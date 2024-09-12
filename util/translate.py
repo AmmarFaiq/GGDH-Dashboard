@@ -12,12 +12,8 @@ dictionary = {}
 lang = Language.NL
 
 monthsdic = {
-    Language.NL.value: ["januari", "februari", "maart", " april", "maart", "april",
-                  "mei", "juni", "juli", "augustus", "september", "oktober",
-                  "november", "december"],
-    Language.EN.value: ["January", "February" , "March", "April", "May", "June",
-                  "Juli", "August", "September", "October", "November",
-                  "December"]
+    Language.NL.value: ["Januari", "Februari", "Maart", " April", "Mei", "Juni", "Juli", "Augustus", "September", "Oktober","November", "December"],
+    Language.EN.value: ["January", "February" , "March", "April", "May", "June","Juli", "August", "September", "October", "November","December"]
     
 }
 
