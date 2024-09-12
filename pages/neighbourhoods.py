@@ -201,7 +201,7 @@ drop_var_theme = dcc.Dropdown(
 drop_var = dcc.Dropdown(
     # make display variable different than value label
         options=[{'label': var_label, 'value': var_value} for var_value, var_label in var_def_label_dict.items()],
-        value = 'Total_Population',
+        value = 'Total_ICPCPat_Pop',
         id = 'drop_var_id',
         clearable=False,
         searchable=False,
@@ -226,7 +226,7 @@ drop_municipality = dcc.Dropdown(
             {'label': 'ELAN area', 'value': 'ELAN area'},
             {'label': "Hadoks' area", 'value': "Hadoks' area"}
             ],
-        value="'s-Gravenhage", 
+        value="ELAN area", 
         className = "custom_select"
     )
 
@@ -272,7 +272,7 @@ layout = html.Div([
                     html.Div([
                         html.H1(id='title_map'),
                         html.P('Click on a tile to see the trendline!', id='geospat_expl'), 
-                        dcc.Graph(id='map', config={"displayModeBar": False})
+                        dcc.Graph(id='map', config={"displayModeBar": False, 'scrollZoom': True})
                     ], className='box'),
                     html.Div([
                         html.H1(id='wijk_trend_label'),
