@@ -7,53 +7,19 @@ This is one of the ongoing dashboard projects for GGDH-ELAN from the Department 
 
 1. Area coverage (will increase in the future):
 
-ELAN covered area :
+- ELAN covered area :
 
-- Den Haag and other
-s-Gravenhage
-Leidschendam-Voorburg
-Rijswijk
-Wassenaar
+ - Den Haag and other : s-Gravenhage, Leidschendam-Voorburg, Rijswijk, Wassenaar
+ - Leiden and other : Alphen aan den Rijn, Hillegom, Kaag en Braassem, Katwijk, Leiden, Leiderdorp, Lisse, Nieuwkoop, Noordwijk, Oegstgeest, Teylingen, Voorschoten, Zoeterwoude
+ - Delft and other: Delft, Midden-Delfland, Pijnacker-Nootdorp, Westland
+ - Zoetermeer
+ - Additional : Waddinxveen, Bodegraven-Reeuwijk
 
-- Leiden and other
-Alphen aan den Rijn
-Hillegom
-Kaag en Braassem
-Katwijk
-Leiden
-Leiderdorp
-Lisse
-Nieuwkoop
-Noordwijk
-Oegstgeest
-Teylingen
-Voorschoten
-Zoeterwoude
-
-- Delft and other
-Delft
-Midden-Delfland
-Pijnacker-Nootdorp
-Westland
-
-Zoetermeer
-
-- additional :
-Waddinxveen
-Bodegraven-Reeuwijk
-
-- Hadoks Area :
-'s-Gravenhage
-Leidschendam-Voorburg
-Rijswijk
-Wassenaar
-
-
-
+- Hadoks Area : 's-Gravenhage, Leidschendam-Voorburg, Rijswijk, Wassenaar
  
 2. Working pages are :
 
-- Neighbourhood: contains infographics of current and past variables per Neighbourhood.
+- Neighbourhood: contains infographics of past variables per Neighbourhood.
 - Supply and Demand: contains a clustering and projection of selected variables per Neighbourhood in Collaboration with Hadoks
 - heartfailure: contains infographics of heart failure patients
 - Language options are working only on Neighbourhood (main page)
