@@ -1,0 +1,102 @@
+Total_Population:CBS-gegevens afgeleid van GWBTAB en GBAADRESOBJECTBUS
+Total_ICPCPat_Pop:ELAN-gegevens afgeleid van PAT 
+%_Gender_Mannen:CBS-gegevens afgeleid van GBAPERSOONTAB - GBAGESLACHT
+%_Gender_Vrouwen:CBS-gegevens afgeleid van GBAPERSOONTAB - GBAGESLACHT
+%_0to20:CBS-gegevens afgeleid van GBAPERSOONTAB - GBAGEBOORTEJAAR, GBAGEBOORTEMAAND, GBAGEBOORTEDAG
+%_21to40:CBS-gegevens afgeleid van GBAPERSOONTAB - GBAGEBOORTEJAAR, GBAGEBOORTEMAAND, GBAGEBOORTEDAG 
+%_41to60:CBS-gegevens afgeleid van GBAPERSOONTAB - GBAGEBOORTEJAAR, GBAGEBOORTEMAAND, GBAGEBOORTEDAG
+%_61to80:CBS-gegevens afgeleid van GBAPERSOONTAB - GBAGEBOORTEJAAR, GBAGEBOORTEMAAND, GBAGEBOORTEDAG
+%_Above80:CBS-gegevens afgeleid van GBAPERSOONTAB - GBAGEBOORTEJAAR, GBAGEBOORTEMAAND, GBAGEBOORTEDAG
+%_MajorEthnicity_Native Dutch:CBS-gegevens afgeleid van GBAPERSOONTAB - GBAHERKOMSTGROEPERING
+%_MajorEthnicity_Western:CBS-gegevens afgeleid van GBAPERSOONTAB - GBAHERKOMSTGROEPERING
+%_MajorEthnicity_Non-Western:CBS-gegevens afgeleid van GBAPERSOONTAB - GBAHERKOMSTGROEPERING
+%_MinorEthnicity_Marokko:CBS-gegevens afgeleid van GBAPERSOONTAB - GBAHERKOMSTGROEPERING
+%_MinorEthnicity_Suriname:CBS-gegevens afgeleid van GBAPERSOONTAB - GBAHERKOMSTGROEPERING
+%_MinorEthnicity_Turkije:CBS-gegevens afgeleid van GBAPERSOONTAB - GBAHERKOMSTGROEPERING
+%_MinorEthnicity_Voormalige Nederlense Antillen en Aruba:CBS-gegevens afgeleid van GBAPERSOONTAB - GBAHERKOMSTGROEPERING
+%_Multiperson_Household:CBS-gegevens afgeleid van GBAHUISHOUDENSBUS - AANTALPERSHHH en INHATAB - INHAHL
+%_HouseholdType_Institutional:CBS-gegevens afgeleid van GBAHUISHOUDENSBUS - TYPHH
+%_Employee:CBS-gegevens afgeleid van INPATAB - INPSECJ
+%_Unemployment_benefit_user:CBS-gegevens afgeleid van INPATAB - INPSECJ
+%_Welfare_benefit_user:CBS-gegevens afgeleid van INPATAB - INPSECJ
+%_Other_social_benefit_user:CBS-gegevens afgeleid van INPATAB - INPSECJ
+%_Sickness_benefit_user:CBS-gegevens afgeleid van INPATAB - INPSECJ
+%_Pension_benefit_user:CBS-gegevens afgeleid van INPATAB - INPSECJ
+%_Moving_count_above_1:CBS-gegevens afgeleid van GWBTAB en GBAADRESOBJECTBUS
+%_Lifeevents_count_above_2:CBS-gegevens afgeleid van GBAHUISHOUDENSBUS - TYPHH en CBS-gegevens afgeleid van GWBTAB en GBAADRESOBJECTBUS
+%_Low_Income:CBS-gegevens afgeleid van INHATAB - INHARMLAG
+%_Debt_Mortgage:CBS-gegevens afgeleid van INPATAB - INPT3170RBW, INPT3180RST, INPT3190RBS
+%_Debt_Poor:CBS-gegevens afgeleid van WSNPPERSBUS
+%_Wanbet:CBS-gegevens afgeleid van WANBZVWTAB
+%_WMO_user:CBS-gegevens afgeleid van WMOBUS
+%_WLZ_user:CBS-gegevens afgeleid van GEBWLZTAB
+%_ZVWKHUISARTS_user:CBS-gegevens afgeleid van ZVWZORGKOSTENTAB - ZVWKHUISARTS, NOPZVWKHUISARTSINSCHRIJF
+%_ZVWKFARMACIE_user:CBS-gegevens afgeleid van ZVWZORGKOSTENTAB - ZVWKFARMACIE
+%_ZVWKZIEKENHUIS_user:CBS-gegevens afgeleid van ZVWZORGKOSTENTAB - ZVWKZIEKENHUIS
+%_ZVWKOSTENPSYCHO_user:CBS-gegevens afgeleid van ZVWZORGKOSTENTAB - ZVWKGGZ, ZVWKGENBASGGZ, ZVWKSPECGGZ
+%_HVZ_Medication_user:CBS-gegevens afgeleid van MEDICIJNTAB - ATC4
+%_UniqueMed_Count_>=5:CBS-gegevens afgeleid van MEDICIJNTAB - ATC4
+%_UniqueMed_Count_>=10:CBS-gegevens afgeleid van MEDICIJNTAB - ATC4
+%_DIAB_Medication_user:CBS-gegevens afgeleid van MEDICIJNTAB - ATC4
+%_BLOEDDRUKV_Medication_user:CBS-gegevens afgeleid van MEDICIJNTAB - ATC4
+%_CHOL_Medication_user:CBS-gegevens afgeleid van MEDICIJNTAB - ATC4
+%_DIURETICS_Medication_user:CBS-gegevens afgeleid van MEDICIJNTAB - ATC4
+%_DIURETICS_RAAS_BETA_Medication_user:CBS-gegevens afgeleid van MEDICIJNTAB - ATC4
+%_OPIOID_Medication_user:CBS-gegevens afgeleid van MEDICIJNTAB - ATC4
+%_OPIOID_MULYEARS_Medication_user:CBS-gegevens afgeleid van MEDICIJNTAB - ATC4
+%_Opioid_user_no_death:CBS-gegevens afgeleid van MEDICIJNTAB - ATC4 en CBS-gegevens afgeleid van GBAOVERLIJDENTAB - GBADatumOverlijden
+%_Opioid_user_no_death_primary:ELAN-gegevens afgeleid van MED - ATC, dATC en CBS-gegevens afgeleid van GBAOVERLIJDENTAB - GBADatumOverlijden
+%_Opioid_user_2Years_no_death:CBS-gegevens afgeleid van MEDICIJNTAB - ATC4 en CBS-gegevens afgeleid van GBAOVERLIJDENTAB - GBADatumOverlijden
+%_Opioid_user_2Years_no_death_primary:ELAN-gegevens afgeleid van MED - ATC, dATC en CBS-gegevens afgeleid van GBAOVERLIJDENTAB - GBADatumOverlijden
+%_Opioid_user_no_death_comb:ELAN-gegevens afgeleid van MED - ATC, dATC; CBS-gegevens afgeleid van MEDICIJNTAB - ATC4 en CBS-gegevens afgeleid van GBAOVERLIJDENTAB - GBADatumOverlijden
+%_Opioid_user_2Years_no_death_comb:ELAN-gegevens afgeleid van MED - ATC, dATC; CBS-gegevens afgeleid van MEDICIJNTAB - ATC4 en CBS-gegevens afgeleid van GBAOVERLIJDENTAB - GBADatumOverlijden
+%_Hypertensie_patients:CBS-gegevens afgeleid van MSZSUBTRAJECTENTAB - MSZSTRSpecialismeDiagnoseCombinatie en MSZPRESTATIESVEKTTAB - VEKTMSZSpecialismeDiagnoseCombinatie
+%_COPD_patients:CBS-gegevens afgeleid van MSZSUBTRAJECTENTAB - MSZSTRSpecialismeDiagnoseCombinatie en MSZPRESTATIESVEKTTAB - VEKTMSZSpecialismeDiagnoseCombinatie
+%_Diabetes_I_patients:CBS-gegevens afgeleid van MSZSUBTRAJECTENTAB - MSZSTRSpecialismeDiagnoseCombinatie en MSZPRESTATIESVEKTTAB - VEKTMSZSpecialismeDiagnoseCombinatie
+%_Diabetes_II_patients:CBS-gegevens afgeleid van MSZSUBTRAJECTENTAB - MSZSTRSpecialismeDiagnoseCombinatie en MSZPRESTATIESVEKTTAB - VEKTMSZSpecialismeDiagnoseCombinatie
+%_Hartfalen_patients:CBS-gegevens afgeleid van MSZSUBTRAJECTENTAB - MSZSTRSpecialismeDiagnoseCombinatie en MSZPRESTATIESVEKTTAB - VEKTMSZSpecialismeDiagnoseCombinatie
+%_OMA_patients:CBS-gegevens afgeleid van MSZSUBTRAJECTENTAB - MSZSTRSpecialismeDiagnoseCombinatie en MSZPRESTATIESVEKTTAB - VEKTMSZSpecialismeDiagnoseCombinatie
+%_Morbus_Parkinson_patients:CBS-gegevens afgeleid van MSZSUBTRAJECTENTAB - MSZSTRSpecialismeDiagnoseCombinatie en MSZPRESTATIESVEKTTAB - VEKTMSZSpecialismeDiagnoseCombinatie
+%_Heupfractuur_patients:CBS-gegevens afgeleid van MSZSUBTRAJECTENTAB - MSZSTRSpecialismeDiagnoseCombinatie en MSZPRESTATIESVEKTTAB - VEKTMSZSpecialismeDiagnoseCombinatie
+%_BMIUP45_patients:CBS-gegevens afgeleid van MSZSUBTRAJECTENTAB - MSZSTRSpecialismeDiagnoseCombinatie en MSZPRESTATIESVEKTTAB - VEKTMSZSpecialismeDiagnoseCombinatie
+%_Lung_Cancer_patients:CBS-gegevens afgeleid van MSZSUBTRAJECTENTAB - MSZSTRSpecialismeDiagnoseCombinatie en MSZPRESTATIESVEKTTAB - VEKTMSZSpecialismeDiagnoseCombinatie
+%_Colon_Cancer_patients:CBS-gegevens afgeleid van MSZSUBTRAJECTENTAB - MSZSTRSpecialismeDiagnoseCombinatie en MSZPRESTATIESVEKTTAB - VEKTMSZSpecialismeDiagnoseCombinatie
+%_Back_pain_patients:CBS-gegevens afgeleid van MSZSUBTRAJECTENTAB - MSZSTRSpecialismeDiagnoseCombinatie en MSZPRESTATIESVEKTTAB - VEKTMSZSpecialismeDiagnoseCombinatie
+%_ICPC_Hartfalen_patients:ELAN-gegevens afgeleid van EPI - ICPC, dICPC en JOR - ICPC, dICPC
+%_Medication_Dependency_patients:ELAN-gegevens afgeleid van EPI - ICPC, dICPC en JOR - ICPC, dICPC
+%_Alcohol_Dependency_patients:ELAN-gegevens afgeleid van EPI - ICPC, dICPC en JOR - ICPC, dICPC
+%_Loneliness_patients:ELAN-gegevens afgeleid van EPI - ICPC, dICPC en JOR - ICPC, dICPC
+%_ICPC_Obesitas_patients:ELAN-gegevens afgeleid van EPI - ICPC, dICPC en JOR - ICPC, dICPC
+%_BMI_NormalWeight:ELAN-gegevens afgeleid van LAB - dWCIANummer, Resultaat
+%_BMI_Obese:ELAN-gegevens afgeleid van LAB - dWCIANummer, Resultaat
+%_BMI_OverWeight:ELAN-gegevens afgeleid van LAB - dWCIANummer, Resultaat
+%_BMI_UnderWeight:ELAN-gegevens afgeleid van LAB - dWCIANummer, Resultaat
+%_Medication_Dependency_3Years_patients:ELAN-gegevens afgeleid van EPI - ICPC, dICPC en JOR - ICPC, dICPC
+%_Medication_Dependency_5Years_patients:ELAN-gegevens afgeleid van EPI - ICPC, dICPC en JOR - ICPC, dICPC
+%_Alcohol_Dependency_3Years_patients:ELAN-gegevens afgeleid van EPI - ICPC, dICPC en JOR - ICPC, dICPC
+%_Alcohol_Dependency_5Years_patients:ELAN-gegevens afgeleid van EPI - ICPC, dICPC en JOR - ICPC, dICPC
+%_Loneliness_3Years_patients:ELAN-gegevens afgeleid van EPI - ICPC, dICPC en JOR - ICPC, dICPC
+%_Loneliness_5Years_patients:ELAN-gegevens afgeleid van EPI - ICPC, dICPC en JOR - ICPC, dICPC
+%_Hartfalen_PrimarynSecondary_patients:ELAN-gegevens afgeleid van EPI - ICPC, dICPC en JOR - ICPC, dICPC; en CBS-gegevens afgeleid van MSZSUBTRAJECTENTAB - MSZSTRSpecialismeDiagnoseCombinatie en MSZPRESTATIESVEKTTAB - VEKTMSZSpecialismeDiagnoseCombinatie
+%_Primary_care_patients_in_Secondary_care:ELAN-gegevens afgeleid van PAT - RINPERSOON; en CBS-gegevens afgeleid van MSZSUBTRAJECTENTAB - RINPERSOON, MSZSTRBegindatumDBC en MSZPRESTATIESVEKTTAB - RINPERSOON, VEKTMSZBegindatumZT
+%_Proxy_Primary_care_refer_to_Secondary_care:ELAN-gegevens afgeleid van PAT - RINPERSOON; en CBS-gegevens afgeleid van MSZSUBTRAJECTENTAB - RINPERSOON, MSZSTRBegindatumDBC en MSZPRESTATIESVEKTTAB - RINPERSOON, VEKTMSZBegindatumZT
+%_JGDHULP_user:CBS-gegevens afgeleid van JGDHULPBUS - RINPERSOON
+%_GEDETINEERDENTAB:CBS-gegevens afgeleid van GEDETINEERDENTAB - RINPERSOON
+%_SHNTAB:CBS-gegevens afgeleid van SHNTAB - RINPERSOON
+%_HBOPL_Low:CBS-gegevens afgeleid van HOOGSTEOPLTAB - OPLNIVSOI2016AGG4HBMETNIRWO, OPLNIVSOI2021AGG4HBmetNIRWO
+%_HBOPL_Mid:CBS-gegevens afgeleid van HOOGSTEOPLTAB - OPLNIVSOI2016AGG4HBMETNIRWO, OPLNIVSOI2021AGG4HBmetNIRWO
+%_HBOPL_High:CBS-gegevens afgeleid van HOOGSTEOPLTAB - OPLNIVSOI2016AGG4HBMETNIRWO, OPLNIVSOI2021AGG4HBmetNIRWO
+%_HGOPL_Low:CBS-gegevens afgeleid van HOOGSTEOPLTAB - OPLNIVSOI2016AGG4HGMETNIRWO, OPLNIVSOI2021AGG4HGmetNIRWO
+%_HGOPL_Mid:CBS-gegevens afgeleid van HOOGSTEOPLTAB - OPLNIVSOI2016AGG4HGMETNIRWO, OPLNIVSOI2021AGG4HGmetNIRWO
+%_HGOPL_High:CBS-gegevens afgeleid van HOOGSTEOPLTAB - OPLNIVSOI2016AGG4HGMETNIRWO, OPLNIVSOI2021AGG4HGmetNIRWO
+AGE_MEAN:CBS-gegevens afgeleid van GBAPERSOONTAB - GBAGEBOORTEJAAR, GBAGEBOORTEMAAND, GBAGEBOORTEDAG
+Income_MEAN:CBS-gegevens afgeleid van INHATAB - INHGESTINKH
+Moving_Count_MEAN:CBS-gegevens afgeleid van GWBTAB en GBAADRESOBJECTBUS
+Lifeevents_Count_MEAN:CBS-gegevens afgeleid van GBAHUISHOUDENSBUS - TYPHH en CBS-gegevens afgeleid van GWBTAB en GBAADRESOBJECTBUS
+UniqueMed_Count_MEAN:CBS-gegevens afgeleid van MEDICIJNTAB - ATC4
+ZVWKOSTENTOTAAL_MEAN:CBS-gegevens afgeleid van ZVWZORGKOSTENTAB - ZVWKHUISARTS, ZVWKFARMACIE, ZVWKZIEKENHUIS, ZVWKMONDZORG, ZVWKPARAMEDISCH, ZVWKHULPMIDDEL, ZVWKZIEKENVERVOER, ZVWKGEBOORTEZORG, ZVWKBUITENLAND, ZVWKOVERIG, ZVWKEERSTELIJNSPSYCHO, ZVWKGGZ, ZVWKGENBASGGZ, ZVWKSPECGGZ, ZVWKGERIATRISCH, ZVWKWYKVERPLEGING
+ZVWKHUISARTS_MEAN:CBS-gegevens afgeleid van ZVWZORGKOSTENTAB - ZVWKHUISARTS
+ZVWKHUISARTS_NO_REG_MEAN:CBS-gegevens afgeleid van ZVWZORGKOSTENTAB - ZVWKHUISARTS, NOPZVWKHUISARTSINSCHRIJF
+ZVWKZIEKENHUIS_MEAN:CBS-gegevens afgeleid van ZVWZORGKOSTENTAB - ZVWKZIEKENHUIS
+ZVWKFARMACIE_MEAN:CBS-gegevens afgeleid van ZVWZORGKOSTENTAB - ZVWKFARMACIE
+ZVWKOSTENPSYCHO_MEAN:CBS-gegevens afgeleid van ZVWZORGKOSTENTAB - ZVWKGGZ, ZVWKGENBASGGZ, ZVWKSPECGGZ
