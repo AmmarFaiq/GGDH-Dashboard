@@ -50,34 +50,34 @@ Total_ICPCPat_Pop:Totale populatie geregistreerd in de ELAN-patient gegevens van
 %_Opioid_user_2Years_no_death_primary:Totaal aantal levende mensen met opioide medicatie op ATC4 (N01A of N02A) gedurende twee opeenvolgende jaren, te beginnen met het huidige en vorig jaar
 %_Opioid_user_no_death_comb:Totaal aantal levende mensen met opioide medicatie op ATC4 (N01A of N02A) uit twee gegevens (CBS en ELAN)
 %_Opioid_user_2Years_no_death_comb:Totaal aantal levende mensen met opioide medicatie op ATC4 (N01A of N02A) uit twee gegevens (CBS en ELAN) gedurende twee opeenvolgende jaren, beginnend bij het huidige en het vorige jaar
-%_Hypertensie_patients:Totaal aantal mensen dat in de loop van een jaar de diagnose hypertensie kreeg (DBC-code - Specialistencode: 0320-902)
-%_COPD_patients:Totaal aantal mensen dat in de loop van een jaar de diagnose COPD kreeg (DBC-code - Specialistencode: 0322-1241)
-%_Diabetes_I_patients:Totaal aantal mensen dat in de loop van een jaar de diagnose diabetes I kreeg (DBC-code - Specialistencode: 0313-221)
-%_Diabetes_II_patients:Totaal aantal mensen dat in de loop van een jaar de diagnose diabetes II kreeg (DBC-code - Specialistencode: 0313-222)
-%_Hartfalen_patients:Totaal aantal mensen dat in een jaar de diagnose Hartfalen kreeg (DBC-code - Specialistencode: 0320-301, 0320-302)
-%_OMA_patients:Totaal aantal mensen dat in een jaar de diagnose OMA kreeg (DBC-code - Specialistencode: 0302-13)
-%_Morbus_Parkinson_patients:Totaal aantal mensen dat in een jaar de diagnose Morbus Parkinson kreeg (DBC-code - Specialistencode: 0330-0501)
-%_Heupfractuur_patients:Totaal aantal mensen dat in een jaar de diagnose Heupfracturen kreeg (DBC-code - Specialistencode: 8418-303)
-%_BMIUP45_patients:Totaal aantal mensen dat in een jaar de diagnose BMI boven de 45 kreeg (DBC-code - Specialistencode: 0303-342)
-%_Lung_Cancer_patients:Totaal aantal mensen dat in een jaar de diagnose longkanker kreeg (DBC-code - Specialistencode: 1303-322, ,1304-322)
-%_Colon_Cancer_patients:Totaal aantal mensen dat in een jaar de diagnose darmkanker kreeg (DBC-code - Specialistencode: 0303-333,0303-334,0303-335)
-%_Back_pain_patients:Totaal aantal mensen dat in een jaar de diagnose rugpijn kreeg (DBC-code - Specialistencode: 0389-071,0389-072,0389-073)
-%_ICPC_Hartfalen_patients:Totaal aantal mensen dat in een jaar de diagnose hartfalen kreeg (ICPC-code: K77*)
-%_Medication_Dependency_patients:Totaal aantal mensen dat gediagnosticeerd met Medicatieverslaving in een jaar (ICPC-code: P18*)
-%_Alcohol_Dependency_patients:Totaal aantal mensen dat in een jaar de diagnose Alcoholverslaving kreeg (ICPC-code: P15* of P16*)
-%_Loneliness_patients:Totaal aantal mensen dat in een jaar de diagnose Eenzaamheid kreeg (ICPC-code: Z04.03)
-%_ICPC_Obesitas_patients:Totaal aantal mensen dat in een jaar de diagnose Obesitas kreeg (ICPC-code: T82*)
+%_Hypertensie_patients:Totaal aantal mensen dat in de loop van een jaar de diagnose hypertensie kreeg (DBC-code - Specialistencode | 0320-902)
+%_COPD_patients:Totaal aantal mensen dat in de loop van een jaar de diagnose COPD kreeg (DBC-code - Specialistencode | 0322-1241)
+%_Diabetes_I_patients:Totaal aantal mensen dat in de loop van een jaar de diagnose diabetes I kreeg (DBC-code - Specialistencode | 0313-221)
+%_Diabetes_II_patients:Totaal aantal mensen dat in de loop van een jaar de diagnose diabetes II kreeg (DBC-code - Specialistencode | 0313-222)
+%_Hartfalen_patients:Totaal aantal mensen dat in een jaar de diagnose Hartfalen kreeg (DBC-code - Specialistencode | 0320-301, 0320-302)
+%_OMA_patients:Totaal aantal mensen dat in een jaar de diagnose OMA kreeg (DBC-code - Specialistencode | 0302-13)
+%_Morbus_Parkinson_patients:Totaal aantal mensen dat in een jaar de diagnose Morbus Parkinson kreeg (DBC-code - Specialistencode | 0330-0501)
+%_Heupfractuur_patients:Totaal aantal mensen dat in een jaar de diagnose Heupfracturen kreeg (DBC-code - Specialistencode | 8418-303)
+%_BMIUP45_patients:Totaal aantal mensen dat in een jaar de diagnose BMI boven de 45 kreeg (DBC-code - Specialistencode | 0303-342)
+%_Lung_Cancer_patients:Totaal aantal mensen dat in een jaar de diagnose longkanker kreeg (DBC-code - Specialistencode | 1303-322, ,1304-322)
+%_Colon_Cancer_patients:Totaal aantal mensen dat in een jaar de diagnose darmkanker kreeg (DBC-code - Specialistencode | 0303-333,0303-334,0303-335)
+%_Back_pain_patients:Totaal aantal mensen dat in een jaar de diagnose rugpijn kreeg (DBC-code - Specialistencode | 0389-071,0389-072,0389-073)
+%_ICPC_Hartfalen_patients:Totaal aantal mensen dat in een jaar de diagnose hartfalen kreeg (ICPC-code | K77*)
+%_Medication_Dependency_patients:Totaal aantal mensen dat gediagnosticeerd met Medicatieverslaving in een jaar (ICPC-code | P18*)
+%_Alcohol_Dependency_patients:Totaal aantal mensen dat in een jaar de diagnose Alcoholverslaving kreeg (ICPC-code | P15* of P16*)
+%_Loneliness_patients:Totaal aantal mensen dat in een jaar de diagnose Eenzaamheid kreeg (ICPC-code | Z04.03)
+%_ICPC_Obesitas_patients:Totaal aantal mensen dat in een jaar de diagnose Obesitas kreeg (ICPC-code | T82*)
 %_BMI_NormalWeight:Totaal aantal mensen met een BMI van 18,5 tot 25
 %_BMI_Obese:Totaal aantal mensen met een BMI boven de 30
 %_BMI_OverWeight:Totaal aantal mensen met een BMI van 25 tot 30
 %_BMI_UnderWeight:Totaal aantal mensen met een BMI 0 tot 18,5
-%_Medication_Dependency_3Years_patients:Totaal aantal mensen met de diagnose Medicatieafhankelijkheid in de afgelopen 3 jaar vanaf het huidige jaar (ICPC-code: P18*)
-%_Medication_Dependency_5Years_patients:Totaal aantal mensen met de diagnose Medicatieafhankelijkheid in de afgelopen 5 jaar vanaf het huidige jaar (ICPC-code: P18*)
-%_Alcohol_Dependency_3Years_patients:Totaal aantal mensen met de diagnose Alcoholafhankelijkheid in de afgelopen 3 jaar vanaf het huidige jaar (ICPC-code: P15* of P16*)
-%_Alcohol_Dependency_5Years_patients:Totaal aantal mensen met de diagnose Alcoholafhankelijkheid in de afgelopen 5 jaar vanaf het huidige jaar (ICPC-code: P15* of P16*)
-%_Loneliness_3Years_patients:Totaal aantal mensen die de afgelopen 3 jaar vanaf het huidige jaar de diagnose Eenzaamheid hebben gekregen (ICPC-code: Z04.03)
-%_Loneliness_5Years_patients:Totaal aantal mensen dat de afgelopen 5 jaar vanaf het huidige jaar de diagnose Eenzaamheid heeft gekregen (ICPC-code: Z04.03)
-%_Hartfalen_PrimarynSecondary_patients:Totaal aantal mensen dat in een jaar de diagnose Hartfalen heeft gekregen (ICPC-code: K77* en DBC-code - Specialistencode: 0320-301, 0320-302) uit twee gegevens (CBS en ELAN)
+%_Medication_Dependency_3Years_patients:Totaal aantal mensen met de diagnose Medicatieafhankelijkheid in de afgelopen 3 jaar vanaf het huidige jaar (ICPC-code | P18*)
+%_Medication_Dependency_5Years_patients:Totaal aantal mensen met de diagnose Medicatieafhankelijkheid in de afgelopen 5 jaar vanaf het huidige jaar (ICPC-code | P18*)
+%_Alcohol_Dependency_3Years_patients:Totaal aantal mensen met de diagnose Alcoholafhankelijkheid in de afgelopen 3 jaar vanaf het huidige jaar (ICPC-code | P15* of P16*)
+%_Alcohol_Dependency_5Years_patients:Totaal aantal mensen met de diagnose Alcoholafhankelijkheid in de afgelopen 5 jaar vanaf het huidige jaar (ICPC-code | P15* of P16*)
+%_Loneliness_3Years_patients:Totaal aantal mensen die de afgelopen 3 jaar vanaf het huidige jaar de diagnose Eenzaamheid hebben gekregen (ICPC-code | Z04.03)
+%_Loneliness_5Years_patients:Totaal aantal mensen dat de afgelopen 5 jaar vanaf het huidige jaar de diagnose Eenzaamheid heeft gekregen (ICPC-code | Z04.03)
+%_Hartfalen_PrimarynSecondary_patients:Totaal aantal mensen dat in een jaar de diagnose Hartfalen heeft gekregen (ICPC-code | K77* en DBC-code - Specialistencode | 0320-301, 0320-302) uit twee gegevens (CBS en ELAN)
 %_Primary_care_patients_in_Secondary_care:Totaal aantal mensen dat ooit de eerstelijnszorg heeft bezocht en in het huidige jaar de tweedelijnszorg heeft bezocht
 %_Proxy_Primary_care_refer_to_Secondary_care:Totaal aantal mensen dat de eerstelijnszorg 1 jaar voordat ze de tweedelijnszorg bezochten in het huidige jaar de eerstelijnszorg heeft bezocht jaar
 %_JGDHULP_user:Totaal aantal mensen dat ooit het programma "jongerenhulp" heeft ontvangen
@@ -96,7 +96,7 @@ Lifeevents_Count_MEAN:Gemiddelde van het aantal mensen dat is verhuisd en/of van
 UniqueMed_Count_MEAN:Gemiddeld aantal voorgeschreven unieke medicatiecodes (ATC) per regio
 ZVWKOSTENTOTAAL_MEAN:Gemiddelde totale kosten voor gezondheidszorg ten opzichte van de kosten voor basisgezondheidszorg (ZVW Kosten)
 ZVWKHUISARTS_MEAN:Gemiddelde kosten voor eerstelijnszorg ten opzichte van de kosten voor basisgezondheidszorg (ZVW Kosten)
-ZVWKHUISARTS_NO_REG_MEAN:Gemiddelde kosten voor eerstelijnszorg ten opzichte van de kosten voor basisgezondheidszorg (ZVW Kosten) zonder de kosten voor basisregistratie (inschrijving) - alleen service kosten
+ZVWKHUISARTS_NO_REG_MEAN:Gemiddelde kosten voor eerstelijnszorg ten opzichte van de kosten voor basisgezondheidszorg (ZVW Kosten) zonder de kosten voor basisregistratie (NOPZVWKHUISARTSINSCHRIJF) - alleen service kosten
 ZVWKZIEKENHUIS_MEAN:Gemiddelde kosten voor tweedelijnszorg uit basiszorgkosten (ZVW Kosten)
 ZVWKFARMACIE_MEAN:Gemiddelde farmaceutische kosten uit basiszorgkosten (ZVW Kosten)
 ZVWKOSTENPSYCHO_MEAN:Gemiddelde kosten voor psychologische zorg uit basiszorgkosten (ZVW Kosten)
