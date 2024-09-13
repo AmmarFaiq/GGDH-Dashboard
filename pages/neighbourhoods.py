@@ -96,6 +96,12 @@ with open(path + 'Variables_Data_Sources.txt', mode='r') as f2:
         s = line.split(':')
         var_def_data_dict[s[0]] = s[1].split('\n')[0]
 
+var_def_data_NL_dict = {}
+with open(path + 'Variables_Data_Sources_NL.txt', mode='r') as f2:
+    for line in f2:
+        s = line.split(':')
+        var_def_data_NL_dict[s[0]] = s[1].split('\n')[0]
+
 var_def_label_dict = {}
 with open(path + 'Variables_Label.txt', mode='r') as f2:
     for line in f2:
@@ -122,7 +128,7 @@ headers = df.columns.to_list().copy()
 columns = [col for col in headers if col not in ['WKC', 'GMN', 'WKN', 'YEAR']]
 orig_columns = columns.copy()
 
-df[columns] = df[columns].round(2)
+df[columns] = df[columns].round(4)
 
 
 Person_var = ['AGE_MEAN', '%_Gender_Mannen',
@@ -263,9 +269,9 @@ layout = html.Div([
             ),
             html.Div([
                         html.H1(id='title_var_def'),
-                        html.P('Definition : Total population of neighbourhood on the year choosen', id='var_def_expl'), 
+                        html.P('Definition :', id='var_def_expl'), 
                         html.P('Data sources :', id='var_def_data'),
-                        html.P('Source Code : Github (Work in Progress)', id='var_def_code'),
+                        html.P('Broncode : Github (Work in Progress)', id='var_def_code'),
                     ], className='box'),
             html.Div([
                 html.Div([
@@ -425,7 +431,7 @@ def update_slider(xaxis_column_name, municipality, drop_value, language):
         year = 'Jaar'
         variable_name = method_trans_dict(var_def_label_NL_dict, xaxis_column_name)[0]
         var_def = 'Definitie : {}'.format(var_def_NL_dict.get(variable_name))
-        var_def_data = 'Gegevensbronnen : {}'.format(var_def_data_dict.get(variable_name))
+        var_def_data = 'Gegevensbronnen : {}'.format(var_def_data_NL_dict.get(variable_name))
     
     temp_df.dropna(subset=xaxis_column_name, inplace= True)
 
@@ -532,6 +538,7 @@ def update_graph_bar(year_value, xaxis_column_name, wijk_name, wijk_spec, langua
         dff = dff.query("WKC in @wijk_spec")
         dff = dff.sort_values(by=[xaxis_column_name], ascending=False).reset_index()
         dff = dff.drop_duplicates(subset='WKN', keep="last")
+        dff = dff.dropna(subset=[xaxis_column_name])
         
         fig = px.bar(dff, xaxis_column_name, 'WKN', color= xaxis_column_name,
                 hover_name='WKN', color_continuous_scale=colorscale_inverted,
