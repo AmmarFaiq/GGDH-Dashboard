@@ -30,7 +30,7 @@ Total_ICPCPat_Pop:Total population registered in the ELAN patient data of neighb
 %_Wanbet:Total count of people that received status of insurance defaulters (cannot pay monthly basic insurance)
 %_WMO_user:Total count of people that received WMO benefits
 %_WLZ_user:Total count of people that received WLZ benefits 
-%_ZVWKHUISARTS_user:Total count of people that have ZVWKHUISARTS more than 0
+%_ZVWKHUISARTS_user:Total count of people that have ZVWKHUISARTS minus NOPZVWKHUISARTSINSCHRIJF more than 0. 
 %_ZVWKFARMACIE_user:Total count of people that have ZVWKFARMACIE more than 0
 %_ZVWKZIEKENHUIS_user:Total count of people that have ZVWKZIEKENHUIS more than 0
 %_ZVWKOSTENPSYCHO_user:Total count of people that have ZVWKOSTENPSYCHO more than 0
@@ -50,34 +50,34 @@ Total_ICPCPat_Pop:Total population registered in the ELAN patient data of neighb
 %_Opioid_user_2Years_no_death_primary:Total count of alive people with Opioid medication on ATC4 (N01A or N02A) for two consecutive years starting from the current and last year
 %_Opioid_user_no_death_comb:Total count of alive people with Opioid medication on ATC4 (N01A or N02A) from two data (CBS and ELAN)
 %_Opioid_user_2Years_no_death_comb:Total count of alive people with Opioid medication on ATC4 (N01A or N02A) from two data (CBS and ELAN) for two consecutive years starting from the current and last year
-%_Hypertensie_patients:Total count of people that diagnosed with Hypertension over a year(DBC Code - Specialist Code : 0320-902)
-%_COPD_patients:Total count of people that diagnosed with COPD over a year(DBC Code - Specialist Code : 0322-1241)
-%_Diabetes_I_patients:Total count of people that diagnosed with Diabetes I over a year (DBC Code - Specialist Code : 0313-221)
-%_Diabetes_II_patients:Total count of people that diagnosed with Diabetes II over a year (DBC Code - Specialist Code : 0313-222)
-%_Hartfalen_patients:Total count of people that diagnosed with Heart Failure over a year (DBC Code - Specialist Code : 0320-301, 0320-302)
-%_OMA_patients:Total count of people that diagnosed with OMA over a year (DBC Code - Specialist Code : 0302-13)
-%_Morbus_Parkinson_patients:Total count of people that diagnosed with Morbus Parkinson over a year (DBC Code - Specialist Code : 0330-0501)
-%_Heupfractuur_patients:Total count of people that diagnosed with Hip Fractures over a year (DBC Code - Specialist Code : 8418-303)
-%_BMIUP45_patients:Total count of people that diagnosed with BMI above 45 over a year (DBC Code - Specialist Code : 0303-342)
-%_Lung_Cancer_patients:Total count of people that diagnosed with Lung Cancer over a year (DBC Code - Specialist Code : 1303-322, ,1304-322)
-%_Colon_Cancer_patients:Total count of people that diagnosed with Colon Cancer over a year (DBC Code - Specialist Code : 0303-333,0303-334,0303-335)
-%_Back_pain_patients:Total count of people that diagnosed with Back Pain over a year (DBC Code - Specialist Code : 0389-071,0389-072,0389-073)
-%_ICPC_Hartfalen_patients:Total count of people that diagnosed with Heart Failure over a year (ICPC Code : K77*)
-%_Medication_Dependency_patients:Total count of people that diagnosed with Medication Dependency over a year (ICPC Code : P18*)
-%_Alcohol_Dependency_patients:Total count of people that diagnosed with Alcohol Dependency over a year (ICPC Code : P15* or P16*)
-%_Loneliness_patients:Total count of people that diagnosed with Loneliness over a year (ICPC Code : Z04.03)
-%_ICPC_Obesitas_patients:Total count of people that diagnosed with Obesitas over a year (ICPC Code : T82*)
+%_Hypertensie_patients:Total count of people that diagnosed with Hypertension over a year(DBC Code - Specialist Code | 0320-902)
+%_COPD_patients:Total count of people that diagnosed with COPD over a year(DBC Code - Specialist Code | 0322-1241)
+%_Diabetes_I_patients:Total count of people that diagnosed with Diabetes I over a year (DBC Code - Specialist Code | 0313-221)
+%_Diabetes_II_patients:Total count of people that diagnosed with Diabetes II over a year (DBC Code - Specialist Code | 0313-222)
+%_Hartfalen_patients:Total count of people that diagnosed with Heart Failure over a year (DBC Code - Specialist Code | 0320-301, 0320-302)
+%_OMA_patients:Total count of people that diagnosed with OMA over a year (DBC Code - Specialist Code | 0302-13)
+%_Morbus_Parkinson_patients:Total count of people that diagnosed with Morbus Parkinson over a year (DBC Code - Specialist Code | 0330-0501)
+%_Heupfractuur_patients:Total count of people that diagnosed with Hip Fractures over a year (DBC Code - Specialist Code | 8418-303)
+%_BMIUP45_patients:Total count of people that diagnosed with BMI above 45 over a year (DBC Code - Specialist Code | 0303-342)
+%_Lung_Cancer_patients:Total count of people that diagnosed with Lung Cancer over a year (DBC Code - Specialist Code | 1303-322, ,1304-322)
+%_Colon_Cancer_patients:Total count of people that diagnosed with Colon Cancer over a year (DBC Code - Specialist Code | 0303-333,0303-334,0303-335)
+%_Back_pain_patients:Total count of people that diagnosed with Back Pain over a year (DBC Code - Specialist Code | 0389-071,0389-072,0389-073)
+%_ICPC_Hartfalen_patients:Total count of people that diagnosed with Heart Failure over a year (ICPC Code | K77*)
+%_Medication_Dependency_patients:Total count of people that diagnosed with Medication Dependency over a year (ICPC Code | P18*)
+%_Alcohol_Dependency_patients:Total count of people that diagnosed with Alcohol Dependency over a year (ICPC Code | P15* or P16*)
+%_Loneliness_patients:Total count of people that diagnosed with Loneliness over a year (ICPC Code | Z04.03)
+%_ICPC_Obesitas_patients:Total count of people that diagnosed with Obesitas over a year (ICPC Code | T82*)
 %_BMI_NormalWeight::Total count of people that measured with BMI 18.5 to 25
 %_BMI_Obese:Total count of people that measured with BMI above 30 
 %_BMI_OverWeight:Total count of people that measured with BMI 25 to 30
 %_BMI_UnderWeight:Total count of people that measured with BMI 0 to 18.5
-%_Medication_Dependency_3Years_patients:Total count of people that diagnosed with Medication Dependency for the past 3 years from the current year (ICPC Code : P18*)
-%_Medication_Dependency_5Years_patients:Total count of people that diagnosed with Medication Dependency for the past 5 years from the current year (ICPC Code : P18*)
-%_Alcohol_Dependency_3Years_patients:Total count of people that diagnosed with Alcohol Dependency for the past 3 years from the current year (ICPC Code : P15* or P16*)
-%_Alcohol_Dependency_5Years_patients: Total count of people that diagnosed with Alcohol Dependency for the past 5 years from the current year (ICPC Code : P15* or P16*)
-%_Loneliness_3Years_patients:Total count of people that diagnosed with Loneliness for the past 3 years from the current year (ICPC Code : Z04.03)
-%_Loneliness_5Years_patients:Total count of people that diagnosed with Loneliness for the past 5 years from the current year (ICPC Code : Z04.03)
-%_Hartfalen_PrimarynSecondary_patients:Total count of people that diagnosed with Heart Failure over a year (ICPC Code : K77* and DBC Code - Specialist Code : 0320-301, 0320-302) from two data (CBS and ELAN)
+%_Medication_Dependency_3Years_patients:Total count of people that diagnosed with Medication Dependency for the past 3 years from the current year (ICPC Code | P18*)
+%_Medication_Dependency_5Years_patients:Total count of people that diagnosed with Medication Dependency for the past 5 years from the current year (ICPC Code | P18*)
+%_Alcohol_Dependency_3Years_patients:Total count of people that diagnosed with Alcohol Dependency for the past 3 years from the current year (ICPC Code | P15* or P16*)
+%_Alcohol_Dependency_5Years_patients:Total count of people that diagnosed with Alcohol Dependency for the past 5 years from the current year (ICPC Code | P15* or P16*)
+%_Loneliness_3Years_patients:Total count of people that diagnosed with Loneliness for the past 3 years from the current year (ICPC Code | Z04.03)
+%_Loneliness_5Years_patients:Total count of people that diagnosed with Loneliness for the past 5 years from the current year (ICPC Code | Z04.03)
+%_Hartfalen_PrimarynSecondary_patients:Total count of people that diagnosed with Heart Failure over a year (ICPC Code | K77* and DBC Code - Specialist Code | 0320-301, 0320-302) from two data (CBS and ELAN)
 %_Primary_care_patients_in_Secondary_care:Total count of people that ever visited primary care and in the current year visited secondary care
 %_Proxy_Primary_care_refer_to_Secondary_care:Total count of people that visited primary care 1 year before they visited secondary care in the current year
 %_JGDHULP_user:Total count of people that ever received "young help" program
@@ -96,7 +96,7 @@ Lifeevents_Count_MEAN:Average of people that moved address and/or change their h
 UniqueMed_Count_MEAN:Average number of prescribed unique medication code (ATC) per region
 ZVWKOSTENTOTAAL_MEAN:Average total healthcare cost from basic healthcare cost (ZVW Kosten)
 ZVWKHUISARTS_MEAN:Average primary care cost from basic healthcare cost (ZVW Kosten)
-ZVWKHUISARTS_NO_REG_MEAN:Average primary care cost from basic healthcare cost (ZVW Kosten) without the basic registration cost (inschrijving) - only service costs
+ZVWKHUISARTS_NO_REG_MEAN:Average primary care cost from basic healthcare cost (ZVW Kosten) without the basic registration cost (NOPZVWKHUISARTSINSCHRIJF) - only service costs
 ZVWKZIEKENHUIS_MEAN:Average secondary care cost from basic healthcare cost (ZVW Kosten)
 ZVWKFARMACIE_MEAN:Average pharmaceutical cost from basic healthcare cost (ZVW Kosten)
 ZVWKOSTENPSYCHO_MEAN:Average Psychological care cost from basic healthcare cost (ZVW Kosten)
