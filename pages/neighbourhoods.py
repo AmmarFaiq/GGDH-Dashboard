@@ -271,7 +271,7 @@ layout = html.Div([
                         html.H1(id='title_var_def'),
                         html.P('Definition :', id='var_def_expl'), 
                         html.P('Data sources :', id='var_def_data'),
-                        html.P('Broncode : Github (Work in Progress)', id='var_def_code'),
+                        html.P('Broncode : [Github](https://github.com/elan-dcc/data-loading) (Work in Progress)', id='var_def_code'),
                     ], className='box'),
             html.Div([
                 html.Div([
@@ -481,12 +481,11 @@ def update_graph_map(year_value, xaxis_column_name, wijk_name, wijk_spec, langua
                             mapbox_style="carto-positron", zoom=9, hover_name="WKN",
                             custom_data=['GMN', xaxis_column_name,total_pop])
     
-    fig.update_traces(hovertemplate='<b>%{hovertext}</b>'+ '<br><b>%{customdata[0]}</b><br>' +'<br><b>Waarde</b>: %{customdata[1]}<br>' +'<b>Bevolking</b>: %{customdata[2]}')  
-
+    fig.update_traces(hovertemplate='<b><b>Wijk</b>: %{hovertext}</b>'+ '<br><b><b>Gementee</b>: %{customdata[0]}</b><br>' +'<br><b>Waarde</b>: %{customdata[1]}<br>' +'<b>Bevolking</b>: %{customdata[2]}')  
     
     fig.update_layout(geo=dict(bgcolor= 'rgba(0,0,0,0)', lakecolor='#4E5D6C'),
                                 autosize=False,
-                                font = {"size": 9, "color":"black"},
+                                font = {"size": 12, "color":"black"},
                                 margin={"r":0,"t":10,"l":10,"b":50},
                                 paper_bgcolor='white',
                                 showlegend=True
@@ -604,10 +603,12 @@ def update_line_menu(select_munic, select_wijken, map_values,language):
         else:
             selected_wijken.remove(map_values)
            
-    select_wijken = df[df.WKC.isin(select_wijken) & (df[year] == 2022)].set_index("WKC").to_dict()["WKN"]
-    
+    dff = df[df.WKC.isin(select_wijken) & (df[year] == 2022)]     
+    # select_wijken = df[df.WKC.isin(select_wijken) & (df[year] == 2022)].set_index("WKC").to_dict()["WKN"]
+    select_wijken = dict(zip(dff.WKN, dff.WKN )) 
+
     #select_wijken = {df[df.WKC == select_wijken[i]].WKN: select_wijken[i] for i in range(len(select_wijken))} 
-    return select_wijken, list(selected_wijken)
+    return select_wijken, [*selected_wijken]
 
 @callback(
     Output('line_menu', 'className'),
@@ -639,7 +640,7 @@ def change_button_style(n_clicks, buttonClass):
 #TODO: use WKC instead of Wijknaam. What if you're plotting neighbourhoods
 # with the same new from different cities?
 def update_graph(mapData, menu_data,
-                 xaxis_column_name, wijk_name, wijk_spec, language):
+                 xaxis_column_name, area, wijk_spec, language):
     '''
     Update line graph 
     '''
@@ -653,8 +654,19 @@ def update_graph(mapData, menu_data,
         variable = method_trans_dict(var_def_label_NL_dict, xaxis_column_name)[0]
         no_wijk_label = "Geen buurt geselecteerd"
 
+    dff = df.query("WKC in @wijk_spec")
+
+    # x_trendline = dff[dff[xaxis_column_name].notnull()][year].tolist()
+    # y_trendline = dff[dff[xaxis_column_name].notnull()][xaxis_column_name].tolist()
+
+    # z_trendline = np.polyfit(x_trendline, y_trendline, 1)
+    # p_trendline = np.poly1d(z_trendline)
+                     
     if len(selected_wijken) == 0 and (dash.callback_context.triggered_id != "line_menu"):
         fig = px.line(x=[0, 10], y=[0, 0])
+        # fig = px.line(x=list(set(x_trendline)), y=p_trendline(list(set(x_trendline))).round(4)).update_traces(mode='lines+markers')#, patch={"line": {"dash": "longdash"}}
+        # fig.add_trace(go.Scatter(x=x_trendline, y=p_trendline(x_trendline), mode='markers'))#, dash = "dot"
+
         fig.update_xaxes(showticklabels=False, visible=False)
         fig.update_yaxes(showticklabels=False, visible=False)
         fig.update_layout(
@@ -664,10 +676,9 @@ def update_graph(mapData, menu_data,
         selected_wijken = set()
         #TODO: change the class to hide the graph + make the "Show menu button" loud
         return no_wijk_label, fig, []    
-    
-    dff = df.query("WKC in @wijk_spec")
+        
     # dff = dff.drop_duplicates(subset=['WKN','YEAR'], keep="last")
-    
+                     
     fig = px.line(dff, x=year, y= xaxis_column_name, color='WKC', custom_data=['WKN'],
                   color_discrete_sequence=px.colors.qualitative.Alphabet
                 #   height= max(150, 30 * dff.shape[0]),
@@ -753,7 +764,7 @@ def update_graph(mapData, menu_data,
     # look_up = dff[dff.WKC.isin(selected_wijken) & (dff.YEAR == 2022)].set_index("WKC").to_dict()["WKN"]
 
     # title = '{} - {} - {} - {}'.format(wijk.legendgroup, selected_wijken, look_up, set(dff[(dff.WKC == wijk.legendgroup) & (dff.YEAR == 2022)].WKN.unique()) )
-    title= '{} - {}'.format(xaxis_column_name, list(look_up.values()))
+    title= '{} - {}'.format(xaxis_column_name, area)#list(look_up.values())
     for wijk in fig.data:
         if wijk.visible:
             legend.append(html.Div([html.Div(className="legendcolor", style={'background-color': wijk.line.color}),look_up[wijk.legendgroup]], className="legenditem"))
