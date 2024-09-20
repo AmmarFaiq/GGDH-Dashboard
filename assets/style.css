@@ -11,7 +11,7 @@ body {
   padding: 10px 0 0 0;
   color:#001158;
   position: relative;
-  max-width: 70%;
+  max-width: 80%;
 }
 
 #header{
@@ -43,6 +43,7 @@ body {
 
 #headerlogo{
   float: left;
+  
 }
 
 #headersub{
@@ -115,8 +116,8 @@ body {
 
 #lang_select_parent{
   position: absolute;
-  right: 0;
-  top: 20px;
+  right: -25px;
+  top: 45px;
 }
 
 #lang_select_parent img{
