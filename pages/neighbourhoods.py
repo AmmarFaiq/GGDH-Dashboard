@@ -361,7 +361,8 @@ def localise(themes, language):
     df.columns = tr.translate_list(headers)
     
     return linechart_expl, geospat_expl, choose_theme, choose_variable, choose_area, choose_neighborhoud, select_year, control_panel, drop_var, drop_var_value
-  
+
+
 @callback(
     Output('drop_municipality_spec_id', 'options'),
     Output('drop_municipality_spec_id', 'value'),
@@ -383,7 +384,7 @@ def update_select_neighbourhoods(munipality, clear_click, language):
     else:
         dff = df[(df.GMN == munipality)] #TODO: maybe change to GMcode?
 
-    dff = dff[dff[year] == 2022] #YEAR gets translated by the translate feature to jaar. fixed. TODO: fix translations of data. (labels)
+    dff = dff[dff[year] == 2022] #YEAR gets translated by the translate feature to jaar. fixed. 
     # labels = list(dff.WKN)
     # labels = {options[i]: labels[i] for i in range(len(options))}
     labels = dict(zip(dff.WKC, dff.WKN))
@@ -445,7 +446,6 @@ def update_slider(xaxis_column_name, municipality, drop_value, language):
     return min, max, marks, value, list(range(min, max)), value, title_def, var_def, var_def_data
 
 
-
 @callback(
     Output('map', 'figure'),
     Output('title_map', 'children'),
@@ -474,17 +474,20 @@ def update_graph_map(year_value, xaxis_column_name, wijk_name, wijk_spec, langua
     title = '{} - {} - {}'.format(xaxis_column_name, wijk_name, year_value)
 
     dff = dff.query("WKC in @wijk_spec")
+    # dff = dff.drop_duplicates(subset='WKN', keep="last")
+    # dff = dff.dropna(subset=[xaxis_column_name])
 
     fig = px.choropleth_mapbox(dff, geojson=geo_df, color=xaxis_column_name,
                             locations="WKC", featureidkey="properties.WKC", opacity = 0.5,
                             center={"lat": 52.0705, "lon": 4.3003}, color_continuous_scale=colorscale_inverted,
-                            mapbox_style="carto-positron", zoom=9, hover_name="WKN",
+                            mapbox_style="carto-positron", zoom=10, hover_name="WKN",
                             custom_data=['GMN', xaxis_column_name,total_pop])
     
     fig.update_traces(hovertemplate='<b><b>Wijk</b>: %{hovertext}</b>'+ '<br><b><b>Gementee</b>: %{customdata[0]}</b><br>' +'<br><b>Waarde</b>: %{customdata[1]}<br>' +'<b>Bevolking</b>: %{customdata[2]}')  
+
     
     fig.update_layout(geo=dict(bgcolor= 'rgba(0,0,0,0)', lakecolor='#4E5D6C'),
-                                autosize=False,
+                                autosize=True,
                                 font = {"size": 12, "color":"black"},
                                 margin={"r":0,"t":10,"l":10,"b":50},
                                 paper_bgcolor='white',
@@ -602,11 +605,11 @@ def update_line_menu(select_munic, select_wijken, map_values,language):
             selected_wijken.add(map_values)
         else:
             selected_wijken.remove(map_values)
-           
+
     dff = df[df.WKC.isin(select_wijken) & (df[year] == 2022)]     
     # select_wijken = df[df.WKC.isin(select_wijken) & (df[year] == 2022)].set_index("WKC").to_dict()["WKN"]
     select_wijken = dict(zip(dff.WKN, dff.WKN )) 
-
+    
     #select_wijken = {df[df.WKC == select_wijken[i]].WKN: select_wijken[i] for i in range(len(select_wijken))} 
     return select_wijken, [*selected_wijken]
 
@@ -644,6 +647,7 @@ def update_graph(mapData, menu_data,
     '''
     Update line graph 
     '''
+
     global selected_wijken
     if language == 'en':
         year = 'YEAR'
@@ -661,7 +665,7 @@ def update_graph(mapData, menu_data,
 
     # z_trendline = np.polyfit(x_trendline, y_trendline, 1)
     # p_trendline = np.poly1d(z_trendline)
-                     
+
     if len(selected_wijken) == 0 and (dash.callback_context.triggered_id != "line_menu"):
         fig = px.line(x=[0, 10], y=[0, 0])
         # fig = px.line(x=list(set(x_trendline)), y=p_trendline(list(set(x_trendline))).round(4)).update_traces(mode='lines+markers')#, patch={"line": {"dash": "longdash"}}
@@ -676,9 +680,10 @@ def update_graph(mapData, menu_data,
         selected_wijken = set()
         #TODO: change the class to hide the graph + make the "Show menu button" loud
         return no_wijk_label, fig, []    
-        
+    
+    
     # dff = dff.drop_duplicates(subset=['WKN','YEAR'], keep="last")
-                     
+    
     fig = px.line(dff, x=year, y= xaxis_column_name, color='WKC', custom_data=['WKN'],
                   color_discrete_sequence=px.colors.qualitative.Alphabet
                 #   height= max(150, 30 * dff.shape[0]),
@@ -761,14 +766,11 @@ def update_graph(mapData, menu_data,
     
     look_up = dff[dff.WKN.isin(selected_wijken) & (dff[year] == 2022)].set_index("WKC").to_dict()["WKN"]
     
-    # look_up = dff[dff.WKC.isin(selected_wijken) & (dff.YEAR == 2022)].set_index("WKC").to_dict()["WKN"]
+    title= '{} - {}'.format(xaxis_column_name, area)# list(look_up.values())
 
-    # title = '{} - {} - {} - {}'.format(wijk.legendgroup, selected_wijken, look_up, set(dff[(dff.WKC == wijk.legendgroup) & (dff.YEAR == 2022)].WKN.unique()) )
-    title= '{} - {}'.format(xaxis_column_name, area)#list(look_up.values())
     for wijk in fig.data:
         if wijk.visible:
             legend.append(html.Div([html.Div(className="legendcolor", style={'background-color': wijk.line.color}),look_up[wijk.legendgroup]], className="legenditem"))
                                     
     return title, fig, legend
-    
 
