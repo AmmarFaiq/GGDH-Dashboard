@@ -43,9 +43,12 @@ footer = html.Div([
             html.P(['Turfmarkt 99', html.Br(), '3rd floor', html.Br(), '2511 DP, Den Haag'])
         ], className= 'footerelement', id="contactdetails"),
         html.Div([
-            html.Ul([html.Li(dcc.Link('About Us', href= '/about')), html.Li(dcc.Link('Variables Explanation', href= '/changelog')),
-                     html.Li(dcc.Link('Data Availability', href= '/changelog')), html.Li(dcc.Link('Changelog', href= '/changelog')),
-                     html.Li(dcc.Link('Terms and Conditions', href= '/changelog'))])
+            html.Ul([html.Li(dcc.Link('About', href= '/about')), 
+                     html.Li(dcc.Link('Changelog', href= '/changelog')),
+                     html.Li(dcc.Link('Variables Explanation', href= '/variablesdefinition')),
+                     html.Li(dcc.Link('Data Sources', href= '/datasources'))
+                    #  html.Li(dcc.Link('Terms and Conditions', href= '/changelog'))
+                    ])
         ], className= 'footerelement', id="footerlinks"),
         ], id = 'footercontent')),
     html.Div(["Copyright © 2024 | All rights reserved"], id="footercopyright" ),
@@ -113,7 +116,7 @@ def update_language(value, clicks):
     Input('session', 'data')
 )
 def localise(language):
-    last_update = (tr.translate("last update") + tr.translate_date(8))
+    last_update = (tr.translate("last update") + tr.translate_date(8) + " 2024")
     nav =  [dcc.Link(tr.translate('neighbourhood'), href= '/'),
             dcc.Link(tr.translate('supply and demand'), href='/supplydemand'),
             # dcc.Link(tr.translate("opioid"), href="/opioid"),
