@@ -57,11 +57,11 @@ drop_data = html.Div(
             searchable=False, 
             # below could be improved as well eventually, by extracting all regions from the data + the special_regions
             options=[
-                {'label': "ELAN-H", 'value': "ELAN-H"},
-                {'label': 'ELAN-GGDH', 'value': 'ELAN-GGDH'},
-                {'label': "ELAN-H-GGDH", 'value': "ELAN-H-GGDH"}
+                {'label': "ELAN-Huisarts", 'value': "ELAN-Huisarts"},
+                {'label': 'ELAN-Ziekenhuis', 'value': 'ELAN-Ziekenhuis'},
+                {'label': "ELAN-Huisarts-Ziekenhuis", 'value': "ELAN-Huisarts-Ziekenhuis"}
                 ],
-            value="ELAN-H", 
+            value="ELAN-Huisarts", 
             className = "custom_select"
         )
     ],  className="mb-4",
@@ -236,7 +236,7 @@ def toggle_navbar_collapse(n, classname):
     Input('area_id_hartfalen', 'value')
 )
 def pin_selected_report(year, data_elan, area):
-    if data_elan == 'ELAN-H':
+    if data_elan == 'ELAN-Huisarts':
          records_cvd = DT_PRI_CVD[(DT_PRI_CVD.YEAR == year) & (DT_PRI_CVD.gem_sector == area)].to_dict("records")
          records_gender = DT_PRI_Gender[(DT_PRI_Gender.YEAR == year) & (DT_PRI_Gender.gem_sector == area)].to_dict("records")
          records_age = DT_PRI_Age[(DT_PRI_Age.YEAR == year) & (DT_PRI_Age.gem_sector == area)].to_dict("records")
@@ -246,7 +246,7 @@ def pin_selected_report(year, data_elan, area):
          records_gender_age_eth = DT_PRI_Gender_Age_Ethnicity[(DT_PRI_Gender_Age_Ethnicity.YEAR == year) & (DT_PRI_Gender_Age_Ethnicity.gem_sector == area)].to_dict("records")
          records_gender_age_ses = DT_PRI_Gender_Age_SES[(DT_PRI_Gender_Age_SES.YEAR == year) & (DT_PRI_Gender_Age_SES.gem_sector == area)].to_dict("records")
 
-    elif data_elan == 'ELAN-GGDH':
+    elif data_elan == 'ELAN-Ziekenhuis':
          records_cvd = DT_SEC_CVD[(DT_SEC_CVD.YEAR == year) & (DT_SEC_CVD.gem_sector == area)].to_dict("records")
          records_gender = DT_SEC_Gender[(DT_SEC_Gender.YEAR == year) & (DT_SEC_Gender.gem_sector == area)].to_dict("records")
          records_age = DT_SEC_Age[(DT_SEC_Age.YEAR == year) & (DT_SEC_Age.gem_sector == area)].to_dict("records")
@@ -281,16 +281,16 @@ def pin_selected_report(year, data_elan, area):
 )
 def update_slider(data_elan, area ):
 
-    if data_elan == 'ELAN-H':
+    if data_elan == 'ELAN-Huisarts':
          year_options = list(range(2010, 2023))
          year_value = 2020
          info = ELANH_card
-         info_title="About ELAN-H Data" 
-    elif data_elan == 'ELAN-GGDH':
+         info_title="About ELAN-Huisarts Data" 
+    elif data_elan == 'ELAN-Ziekenhuis':
          year_options = list(range(2010, 2021))
          year_value = 2020
          info = ELAN_GGDH_card
-         info_title="About ELAN-GGDH Data"
+         info_title="About ELAN-Ziekenhuis Data"
     else:
          year_options = list(range(2010, 2021))
          year_value = 2020
@@ -602,21 +602,35 @@ def make_pay_gap_card(data_cvd,year_value,data_elan,area):
             """,
     ), id="tooltip-target", color="#6ADDFF")
 
-    test = dbc.Tooltip(
+
+    if data_elan == 'ELAN-Huisarts':
+        hartfalen_tooltip = dbc.Tooltip(
             "Total count of people that diagnosed with Heart Failure over a year, "
             "(ICPC Code : K77*)",
+            target="tooltip-target",
+        )
+    elif data_elan == 'ELAN-Ziekenhuis':
+        hartfalen_tooltip = dbc.Tooltip(
+            "Total count of people that diagnosed with Heart Failure over a year, "
+            "(DBC Code - Specialist Code | 0320-301, 0320-302)",
+            target="tooltip-target",
+        )
+    else:
+        hartfalen_tooltip = dbc.Tooltip(
+            "Total count of people that diagnosed with Heart Failure over a year, "
+            "(ICPC Code : K77*) and (DBC Code - Specialist Code | 0320-301, 0320-302)",
             target="tooltip-target",
         )
 
     card =  dbc.Card([
         dbc.CardHeader(html.H2(stat_title), className="text-center"),
         dbc.CardBody([
-            dbc.Row([dbc.Col(Hartfalen), test], className="text-center"),
+            dbc.Row([dbc.Col(Hartfalen), hartfalen_tooltip], className="text-center"),
             dbc.Accordion([ dbc.AccordionItem(html.Div([dbc.Row([dbc.Col(Cholestherol), dbc.Col(Diabetes), dbc.Col(Diuretics_raas_beta)], className="text-center"), 
                                                         dbc.Row([ dbc.Col(Diuretics_only), dbc.Col(Diuretics_beta), dbc.Col(Diuretics_raas)], className="text-center")]), title="Medication User"),
                             # dbc.AccordionItem(dbc.Row([dbc.Col(BMI_obese), dbc.Col(BMI_Overweight), dbc.Col(BMI_Normalweight), dbc.Col(NTPR)], className="text-center"), title="Medical Measurement"),
                             # dbc.AccordionItem(dbc.Row([dbc.Col(ACP), dbc.Col(ACP_3years), dbc.Col(CVRM_HA), dbc.Col(CVRM_SPEC)], className="text-center"), title="ICPC Code"),
-                            dbc.AccordionItem(dbc.Row([dbc.Col(ZVWHUISARTS), dbc.Col(ZVWZIEKEN), dbc.Col(ZVWFARMACIE), dbc.Col(ZVWKOSTENTOTAAL), test], className="text-center"), title="Average ZVW Kosten") ],  start_collapsed=True)
+                            dbc.AccordionItem(dbc.Row([dbc.Col(ZVWHUISARTS), dbc.Col(ZVWZIEKEN), dbc.Col(ZVWFARMACIE), dbc.Col(ZVWKOSTENTOTAAL)], className="text-center"), title="Average ZVW Kosten") ],  start_collapsed=True)
         ])
     ])
     return card
