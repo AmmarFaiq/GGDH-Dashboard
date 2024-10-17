@@ -385,9 +385,10 @@ def update_select_neighbourhoods(munipality, clear_click, language):
         dff = df[(df.GMN == munipality)] #TODO: maybe change to GMcode?
 
     dff = dff[dff[year] == 2022] #YEAR gets translated by the translate feature to jaar. fixed. 
-    # labels = list(dff.WKN)
-    # labels = {options[i]: labels[i] for i in range(len(options))}
-    labels = dict(zip(dff.WKC, dff.WKN))
+
+    # labels = dict(zip(dff.WKC, dff.WKN))
+    # options = [*labels]
+    labels = dict(zip(set(dff.WKN), set(dff.WKN)))
     options = [*labels]
     
     if (dash.callback_context.triggered_id == "clear_me_button"):
@@ -473,7 +474,7 @@ def update_graph_map(year_value, xaxis_column_name, wijk_name, wijk_spec, langua
 
     title = '{} - {} - {}'.format(xaxis_column_name, wijk_name, year_value)
 
-    dff = dff.query("WKC in @wijk_spec")
+    dff = dff.query("WKN in @wijk_spec")
     # dff = dff.drop_duplicates(subset='WKN', keep="last")
     # dff = dff.dropna(subset=[xaxis_column_name])
 
@@ -537,7 +538,7 @@ def update_graph_bar(year_value, xaxis_column_name, wijk_name, wijk_spec, langua
         
         return ["No neighbourhood selected"], fig    
     else:
-        dff = dff.query("WKC in @wijk_spec")
+        dff = dff.query("WKN in @wijk_spec")
         dff = dff.sort_values(by=[xaxis_column_name], ascending=False).reset_index()
         dff = dff.drop_duplicates(subset='WKN', keep="last")
         dff = dff.dropna(subset=[xaxis_column_name])
@@ -647,18 +648,22 @@ def update_graph(mapData, menu_data,
     '''
     Update line graph 
     '''
-
+                     
+    dff = df.query("WKN in @wijk_spec")
+                     
     global selected_wijken
     if language == 'en':
         year = 'YEAR'
         variable = method_trans_dict(var_def_label_dict, xaxis_column_name)[0]
         no_wijk_label = "No neighbourhood selected"
+        dff = dff.drop_duplicates(subset=['WKN','YEAR'], keep="last")
     else:
         year = 'Jaar'
         variable = method_trans_dict(var_def_label_NL_dict, xaxis_column_name)[0]
         no_wijk_label = "Geen buurt geselecteerd"
+        dff = dff.drop_duplicates(subset=['WKN','Jaar'], keep="last")
 
-    dff = df.query("WKC in @wijk_spec")
+    
 
     # x_trendline = dff[dff[xaxis_column_name].notnull()][year].tolist()
     # y_trendline = dff[dff[xaxis_column_name].notnull()][xaxis_column_name].tolist()
