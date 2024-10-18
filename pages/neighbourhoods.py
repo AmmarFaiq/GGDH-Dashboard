@@ -607,7 +607,7 @@ def update_line_menu(select_munic, select_wijken, map_values,language):
         else:
             selected_wijken.remove(map_values)
 
-    dff = df[df.WKC.isin(select_wijken) & (df[year] == 2022)]     
+    dff = df[df.WKN.isin(select_wijken) & (df[year] == 2022)]     
     # select_wijken = df[df.WKC.isin(select_wijken) & (df[year] == 2022)].set_index("WKC").to_dict()["WKN"]
     select_wijken = dict(zip(dff.WKN, dff.WKN )) 
     
