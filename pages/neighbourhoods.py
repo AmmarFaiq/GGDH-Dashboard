@@ -286,7 +286,9 @@ layout = html.Div([
                         html.H1(id='title_var_def'),
                         html.P('Definition :', id='var_def_expl'), 
                         html.P('Data sources :', id='var_def_data'),
-                        html.P('Broncode : [Github](https://github.com/elan-dcc/data-loading) (Work in Progress)', id='var_def_code'),
+                        html.P(['Broncode : ' html.A( "Github", href = "https://github.com/elan-dcc/data-loading"), '(Work in Progress)'], id='var_def_code'),
+                        html.P(['ELAN Research Ticket code : '  html.A( "ELAN Ticket", href = "https://www.elanresearch.nl/"), '(Work in Progress)'], id='var_def_ticket'),
+                
                     ], className='box'),
             html.Div([
                 html.Div([
