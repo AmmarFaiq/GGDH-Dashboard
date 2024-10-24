@@ -38,6 +38,3 @@ ZVWKOSTENPSYCHO_MEAN:Gemiddelde kosten voor psychologische zorg
 %_DIURETICS_Medication_user:Gebruiker van DIURETICS-medicatie
 %_DIURETICS_RAAS_BETA_Medication_user:Gebruiker van DIURETICS-, RAAS- en BETA-medicatie
 %_Opioid_user_2Years_no_death:In leven Opioide medicatie gebruiker langer dan 2 jaar
-
-
-
