@@ -103,13 +103,13 @@ with open(path + 'Variables_Data_Sources_NL.txt', mode='r') as f2:
         var_def_data_NL_dict[s[0]] = s[1].split('\n')[0]
 
 var_def_label_dict = {}
-with open(path + 'Variables_Label.txt', mode='r') as f2:
+with open(path + 'Variables_Label_short.txt', mode='r') as f2:
     for line in f2:
         s = line.split(':')
         var_def_label_dict[s[0]] = s[1].split('\n')[0]
 
 var_def_label_NL_dict = {}
-with open(path + 'Variables_Label_NL.txt', mode='r') as f2:
+with open(path + 'Variables_Label_NL_short.txt', mode='r') as f2:
     for line in f2:
         s = line.split(':')
         var_def_label_NL_dict[s[0]] = s[1].split('\n')[0]
@@ -131,54 +131,67 @@ orig_columns = columns.copy()
 df[columns] = df[columns].round(4)
 
 
+# Person_var = ['AGE_MEAN', '%_Gender_Mannen',
+#                 '%_Gender_Vrouwen', '%_0to20', '%_21to40', '%_41to60', '%_61to80',
+#                 '%_Above80', '%_MajorEthnicity_Native Dutch',
+#                 '%_MajorEthnicity_Western', '%_MajorEthnicity_Non-Western',
+#                 '%_MinorEthnicity_Marokko', '%_MinorEthnicity_Suriname',
+#                 '%_MinorEthnicity_Turkije','%_MinorEthnicity_Voormalige Nederlandse Antillen en Aruba']
+
 Person_var = ['AGE_MEAN', '%_Gender_Mannen',
                 '%_Gender_Vrouwen', '%_0to20', '%_21to40', '%_41to60', '%_61to80',
-                '%_Above80', '%_MajorEthnicity_Native Dutch',
-                '%_MajorEthnicity_Western', '%_MajorEthnicity_Non-Western',
-                '%_MinorEthnicity_Marokko', '%_MinorEthnicity_Suriname',
-                '%_MinorEthnicity_Turkije','%_MinorEthnicity_Voormalige Nederlandse Antillen en Aruba']
+                '%_Above80', '%_MajorEthnicity_Native Dutch']
 
-Huishouden_var = ['%_Multiperson_Household', '%_HouseholdType_Institutional', '%_Moving_count_above_1', '%_Lifeevents_count_above_2','Moving_Count_MEAN', 'Lifeevents_Count_MEAN']
-Socioecon_var = ['Income_MEAN', '%_Low_Income', '%_Debt_Mortgage', '%_Debt_Poor', '%_Wanbet', 
-                 '%_Employee', '%_Unemployment_benefit_user', '%_Welfare_benefit_user', '%_Other_social_benefit_user', '%_Sickness_benefit_user', '%_Pension_benefit_user',
-                 '%_WMO_user', '%_WLZ_user']
+# Huishouden_var = ['%_Multiperson_Household', '%_HouseholdType_Institutional', '%_Moving_count_above_1', '%_Lifeevents_count_above_2','Moving_Count_MEAN', 'Lifeevents_Count_MEAN']
+Huishouden_var = ['%_Multiperson_Household', '%_HouseholdType_Institutional']
+
+# Socioecon_var = ['Income_MEAN', '%_Low_Income', '%_Debt_Mortgage', '%_Debt_Poor', '%_Wanbet', 
+#                  '%_Employee', '%_Unemployment_benefit_user', '%_Welfare_benefit_user', '%_Other_social_benefit_user', '%_Sickness_benefit_user', '%_Pension_benefit_user',
+#                  '%_WMO_user', '%_WLZ_user']
+
+Socioecon_var = ['Income_MEAN']
 
 Zorgkosten_var = ['ZVWKOSTENTOTAAL_MEAN', 'ZVWKHUISARTS_MEAN', 'ZVWKHUISARTS_NO_REG_MEAN', 'ZVWKZIEKENHUIS_MEAN', 'ZVWKFARMACIE_MEAN', 'ZVWKOSTENPSYCHO_MEAN',
                   '%_ZVWKHUISARTS_user', '%_ZVWKFARMACIE_user', '%_ZVWKZIEKENHUIS_user', '%_ZVWKOSTENPSYCHO_user']
 
-Medicatie_var = ['UniqueMed_Count_MEAN', '%_UniqueMed_Count_>=5', '%_UniqueMed_Count_>=10',
+Medicatie_var = [
+                # 'UniqueMed_Count_MEAN', 
+                '%_UniqueMed_Count_>=5', '%_UniqueMed_Count_>=10',
                 '%_HVZ_Medication_user', '%_DIAB_Medication_user', '%_BLOEDDRUKV_Medication_user',
                 '%_CHOL_Medication_user', '%_DIURETICS_Medication_user', '%_DIURETICS_RAAS_BETA_Medication_user', 
-                '%_OPIOID_Medication_user',
-                '%_Opioid_user_no_death', '%_Opioid_user_2Years_no_death']
+                # '%_OPIOID_Medication_user',
+                # '%_Opioid_user_no_death', 
+                 '%_Opioid_user_2Years_no_death']
 
-Eerstelijns_var = ['%_Opioid_user_no_death_primary','%_Opioid_user_2Years_no_death_primary', '%_ICPC_Hartfalen_patients', 
-                '%_Medication_Dependency_patients', '%_Medication_Dependency_3Years_patients','%_Medication_Dependency_5Years_patients',
-                '%_Alcohol_Dependency_patients', '%_Alcohol_Dependency_3Years_patients', '%_Alcohol_Dependency_5Years_patients', 
-                '%_Loneliness_patients', '%_Loneliness_3Years_patients', '%_Loneliness_5Years_patients', 
-                '%_ICPC_Obesitas_patients', '%_BMI_NormalWeight', '%_BMI_Obese', '%_BMI_OverWeight', '%_BMI_UnderWeight']
+# Eerstelijns_var = ['%_Opioid_user_no_death_primary','%_Opioid_user_2Years_no_death_primary', '%_ICPC_Hartfalen_patients', 
+#                 '%_Medication_Dependency_patients', '%_Medication_Dependency_3Years_patients','%_Medication_Dependency_5Years_patients',
+#                 '%_Alcohol_Dependency_patients', '%_Alcohol_Dependency_3Years_patients', '%_Alcohol_Dependency_5Years_patients', 
+#                 '%_Loneliness_patients', '%_Loneliness_3Years_patients', '%_Loneliness_5Years_patients', 
+#                 '%_ICPC_Obesitas_patients', '%_BMI_NormalWeight', '%_BMI_Obese', '%_BMI_OverWeight', '%_BMI_UnderWeight']
 
-Secundaire_var = ['%_Hypertensie_patients', '%_COPD_patients', 
-                '%_Diabetes_I_patients', '%_Diabetes_II_patients',
-                '%_Hartfalen_patients', 
-                '%_OMA_patients', '%_Morbus_Parkinson_patients',
-                '%_Heupfractuur_patients', '%_BMIUP45_patients',
-                '%_Lung_Cancer_patients', '%_Colon_Cancer_patients',
-                '%_Back_pain_patients']
+# Secundaire_var = ['%_Hypertensie_patients', '%_COPD_patients', 
+#                 '%_Diabetes_I_patients', '%_Diabetes_II_patients',
+#                 '%_Hartfalen_patients', 
+#                 '%_OMA_patients', '%_Morbus_Parkinson_patients',
+#                 '%_Heupfractuur_patients', '%_BMIUP45_patients',
+#                 '%_Lung_Cancer_patients', '%_Colon_Cancer_patients',
+#                 '%_Back_pain_patients']
 
-Eerstelijns_Secundaire_var = ['%_Opioid_user_no_death_comb', '%_Opioid_user_2Years_no_death_comb', '%_Hartfalen_PrimarynSecondary_patients', 
-                '%_Primary_care_patients_in_Secondary_care','%_Proxy_Primary_care_refer_to_Secondary_care']
+# Eerstelijns_Secundaire_var = ['%_Opioid_user_no_death_comb', '%_Opioid_user_2Years_no_death_comb', '%_Hartfalen_PrimarynSecondary_patients', 
+#                 '%_Primary_care_patients_in_Secondary_care','%_Proxy_Primary_care_refer_to_Secondary_care']
 
-Ander_var = ['%_JGDHULP_user', '%_GEDETINEERDENTAB', '%_SHNTAB', '%_HBOPL_Low', '%_HBOPL_Mid', '%_HBOPL_High', '%_HGOPL_Low', '%_HGOPL_Mid', '%_HGOPL_High']
+Ander_var = ['%_JGDHULP_user', 
+             # '%_GEDETINEERDENTAB', '%_SHNTAB', 
+             '%_HBOPL_Low', '%_HBOPL_Mid', '%_HBOPL_High', '%_HGOPL_Low', '%_HGOPL_Mid', '%_HGOPL_High']
 
 var_dict = {'Person':Person_var,
              'Huishouden':Huishouden_var,
              'Socioecon':Socioecon_var,
              'Zorgkosten':Zorgkosten_var,
              'Medicatie':Medicatie_var,
-             'Eerstelijns zorg':Eerstelijns_var,
-             'Secundaire zorg':Secundaire_var,
-             'Eerstelijns en Secundaire zorg':Eerstelijns_Secundaire_var,
+             # 'Eerstelijns zorg':Eerstelijns_var,
+             # 'Secundaire zorg':Secundaire_var,
+             # 'Eerstelijns en Secundaire zorg':Eerstelijns_Secundaire_var,
              'Ander':Ander_var
              }
             
@@ -195,12 +208,14 @@ drop_var_theme = dcc.Dropdown(
             {'label': "Socioecon", 'value': "Socioecon"},
             {'label': 'Zorgkosten', 'value': 'Zorgkosten'},
             {'label': 'Medicatie', 'value': 'Medicatie'},
-            {'label': 'Eerstelijns zorg', 'value': 'Eerstelijns zorg'},
-            {'label': "Secundaire zorg", 'value': "Secundaire zorg"},
-            {'label': "Eerstelijns en Secundaire zorg", 'value': 'Eerstelijns en Secundaire zorg'},
+            # {'label': 'Eerstelijns zorg', 'value': 'Eerstelijns zorg'},
+            # {'label': "Secundaire zorg", 'value': "Secundaire zorg"},
+            # {'label': "Eerstelijns en Secundaire zorg", 'value': 'Eerstelijns en Secundaire zorg'},
             {'label': 'Ander', 'value': 'Ander'}
             ],
-        value=["Person","Huishouden", "Socioecon", "Zorgkosten", "Medicatie", "Eerstelijns zorg", "Secundaire zorg", "Eerstelijns en Secundaire zorg", "Ander"], 
+        value=["Person","Huishouden", "Socioecon", "Zorgkosten", "Medicatie", 
+               # "Eerstelijns zorg", "Secundaire zorg", "Eerstelijns en Secundaire zorg", 
+               "Ander"], 
         className = "custom_select"
     )
 
