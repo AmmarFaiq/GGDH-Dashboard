@@ -16,7 +16,10 @@ layout = html.Div([
     behulp van gegevens uit onze ELAN-dataomgeving.
 
     Neem voor meer informatie over het dashboard contact met ons op:
+    <br />
+    
     elan.dcc@lumc.nl
+    
     """],
     dangerously_allow_html=True,
     ),
@@ -34,10 +37,17 @@ layout = html.Div([
     te kunnen zetten.
 
     Voor meer informatie:
+    
+    <br />
+    
     <dccLink href="https://www.lumc.nl/over-het-lumc/partners/elan/" children="ELAN" /> 
-
+    
+    <br />
+    
     <dccLink href="www.elanresearch.nl" children="ELAN Research" /> 
-
+    
+    <br />
+    
     <dccLink href="https://www.lumc.nl/siteassets/over-het-lumc/partners/elan/data-governance.pdf" children="ELAN Data Governance" /> 
     
     """
