@@ -6,6 +6,18 @@ dash.register_page(__name__)
 layout = html.Div([
     html.H1('Changelog'),
     html.P("This page contains what changes relatively to the last updated version"),
+    html.H2('Version 2.1 - 24/10/2024'),
+    dcc.Markdown(
+    """
+    1. Area coverage :
+    - Change dashboard name to ELAN Dashboard
+    - Neighbourhood / Wijk page changes :
+        - Fix bug-related duplicated Wijk name in the drop-down list
+        - Remove several variables to choose from to plot
+    - Add several links and contacts to "About Us" page
+        
+    """),
+
     html.H2('Version 2 - 11/08/2024'),
     dcc.Markdown(
     """
