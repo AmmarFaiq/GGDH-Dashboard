@@ -1,0 +1,40 @@
+Total_Population:Total Population
+Total_ICPCPat_Pop:Total ELAN registered person
+%_Gender_Mannen:Gender Mannen
+%_Gender_Vrouwen:Gender Vrouwen
+%_0to20:Age 0to20
+%_21to40:Age 21to40
+%_41to60:Age 41to60
+%_61to80:Age 61to80
+%_Above80:Age Above80
+AGE_MEAN:Average Age
+%_MajorEthnicity_Native Dutch:Ethnicity Native Dutch
+%_HBOPL_Low:Education HBOPL Low
+%_HBOPL_Mid:Education HBOPL Mid
+%_HBOPL_High:Education HBOPL High
+%_HGOPL_Low:Education HGOPL Low
+%_HGOPL_Mid:Education HGOPL Mid
+%_HGOPL_High:Education HGOPL High
+Income_MEAN:Average Income
+%_Multiperson_Household:Household Multiperson
+%_HouseholdType_Institutional:Household Institutional
+%_ZVWKHUISARTS_user:ZVWKHUISARTS user
+%_ZVWKFARMACIE_user:ZVWKFARMACIE user
+%_ZVWKZIEKENHUIS_user:ZVWKZIEKENHUIS user
+%_ZVWKOSTENPSYCHO_user:ZVWKOSTENPSYCHO user
+%_JGDHULP_user:JGDHULP Person
+ZVWKOSTENTOTAAL_MEAN:Average Total Healthcare Cost
+ZVWKHUISARTS_MEAN:Average Primary care Cost
+ZVWKHUISARTS_NO_REG_MEAN:Average Primary care Services Cost
+ZVWKZIEKENHUIS_MEAN:Average Secondary care Cost
+ZVWKFARMACIE_MEAN:Average Pharmaceuticals Cost
+ZVWKOSTENPSYCHO_MEAN:Average Psychological care Cost
+%_HVZ_Medication_user:HVZ related medication user
+%_UniqueMed_Count_>=5:Polyfarmacie > 5 ATC
+%_UniqueMed_Count_>=10:Polyfarmacie > 10 ATC
+%_DIAB_Medication_user:Diabetes lowering medication user
+%_BLOEDDRUKV_Medication_user:Blood lowering medication user
+%_CHOL_Medication_user:Cholestherol lowering medication user
+%_DIURETICS_Medication_user:DIURETICS medication user
+%_DIURETICS_RAAS_BETA_Medication_user:DIURETICS, RAAS, and BETA medication user
+%_Opioid_user_2Years_no_death:Alive Opioid medication user over 2 years

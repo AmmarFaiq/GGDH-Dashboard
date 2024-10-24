@@ -1,0 +1,43 @@
+Total_Population:Totale bevolking
+Total_ICPCPat_Pop:Totaal ELAN-geregistreerde personen
+%_Gender_Mannen:Gender Mannen
+%_Gender_Vrouwen:Gender Vrouwen
+%_0to20:Leeftijd 0to20
+%_21to40:Leeftijd 21to40
+%_41to60:Leeftijd 41to60
+%_61to80:Leeftijd 61to80
+%_Above80:Leeftijd boven 80
+AGE_MEAN:Gemiddelde leeftijd
+%_MajorEthnicity_Native Dutch:Etniciteit Native Dutch
+%_HBOPL_Low:Opleiding HBOPL Laag
+%_HBOPL_Mid:Opleiding HBOPL Gemiddeld
+%_HBOPL_High:Opleiding HBOPL Hoog
+%_HGOPL_Low:Onderwijs HGOPL Laag
+%_HGOPL_Mid:Onderwijs HGOPL Midden
+%_HGOPL_High:Onderwijs HGOPL Hoog
+Income_MEAN:Gemiddeld inkomen
+%_Multiperson_Household:Huishouden Multiperson
+%_HouseholdType_Institutional:Huishouden Institutioneel
+%_ZVWKHUISARTS_user:ZVWKHUISARTS gebruiker
+%_ZVWKFARMACIE_user:ZVWKFARMACIE gebruiker
+%_ZVWKZIEKENHUIS_user:ZVWKZIEKENHUIS gebruiker
+%_ZVWKOSTENPSYCHO_user:ZVWKOSTENPSYCHO gebruiker
+%_JGDHULP_user:JGDHULP Persoon
+ZVWKOSTENTOTAAL_MEAN:Gemiddelde totale kosten voor gezondheidszorg
+ZVWKHUISARTS_MEAN:Gemiddelde kosten voor eerstelijnszorg
+ZVWKHUISARTS_NO_REG_MEAN:Gemiddelde kosten voor eerstelijnszorg geleverde diensten
+ZVWKZIEKENHUIS_MEAN:Gemiddelde kosten voor tweedelijnszorg
+ZVWKFARMACIE_MEAN:Gemiddelde kosten voor geneesmiddelen
+ZVWKOSTENPSYCHO_MEAN:Gemiddelde kosten voor psychologische zorg
+%_HVZ_Medication_user:HVZ gerelateerde medicatie gebruiker
+%_UniqueMed_Count_>=5:Polyfarmacie > 5 ATC
+%_UniqueMed_Count_>=10:Polyfarmacie > 10 ATC
+%_DIAB_Medication_user:Gebruiker van diabetes verlagende medicatie
+%_BLOEDDRUKV_Medication_user:Gebruiker van bloed verlagende medicatie
+%_CHOL_Medication_user:Gebruiker van cholesterol verlagende medicatie
+%_DIURETICS_Medication_user:Gebruiker van DIURETICS-medicatie
+%_DIURETICS_RAAS_BETA_Medication_user:Gebruiker van DIURETICS-, RAAS- en BETA-medicatie
+%_Opioid_user_2Years_no_death:In leven Opioide medicatie gebruiker langer dan 2 jaar
+
+
+
