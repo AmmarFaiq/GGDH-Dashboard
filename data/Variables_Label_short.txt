@@ -9,12 +9,12 @@ Total_ICPCPat_Pop:Total ELAN registered person
 %_Above80:Age Above80
 AGE_MEAN:Average Age
 %_MajorEthnicity_Native Dutch:Ethnicity Native Dutch
-%_HBOPL_Low:Education HBOPL Low
-%_HBOPL_Mid:Education HBOPL Mid
-%_HBOPL_High:Education HBOPL High
-%_HGOPL_Low:Education HGOPL Low
-%_HGOPL_Mid:Education HGOPL Mid
-%_HGOPL_High:Education HGOPL High
+%_HBOPL_Low:Education Archived Low
+%_HBOPL_Mid:Education Archived Mid
+%_HBOPL_High:Education Archived High
+%_HGOPL_Low:Education Started Low
+%_HGOPL_Mid:Education Started Mid
+%_HGOPL_High:Education Started High
 Income_MEAN:Average Income
 %_Multiperson_Household:Household Multiperson
 %_HouseholdType_Institutional:Household Institutional
