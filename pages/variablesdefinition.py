@@ -13,13 +13,13 @@ path = os.path.join(os.path.dirname(__file__), path).replace("\\","/")
 # df_cbs = pd.read_excel(open(path + ('Codebook_shorter.xlsx'), 'rb'), sheet_name='CBS')
 
 var_def_label_NL_dict = {}
-with open(path + 'Variables_Label_NL.txt', mode='r') as f2:
+with open(path + 'Variables_Label_NL_short.txt', mode='r') as f2:
     for line in f2:
         s = line.split(':')
         var_def_label_NL_dict[s[0]] = s[1].split('\n')[0]
 
 var_def_NL_dict = {}
-with open(path + 'Variables_Definition_NL.txt', mode='r') as f2:
+with open(path + 'Variables_Definition_NL_short.txt', mode='r') as f2:
     for line in f2:
         s = line.split(':')
         var_def_NL_dict[s[0]] = s[1].split('\n')[0]
