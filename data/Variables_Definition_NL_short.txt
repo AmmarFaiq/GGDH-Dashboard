@@ -9,12 +9,12 @@ Total_ICPCPat_Pop:Totale populatie geregistreerd in de ELAN-patient gegevens van
 %_Above80:Totaal aantal bevolking met leeftijd boven 80
 AGE_MEAN:Gemiddelde leeftijd van de bevolking per regio
 %_MajorEthnicity_Native Dutch:Totaal aantal bevolking met Native Dutch Ethnicity
-%_HBOPL_Low:Totaal aantal mensen met een laag niveau van hoogste behaalde opleiding (hbopl_1111 of hbopl_1112 of hbopl_1211 of hbopl_1212 of hbopl_1213 of hbopl_1221 of hbopl_1222)
-%_HBOPL_Mid:Totaal aantal mensen met een gemiddeld niveau van hoogste behaalde opleiding (hbopl_2111 of hbopl_2112 of hbopl_2121 of hbopl_2131 of hbopl_2132)
-%_HBOPL_High:Totaal aantal mensen met een hoog niveau van hoogste behaalde opleiding (hbopl_3111 of hbopl_3112 of hbopl_3113 of hbopl_3212 of hbopl_3213)
-%_HGOPL_Low:Totaal aantal mensen met een laag niveau van hoogste voltooide opleiding (hgopl_1111 of hgopl_1112 of hgopl_1211 of hgopl_1212 of hgopl_1213 of hgopl_1221 of hgopl_1222)
-%_HGOPL_Mid:Totaal aantal mensen met een gemiddeld niveau van hoogste voltooide opleiding (hgopl_2111 of hgopl_2112 of hgopl_2121 of hgopl_2131 of hgopl_2132)
-%_HGOPL_High:Totaal aantal mensen met een hoog niveau van hoogste voltooide opleiding (hgopl_3111 of hgopl_3112 of hgopl_3113 of hgopl_3212 of hgopl_3213)
+%_HBOPL_Low:Totaal aantal personen met een laag niveau van behaald opleiding (hbopl_1111 of hbopl_1112 of hbopl_1211 of hbopl_1212 of hbopl_1213 of hbopl_1221 of hbopl_1222)
+%_HBOPL_Mid:Totaal aantal personen met een middelbaar niveau van behaald opleiding (hbopl_2111 of hbopl_2112 of hbopl_2121 of hbopl_2131 of hbopl_2132)
+%_HBOPL_High:Totaal aantal personen met een hoog niveau van behaald opleiding(hbopl_3111 of hbopl_3112 of hbopl_3113 of hbopl_3212 of hbopl_3213)
+%_HGOPL_Low:Totaal aantal personen met een laag niveau van gestart opleiding (hgopl_1111 of hgopl_1112 of hgopl_1211 of hgopl_1212 of hgopl_1213 of hgopl_1221 of hgopl_1222)
+%_HGOPL_Mid:Totaal aantal personen met een middelbaar niveau van gestart opleiding (hgopl_2111 of hgopl_2112 of hgopl_2121 of hgopl_2131 of hgopl_2132)
+%_HGOPL_High:Totaal aantal personen met een hoog niveau van gestart opleiding (hgopl_3111 of hgopl_3112 of hgopl_3113 of hgopl_3212 of hgopl_3213)
 Income_MEAN:Gemiddeld gezinsinkomen van de bevolking per regio, gecorrigeerd voor inflatie door CBS
 %_Multiperson_Household:Totaal aantal inwoners met meer dan 1 persoon binnen het huishouden
 %_HouseholdType_Institutional:Totaal aantal inwoners dat in een institutioneel huishouden woonde
