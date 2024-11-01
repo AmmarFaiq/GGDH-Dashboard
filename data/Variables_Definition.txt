@@ -83,12 +83,12 @@ Total_ICPCPat_Pop:Total population registered in the ELAN patient data of neighb
 %_JGDHULP_user:Total count of people that ever received "young help" program
 %_GEDETINEERDENTAB:Total count of people that ever received "GEDETINEERDENTAB" program
 %_SHNTAB:Total count of people that ever received "SHNTAB" program
-%_HBOPL_Low:Total count of people that has low level of highest education achieved (hbopl_1111 or hbopl_1112 or hbopl_1211 or hbopl_1212 or hbopl_1213 or hbopl_1221 or hbopl_1222)
-%_HBOPL_Mid:Total count of people that has medium level of highest education achieved (hbopl_2111 or hbopl_2112 or hbopl_2121 or hbopl_2131 or hbopl_2132)
-%_HBOPL_High:Total count of people that has high level of highest education achieved (hbopl_3111 or hbopl_3112 or hbopl_3113 or hbopl_3212 or hbopl_3213)
-%_HGOPL_Low:Total count of people that has low level of highest completed education (hgopl_1111 or hgopl_1112 or hgopl_1211 or hgopl_1212 or hgopl_1213 or hgopl_1221 or hgopl_1222)
-%_HGOPL_Mid:Total count of people that has medium level of highest completed education (hgopl_2111 or hgopl_2112 or hgopl_2121 or hgopl_2131 or hgopl_2132)
-%_HGOPL_High:Total count of people that has high level of highest completed education (hgopl_3111 or hgopl_3112 or hgopl_3113 or hgopl_3212 or hgopl_3213)
+%_HBOPL_Low:Total number of persons with a low level of completed education (hbopl_1111 or hbopl_1112 or hbopl_1211 or hbopl_1212 or hbopl_1213 or hbopl_1221 or hbopl_1222)
+%_HBOPL_Mid:Total number of persons with a medium level of completed education (hbopl_2111 or hbopl_2112 of hbopl_2121 of hbopl_2131 of hbopl_2132) 
+%_HBOPL_High:Total number of persons with a high level of completed education (hbopl_3111 or hbopl_3112 or hbopl_3113 or hbopl_3212 or hbopl_3213) 
+%_HGOPL_Low:Total number of persons with a low level of starting education (hgopl_1111 or hgopl_1112 or hgopl_1211 or hgopl_1212 or hgopl_1213 or hgopl_1221 or hgopl_1222) 
+%_HGOPL_Mid:Total number of persons with a medium level of starting education (hgopl_2111 or hgopl_2112 or hgopl_2121 or hgopl_2131 or hgopl_2132) 
+%_HGOPL_High:Total number of persons with a high level of starting education (hgopl_3111 or hgopl_3112 or hgopl_3113 or hgopl_3212 or hgopl_3213)
 AGE_MEAN:Average age of population per region
 Income_MEAN:Average household income of population per region adjusted per inflation by CBS
 Moving_Count_MEAN:Average of people that moved address per region
