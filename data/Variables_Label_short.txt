@@ -39,5 +39,5 @@ CHOL_Medication_user:Cholestherol lowering medication user
 DIURETICS_Medication_user:DIURETICS medication user
 DIURETICS_RAAS_BETA_Medication_user:DIURETICS, RAAS, and BETA medication user
 Opioid_user_2Years_no_death:Alive Opioid medication user over 2 years
-Primary_care_patients_in_Secondary_care:GP patients in Secondary care
-Proxy_Primary_care_refer_to_Secondary_care:Proxy referral from primary to secondary care
+Primary_care_patients_in_Secondary_care:*Primary care patients in secondary care
+Proxy_Primary_care_refer_to_Secondary_care:*Proxy referral from primary to secondary care
