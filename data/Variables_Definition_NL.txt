@@ -100,5 +100,5 @@ ZVWKHUISARTS_NO_REG_MEAN:Gemiddelde kosten voor eerstelijnszorg ten opzichte van
 ZVWKZIEKENHUIS_MEAN:Gemiddelde kosten voor tweedelijnszorg uit basiszorgkosten (ZVW Kosten)
 ZVWKFARMACIE_MEAN:Gemiddelde farmaceutische kosten uit basiszorgkosten (ZVW Kosten)
 ZVWKOSTENPSYCHO_MEAN:Gemiddelde kosten voor psychologische zorg uit basiszorgkosten (ZVW Kosten)
-Primary_care_patients_in_Secondary_care: Eerstelijnszorgpatiënten die ook tweedelijnszorg gebruiken of hebben gebruikt in het huidige jaar
-Proxy_Primary_care_refer_to_Secondary_care: Eerstelijnszorgpatiënten die tweedelijnszorg gebruikten in het huidige jaar maar niet in het voorgaande jaar (gebruikt als proxy voor verwijzingen)
+Primary_care_patients_in_Secondary_care:Eerstelijnszorgpatiënten die ook tweedelijnszorg gebruiken of hebben gebruikt in het huidige jaar *(de waarden worden gedeeld door Total GP-patiënten per regio)
+Proxy_Primary_care_refer_to_Secondary_care:Eerstelijnszorgpatiënten die tweedelijnszorg gebruikten in het huidige jaar maar niet in het voorgaande jaar. proxy voor verwijzingen. *(de waarden worden gedeeld door Total GP-patiënten per regio)
