@@ -39,5 +39,5 @@ CHOL_Medication_user:Gebruiker van cholesterol verlagende medicatie
 DIURETICS_Medication_user:Gebruiker van DIURETICS-medicatie
 DIURETICS_RAAS_BETA_Medication_user:Gebruiker van DIURETICS-, RAAS- en BETA-medicatie
 Opioid_user_2Years_no_death:In leven Opioide medicatie gebruiker langer dan 2 jaar
-Primary_care_patients_in_Secondary_care: Huisartspatiënten in de tweedelijnszorg
-Proxy_Primary_care_refer_to_Secondary_care: Proxyverwijzing van de eerstelijnszorg naar de tweedelijnszorg
+Primary_care_patients_in_Secondary_care:*Huisartspatiënten in de tweedelijnszorg
+Proxy_Primary_care_refer_to_Secondary_care:*Proxyverwijzing van de eerstelijnszorg naar de tweedelijnszorg
