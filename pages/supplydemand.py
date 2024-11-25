@@ -74,7 +74,7 @@ values_hadoks= ["'s-Gravenhage", "Leidschendam-Voorburg", "Rijswijk", "Wassenaar
 special_regions = {"Hadoks' area": values_hadoks}
 
 
-dash.register_page(__name__, path= '/')
+dash.register_page(__name__)
 
 path = '../data/'
 path = os.path.join(os.path.dirname(__file__), path).replace("\\","/").replace("pages" + "/../","")
