@@ -7,13 +7,14 @@ Gender_Vrouwen:Total count of men population
 41to60:Total count of population with age between 41 to 60 
 61to80:Total count of population with age between 61 to 80
 Above80:Total count of population with age above 80
-MajorEthnicity_Native Dutch:Total count of population with Native Dutch Ethnicity
+MajorEthnicity_NativeDutch:Total count of population with Native Dutch Ethnicity
+MajorEthnicity_Other:Total count of population with other Ethnicity beside Dutch
 MajorEthnicity_Western:Total count of population with Western Ethnicity
-MajorEthnicity_Non-Western:Total count of population with Non-western Ethnicity
+MajorEthnicity_NonWestern:Total count of population with Non-western Ethnicity
 MinorEthnicity_Marokko:Total count of population with Moroccan Ethnicity
 MinorEthnicity_Suriname:Total count of population with Surinamese Ethnicity
 MinorEthnicity_Turkije:Total count of population with Turkish Ethnicity
-MinorEthnicity_Voormalige Nederlandse Antillen en Aruba:Total count of population with Antillen and Aruba Ethnicity
+MinorEthnicity_VoormaligeNederlandseAntillenenAruba:Total count of population with Antillen and Aruba Ethnicity
 Multiperson_Household:Total count of population with number of person inside household more than 1
 HouseholdType_Institutional:Total count of population that lived in institutional household
 Employee:Total count of population that have source of income from working as employee
@@ -35,8 +36,8 @@ ZVWKFARMACIE_user:Total count of people that have ZVWKFARMACIE more than 0
 ZVWKZIEKENHUIS_user:Total count of people that have ZVWKZIEKENHUIS more than 0
 ZVWKOSTENPSYCHO_user:Total count of people that have ZVWKOSTENPSYCHO more than 0
 HVZ_Medication_user:Total count of people with CVD medication on ATC4 (A10* or B01* or C01* or C02* or C03* or C04* or C07* or C08* or C09* or C10*)
-UniqueMed_Count_>=5:Total count of people with unique ATC4 code per person more than or equal to 5 (polypharmacy)
-UniqueMed_Count_>=10:Total count of people with unique ATC4 code per person more than or equal to 10 (polypharmacy)
+UniqueMed_Count_5:Total count of people with unique ATC4 code per person more than or equal to 5 (polypharmacy)
+UniqueMed_Count_10:Total count of people with unique ATC4 code per person more than or equal to 10 (polypharmacy)
 DIAB_Medication_user:Total count of people with Diabetes medication on ATC4 (A10B*)
 BLOEDDRUKV_Medication_user:Total count of people with Blood Pressure Lowering medication on ATC4 (C03* or C07* or C08* or C09*)
 CHOL_Medication_user:Total count of people with Cholesterol lowering medication on ATC4 (C10*)
