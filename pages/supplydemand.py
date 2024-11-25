@@ -88,8 +88,8 @@ geo_df.rename(columns ={'WK_CODE':'WKC'}, inplace = True)
 
 geo_df = geo_df.query("GM_NAAM in @values_all_regions")
 
-geofilepath = requests.get('https://raw.githubusercontent.com/AmmarFaiq/GGDH-Dashboard/main/data/' + 'wijkgeo_file.json')
-
+# geofilepath = requests.get('https://raw.githubusercontent.com/AmmarFaiq/GGDH-Dashboard/main/data/' + 'wijkgeo_file.json')
+geofilepath = requests.get(path + 'wijkgeo_file.json')
 geo_df_fff = json.loads(geofilepath.content)
 
 
