@@ -72,6 +72,9 @@ geo_df = geo_df.query("GM_NAAM in @values_all_regions")
 
 df_numeric = pd.read_csv(path + 'df_numeric_ver_6.csv', sep=',', encoding='latin-1')
 df_numeric.rename(columns ={'gem_name':'GMN'}, inplace = True)
+# Update the 'WKN' column based on conditions in the 'GMN' column 
+df_numeric.loc[(df_numeric['WKN'] == 'Buitengebied') & (df_numeric['GMN'] == 'Lisse'), 'WKN'] = 'Buitengebied Lisse' 
+df_numeric.loc[(df_numeric['WKN'] == 'Buitengebied') & (df_numeric['GMN'] == 'Hillegom'), 'WKN'] = 'Buitengebied Hillegom'
 df_count = pd.read_csv(path + 'df_count_ver_6.csv', sep=',',encoding= 'latin-1')
 df_count.rename(columns ={'Total_All_Pop':'Total_Population'}, inplace = True)
 df = df_count.merge(df_numeric, on=['WKC','WKN','GMN','YEAR'])
