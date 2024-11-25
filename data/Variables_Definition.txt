@@ -101,5 +101,5 @@ ZVWKHUISARTS_NO_REG_MEAN:Average primary care cost from basic healthcare cost (Z
 ZVWKZIEKENHUIS_MEAN:Average secondary care cost from basic healthcare cost (ZVW Kosten)
 ZVWKFARMACIE_MEAN:Average pharmaceutical cost from basic healthcare cost (ZVW Kosten)
 ZVWKOSTENPSYCHO_MEAN:Average Psychological care cost from basic healthcare cost (ZVW Kosten)
-Primary_care_patients_in_Secondary_care:Primary care patients that also using or has used secondary care in the current year
-Proxy_Primary_care_refer_to_Secondary_care:Primary care patients that used secondary care in the current year but not in the previous year (used as proxy of referrals)
+Primary_care_patients_in_Secondary_care:Primary care patients that also using or have used secondary care in the current year *(the values are divided by Total GP patients per region)
+Proxy_Primary_care_refer_to_Secondary_care:Primary care patients that used secondary care in the current year but not in the previous year. Proxy for referrals. *(the values are divided by Total GP patients per region)
