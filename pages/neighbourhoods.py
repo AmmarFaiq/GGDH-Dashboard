@@ -70,9 +70,9 @@ geo_df.rename(columns ={'WK_CODE':'WKC'}, inplace = True)
 
 geo_df = geo_df.query("GM_NAAM in @values_all_regions")
 
-df_numeric = pd.read_csv(path + 'df_numeric_ver_5.csv', sep=',', encoding='latin-1')
+df_numeric = pd.read_csv(path + 'df_numeric_ver_6.csv', sep=',', encoding='latin-1')
 df_numeric.rename(columns ={'gem_name':'GMN'}, inplace = True)
-df_count = pd.read_csv(path + 'df_count_ver_5.csv', sep=',',encoding= 'latin-1')
+df_count = pd.read_csv(path + 'df_count_ver_6.csv', sep=',',encoding= 'latin-1')
 df_count.rename(columns ={'Total_All_Pop':'Total_Population'}, inplace = True)
 df = df_count.merge(df_numeric, on=['WKC','WKN','GMN','YEAR'])
 # df = df_count.copy()
@@ -138,12 +138,12 @@ df[columns] = df[columns].round(4)
 #                 '%_MinorEthnicity_Marokko', '%_MinorEthnicity_Suriname',
 #                 '%_MinorEthnicity_Turkije','%_MinorEthnicity_Voormalige Nederlandse Antillen en Aruba']
 
-Person_var = ['AGE_MEAN', '%_Gender_Mannen',
-                '%_Gender_Vrouwen', '%_0to20', '%_21to40', '%_41to60', '%_61to80',
-                '%_Above80', '%_MajorEthnicity_Native Dutch']
+Person_var = ['AGE_MEAN', 'Gender_Mannen',
+                'Gender_Vrouwen', '0to20', '21to40', '41to60', '61to80',
+                'Above80', 'MajorEthnicity_Native Dutch', 'MajorEthnicity_Other']
 
 # Huishouden_var = ['%_Multiperson_Household', '%_HouseholdType_Institutional', '%_Moving_count_above_1', '%_Lifeevents_count_above_2','Moving_Count_MEAN', 'Lifeevents_Count_MEAN']
-Huishouden_var = ['%_Multiperson_Household', '%_HouseholdType_Institutional']
+Huishouden_var = ['Multiperson_Household', 'HouseholdType_Institutional']
 
 # Socioecon_var = ['Income_MEAN', '%_Low_Income', '%_Debt_Mortgage', '%_Debt_Poor', '%_Wanbet', 
 #                  '%_Employee', '%_Unemployment_benefit_user', '%_Welfare_benefit_user', '%_Other_social_benefit_user', '%_Sickness_benefit_user', '%_Pension_benefit_user',
@@ -152,16 +152,16 @@ Huishouden_var = ['%_Multiperson_Household', '%_HouseholdType_Institutional']
 Socioecon_var = ['Income_MEAN']
 
 Zorgkosten_var = ['ZVWKOSTENTOTAAL_MEAN', 'ZVWKHUISARTS_MEAN', 'ZVWKHUISARTS_NO_REG_MEAN', 'ZVWKZIEKENHUIS_MEAN', 'ZVWKFARMACIE_MEAN', 'ZVWKOSTENPSYCHO_MEAN',
-                  '%_ZVWKHUISARTS_user', '%_ZVWKFARMACIE_user', '%_ZVWKZIEKENHUIS_user', '%_ZVWKOSTENPSYCHO_user']
+                  'ZVWKHUISARTS_user', 'ZVWKFARMACIE_user', 'ZVWKZIEKENHUIS_user', 'ZVWKOSTENPSYCHO_user']
 
 Medicatie_var = [
                 # 'UniqueMed_Count_MEAN', 
-                '%_UniqueMed_Count_>=5', '%_UniqueMed_Count_>=10',
-                '%_HVZ_Medication_user', '%_DIAB_Medication_user', '%_BLOEDDRUKV_Medication_user',
-                '%_CHOL_Medication_user', '%_DIURETICS_Medication_user', '%_DIURETICS_RAAS_BETA_Medication_user', 
+                'UniqueMed_Count_5', 'UniqueMed_Count_10',
+                'HVZ_Medication_user', 'DIAB_Medication_user', 'BLOEDDRUKV_Medication_user',
+                'CHOL_Medication_user', 'DIURETICS_Medication_user', 'DIURETICS_RAAS_BETA_Medication_user', 
                 # '%_OPIOID_Medication_user',
                 # '%_Opioid_user_no_death', 
-                 '%_Opioid_user_2Years_no_death']
+                 'Opioid_user_2Years_no_death']
 
 # Eerstelijns_var = ['%_Opioid_user_no_death_primary','%_Opioid_user_2Years_no_death_primary', '%_ICPC_Hartfalen_patients', 
 #                 '%_Medication_Dependency_patients', '%_Medication_Dependency_3Years_patients','%_Medication_Dependency_5Years_patients',
@@ -180,9 +180,12 @@ Medicatie_var = [
 # Eerstelijns_Secundaire_var = ['%_Opioid_user_no_death_comb', '%_Opioid_user_2Years_no_death_comb', '%_Hartfalen_PrimarynSecondary_patients', 
 #                 '%_Primary_care_patients_in_Secondary_care','%_Proxy_Primary_care_refer_to_Secondary_care']
 
-Ander_var = ['%_JGDHULP_user', 
+Ander_var = ['JGDHULP_user', 
              # '%_GEDETINEERDENTAB', '%_SHNTAB', 
-             '%_HBOPL_Low', '%_HBOPL_Mid', '%_HBOPL_High', '%_HGOPL_Low', '%_HGOPL_Mid', '%_HGOPL_High']
+             'HBOPL_Low', 'HBOPL_Mid', 'HBOPL_High', 
+             'HGOPL_Low', 'HGOPL_Mid', 'HGOPL_High',
+             'Primary_care_patients_in_Secondary_care', 'Proxy_Primary_care_refer_to_Secondary_care'
+            ]
 
 var_dict = {'Person':Person_var,
              'Huishouden':Huishouden_var,
