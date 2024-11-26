@@ -6,6 +6,17 @@ dash.register_page(__name__)
 layout = html.Div([
     html.H1('Changelog'),
     html.P("This page contains what changes relatively to the last updated version"),
+
+    html.H2('Version 2.2 - 25/11/2024'),
+    dcc.Markdown(
+    """
+    1. Area coverage :
+    - Fix Zoetermeer, Lisse and Hillegom neighbourhood (Wijk)  
+    2. Add variables related to referral info
+    3. Fix JSON file read on Hadoks page (request JSON file posing some issues)
+        
+    """),
+    
     html.H2('Version 2.1 - 24/10/2024'),
     dcc.Markdown(
     """
@@ -60,7 +71,7 @@ layout = html.Div([
     - Supply and Demand: contains a clustering and projection of selected variables per Neighbourhood in Collaboration with Hadoks
     - Opioid page
         - Variables available are Alcohol abuse, Medication abuse, Loneliness, BMI, and Opioid medication user
-        - Add basic map chart
+        - Add a basic map chart
         - Add scatter and line chart
     - Other theme projects/pages are still "Work in Progress"
     """)
