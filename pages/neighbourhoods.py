@@ -143,7 +143,7 @@ df[columns] = df[columns].round(4)
 
 Person_var = ['AGE_MEAN', 'Gender_Mannen',
                 'Gender_Vrouwen', '0to20', '21to40', '41to60', '61to80',
-                'Above80', 'MajorEthnicity_Native Dutch', 'MajorEthnicity_Other']
+                'Above80', 'MajorEthnicity_NativeDutch', 'MajorEthnicity_Other']
 
 # Huishouden_var = ['%_Multiperson_Household', '%_HouseholdType_Institutional', '%_Moving_count_above_1', '%_Lifeevents_count_above_2','Moving_Count_MEAN', 'Lifeevents_Count_MEAN']
 Huishouden_var = ['Multiperson_Household', 'HouseholdType_Institutional']
