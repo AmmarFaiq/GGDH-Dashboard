@@ -18,7 +18,7 @@ navbar = html.Div(
         [
 
             html.Div(html.A(html.Img(src= app.get_asset_url('hc-dh-logo.svg')), href= 'https://healthcampusdenhaag.nl/nl/'), id="headerlogo"),
-            html.Div([html.H1("ELAN Dashboard"), html.P('Last updated October 2024', id="last_update")], id= 'headersub'),
+            html.Div([html.H1("ELAN Dashboard"), html.P('Last updated November 2024', id="last_update")], id= 'headersub'),
             html.Div(html.Button('Menu', id="menu_button"), id="icon"),
             html.Div(
                     [dcc.Link('Neighbourhood', href= '/'),
@@ -116,7 +116,7 @@ def update_language(value, clicks):
     Input('session', 'data')
 )
 def localise(language):
-    last_update = (tr.translate("last update") + tr.translate_date(10) + " 2024")
+    last_update = (tr.translate("last update") + tr.translate_date(11) + " 2024")
     nav =  [dcc.Link(tr.translate('neighbourhood'), href= '/'),
             dcc.Link(tr.translate('supply and demand'), href='/supplydemand'),
             # dcc.Link(tr.translate("opioid"), href="/opioid"),
