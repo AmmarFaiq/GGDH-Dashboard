@@ -401,7 +401,7 @@ def localise(themes, language):
     Input('session', 'data'),
     Input('cluster_wijk', 'data')
 )
-def update_select_neighbourhoods(munipality, clear_click, language):
+def update_select_neighbourhoods(munipality, clear_click, language, wijk_cluster):
     '''
     Present the neighbourhoods of the selected region to the user
     '''      
@@ -445,7 +445,7 @@ def update_select_neighbourhoods(munipality, clear_click, language):
     Input('select_language', 'alt'),
     Input('cluster_wijk', 'data')
 )
-def update_slider(xaxis_column_name, municipality, drop_value, language):
+def update_slider(xaxis_column_name, municipality, drop_value, language, wijk_cluster):
     '''
     Sets the slider to values corresponding the data of the chosen region.
     The drop_select_year dropdown menu and the drop_value variable were added for responsive web design.
