@@ -245,7 +245,9 @@ layout = html.Div([
                                             {'label': 'Leidschendam-Voorburg', 'value': 'Leidschendam-Voorburg'},
                                             {'label': 'Wassenaar', 'value': 'Wassenaar'},
                                             ],
-                                            value="Hadoks Area", 
+                                            value="Hadoks Area",
+                                            persistence = True,
+                                            persistence_type = 'session', 
                                             style= {'margin': '4px', 'box-shadow': '0px 0px #ebb36a', 'border-color': '#ebb36a'}
                                             )], style={'width': '15%','display': 'inline-block'}),
                                 html.Div([
@@ -256,6 +258,8 @@ layout = html.Div([
                                         id = 'choose_cluster_id_hadoks',
                                         clearable=False,
                                         multi=True,
+                                        persistence = True,
+                                        persistence_type = 'session', 
                                         style= {'margin': '4px', 'box-shadow': '0px 0px #ebb36a', 'border-color': '#ebb36a'})
                                         ], style={'width': '15%','display': 'inline-block'}),
                                 html.Div([
@@ -267,6 +271,8 @@ layout = html.Div([
                                         clearable=True,
                                         searchable=True, 
                                         multi=True,
+                                        persistence = True,
+                                        persistence_type = 'session', 
                                         style= {'margin': '4px', 'box-shadow': '0px 0px #ebb36a', 'border-color': '#ebb36a'}),
                                         ], style={'width': '70%','display': 'inline-block'})
                                     ])
@@ -318,7 +324,7 @@ layout = html.Div([
                                         'Average GP Care Cost',
                                         id = 'drop_var_post_id_hadoks',
                                         clearable=False,
-                                        searchable=False, 
+                                        searchable=False,
                                         style= {'margin': '4px', 'box-shadow': '0px 0px #ebb36a', 'border-color': '#ebb36a'})
                                 ], style={'width': '30%','display': 'inline-block'}),
                                     
@@ -443,7 +449,8 @@ def toggle_navbar_collapse(n, classname):
 @callback(
     [ 
         Output('drop_wijk_spec_id_hadoks', 'options'),
-        Output('drop_wijk_spec_id_hadoks', 'value')
+        Output('drop_wijk_spec_id_hadoks', 'value'),
+        Output('cluster_wijk', 'data')
     ],
     [
         Input('drop_wijk_hadoks', 'value'),
@@ -480,8 +487,9 @@ def update_slider_hadoks(wijk_name,cluster_num):
         options = list(dff.Wijknaam.unique())
         dff = dff[dff.YEAR == 2020].query("Cluster_Reworked in @cluster_num")
         options2 = list(dff.Wijknaam.unique())
-       
-    return options, options2
+        
+    options3 = list(dff.WKC.unique())   
+    return options, options2, options3
 
 
 @callback(
