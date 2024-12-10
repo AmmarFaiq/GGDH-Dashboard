@@ -67,7 +67,7 @@ footer = html.Div([
 ], id="footer")
 
 
-app.layout = html.Div([dcc.Store(id='cluster_wijk', storage_type='session'), dcc.Store(id='session', storage_type='session'), navbar,    
+app.layout = html.Div([dcc.Store(id='cluster_wijk', storage_type='memory'), dcc.Store(id='session', storage_type='session'), navbar,    
     html.Div(html.Div(html.Div(dash.page_container, id='main', className= 'toggle'))),
     footer
 ])
