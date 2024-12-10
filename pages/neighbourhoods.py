@@ -221,7 +221,9 @@ drop_var_theme = dcc.Dropdown(
             ],
         value=["Person","Huishouden", "Socioecon", "Zorgkosten", "Medicatie", 
                # "Eerstelijns zorg", "Secundaire zorg", "Eerstelijns en Secundaire zorg", 
-               "Ander"], 
+               "Ander"],
+        persistence = True,
+        persistence_type = 'session', 
         className = "custom_select"
     )
 
@@ -232,6 +234,8 @@ drop_var = dcc.Dropdown(
         id = 'drop_var_id',
         clearable=False,
         searchable=False,
+        persistence = True,
+        persistence_type = 'session',
         className = "custom_select"
     )
 
@@ -251,7 +255,8 @@ drop_municipality = dcc.Dropdown(
             {'label': "Leiden en omstreken", 'value': 'Leiden en omstreken'},
             {'label': 'Delft en omstreken', 'value': 'Delft en omstreken'},
             {'label': 'ELAN area', 'value': 'ELAN area'},
-            {'label': "Hadoks' area", 'value': "Hadoks' area"}
+            {'label': "Hadoks' area", 'value': "Hadoks' area"},
+            {'label': "Hadoks' Cluster area", 'value': "Hadokscluster"}
             ],
         value="ELAN area", 
         className = "custom_select"
@@ -275,14 +280,16 @@ layout = html.Div([
                                     clearable=False,
                                     searchable=True, 
                                     multi=True,
+                                    persistence = True,
+                                    persistence_type = 'session',
                                     className="custom_select"
                                 ),
                                 html.Div(html.Button('Clear', id="clear_me_button"), className="clear_me")
                             ], id='select_neighbourhoods'),
                             html.Div([
                                 html.P("Select a year", id='select_year'),
-                                dcc.Slider(step=1, id = 'slider_select_year'),
-                                dcc.Dropdown( id = 'drop_select_year', className= "custom_select") #when resolution is small, slider is no longer practical
+                                dcc.Slider(step=1, id = 'slider_select_year', persistence = True, persistence_type = 'session'),
+                                dcc.Dropdown( id = 'drop_select_year', persistence = True, persistence_type = 'session', className= "custom_select") #when resolution is small, slider is no longer practical
                             ],  id= 'sliderContainer')
                         ], id= 'select_container'),
                     ], id="control_panel", className="accordeon_open")
@@ -391,7 +398,8 @@ def localise(themes, language):
     Output('drop_municipality_spec_id', 'value'),
     Input('drop_municipality', 'value'),
     Input('clear_me_button', 'n_clicks'), # custom clear feature (event trigger)
-    Input('session', 'data')
+    Input('session', 'data'),
+    Input('cluster_wijk', 'data')
 )
 def update_select_neighbourhoods(munipality, clear_click, language):
     '''
@@ -404,6 +412,8 @@ def update_select_neighbourhoods(munipality, clear_click, language):
 
     if munipality in special_regions.keys():    
         dff = df.query("GMN in @special_regions[@munipality]")
+    elif municipality == "Hadokscluster":
+        dff = df.query("WKC in @wijk_cluster")
     else:
         dff = df[(df.GMN == munipality)] #TODO: maybe change to GMcode?
 
@@ -432,7 +442,8 @@ def update_select_neighbourhoods(munipality, clear_click, language):
     Input('drop_var_id', 'value'),
     Input('drop_municipality', 'value'),
     Input('drop_select_year', 'value'),
-    Input('select_language', 'alt')
+    Input('select_language', 'alt'),
+    Input('cluster_wijk', 'data')
 )
 def update_slider(xaxis_column_name, municipality, drop_value, language):
     '''
@@ -442,6 +453,8 @@ def update_slider(xaxis_column_name, municipality, drop_value, language):
     #TODO data:would have preferred to use GM_code
     if municipality in special_regions.keys():
          temp_df = df.query("GMN in @special_regions[@municipality]").copy()
+    elif municipality == "Hadokscluster":
+        temp_df = df.query("WKC in @wijk_cluster")
     else:
         temp_df = df[df.GMN == municipality].copy()
 
