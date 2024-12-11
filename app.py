@@ -116,7 +116,7 @@ def update_language(value, clicks):
     Input('session', 'data')
 )
 def localise(language):
-    last_update = (tr.translate("last update") + tr.translate_date(11) + " 2024")
+    last_update = (tr.translate("last update") + tr.translate_date(12) + " 2024")
     nav =  [dcc.Link(tr.translate('neighbourhood'), href= '/'),
             dcc.Link(tr.translate('supply and demand'), href='/supplydemand'),
             # dcc.Link(tr.translate("opioid"), href="/opioid"),
