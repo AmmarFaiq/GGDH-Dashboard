@@ -222,7 +222,7 @@ drop_var_theme = dcc.Dropdown(
         value=["Person","Huishouden", "Socioecon", "Zorgkosten", "Medicatie", 
                # "Eerstelijns zorg", "Secundaire zorg", "Eerstelijns en Secundaire zorg", 
                "Ander"],
-         persistence = True,
+        persistence = True,
         persistence_type = 'session', 
         className = "custom_select"
     )
@@ -234,7 +234,7 @@ drop_var = dcc.Dropdown(
         id = 'drop_var_id',
         clearable=False,
         searchable=False,
-         persistence = True,
+        persistence = True,
         persistence_type = 'session', 
         className = "custom_select"
     )
@@ -259,6 +259,8 @@ drop_municipality = dcc.Dropdown(
             {'label': "Hadoks' Cluster area", 'value': "Hadokscluster"}
             ],
         value="ELAN area",
+        persistence = True,
+        persistence_type = 'session',
         className = "custom_select"
     )
 
@@ -280,6 +282,8 @@ layout = html.Div([
                                     clearable=False,
                                     searchable=True, 
                                     multi=True,
+                                    persistence = True,
+                                    persistence_type = 'session',
                                     className="custom_select"
                                 ),
                                 html.Div(html.Button('Clear', id="clear_me_button"), className="clear_me")
