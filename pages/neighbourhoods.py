@@ -491,7 +491,7 @@ def update_slider(xaxis_column_name, municipality, drop_value, language, wijk_cl
     Input('select_language', 'alt')
     )
 
-def update_graph_map(year_value, xaxis_column_name, wijk_name, wijk_spec, language, wijk_cluster):
+def update_graph_map(year_value, xaxis_column_name, wijk_name, wijk_spec, language):
     '''
     Select the appropriate data to display in the map fig
     '''
