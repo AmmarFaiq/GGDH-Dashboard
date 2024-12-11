@@ -258,7 +258,9 @@ drop_municipality = dcc.Dropdown(
             {'label': "Hadoks' area", 'value': "Hadoks' area"},
             {'label': "Hadoks' Cluster area", 'value': "Hadokscluster"}
             ],
-        value="ELAN area", 
+        value="ELAN area",
+        persistence = True,
+        persistence_type = 'session',
         className = "custom_select"
     )
 
@@ -280,14 +282,16 @@ layout = html.Div([
                                     clearable=False,
                                     searchable=True, 
                                     multi=True,
+                                    persistence = True,
+                                    persistence_type = 'session',
                                     className="custom_select"
                                 ),
                                 html.Div(html.Button('Clear', id="clear_me_button"), className="clear_me")
                             ], id='select_neighbourhoods'),
                             html.Div([
                                 html.P("Select a year", id='select_year'),
-                                dcc.Slider(step=1, id = 'slider_select_year'),
-                                dcc.Dropdown( id = 'drop_select_year', className= "custom_select") #when resolution is small, slider is no longer practical
+                                dcc.Slider(step=1, id = 'slider_select_year', persistence = True, persistence_type = 'session'),
+                                dcc.Dropdown( id = 'drop_select_year', persistence = True, persistence_type = 'session', className= "custom_select") #when resolution is small, slider is no longer practical
                             ],  id= 'sliderContainer')
                         ], id= 'select_container'),
                     ], id="control_panel", className="accordeon_open")
