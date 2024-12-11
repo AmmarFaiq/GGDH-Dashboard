@@ -521,9 +521,9 @@ def update_graph_map(year_value, xaxis_column_name, wijk_name, wijk_spec, langua
                             locations="WKC", featureidkey="properties.WKC", opacity = 0.5,
                             center={"lat": 52.0705, "lon": 4.3003}, color_continuous_scale=colorscale_inverted,
                             mapbox_style="carto-positron", zoom=10, hover_name="WKN",
-                            custom_data=['GMN', xaxis_column_name,total_pop])
+                            custom_data=['GMN', xaxis_column_name,total_pop, 'WKC'])
     
-    fig.update_traces(hovertemplate='<b><b>Wijk</b>: %{hovertext}</b>'+ '<br><b><b>Gemeente</b>: %{customdata[0]}</b><br>' +'<br><b>Waarde</b>: %{customdata[1]}<br>' +'<b>Bevolking</b>: %{customdata[2]}')  
+    fig.update_traces(hovertemplate='<b><b>Wijk</b>: %{hovertext}</b>'+ '<br><b><b>WKC</b>: %{customdata[3]}</b><br>' + '<br><b><b>Gemeente</b>: %{customdata[0]}</b><br>' +'<br><b>Waarde</b>: %{customdata[1]}<br>' +'<b>Bevolking</b>: %{customdata[2]}')  
 
     
     fig.update_layout(geo=dict(bgcolor= 'rgba(0,0,0,0)', lakecolor='#4E5D6C'),
