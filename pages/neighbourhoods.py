@@ -222,6 +222,8 @@ drop_var_theme = dcc.Dropdown(
         value=["Person","Huishouden", "Socioecon", "Zorgkosten", "Medicatie", 
                # "Eerstelijns zorg", "Secundaire zorg", "Eerstelijns en Secundaire zorg", 
                "Ander"],
+         persistence = True,
+        persistence_type = 'session', 
         className = "custom_select"
     )
 
@@ -232,6 +234,8 @@ drop_var = dcc.Dropdown(
         id = 'drop_var_id',
         clearable=False,
         searchable=False,
+         persistence = True,
+        persistence_type = 'session', 
         className = "custom_select"
     )
 
@@ -405,11 +409,11 @@ def update_select_neighbourhoods(municipality, clear_click, language, wijk_clust
         year = 'Jaar'
 
     if municipality in special_regions.keys():    
-        dff = df.query("GMN in @special_regions[@munipality]")
+        dff = df.query("GMN in @special_regions[@municipality]")
     elif municipality == "Hadokscluster":
         dff = df.query("WKC in @wijk_cluster")
     else:
-        dff = df[(df.GMN == munipality)] #TODO: maybe change to GMcode?
+        dff = df[(df.GMN == municipality)] #TODO: maybe change to GMcode?
 
     dff = dff[dff[year] == 2022] #YEAR gets translated by the translate feature to jaar. fixed. 
 
