@@ -7,6 +7,15 @@ layout = html.Div([
     html.H1('Changelog'),
     html.P("This page contains what changes relatively to the last updated version"),
 
+    html.H2('Version 2.3 - 11/12/2024'),
+    dcc.Markdown(
+    """
+    1. Functionality add :
+    - Add a new region on the Neighbourhood page that links to control input on the Hadoks page
+    - Add control panel session save in region input
+        
+    """),
+    
     html.H2('Version 2.2 - 25/11/2024'),
     dcc.Markdown(
     """
@@ -49,7 +58,7 @@ layout = html.Div([
         - Merge the variables in the Opioid page to the Nighbourhood page
     - Supply and Demand: contains a clustering and projection of selected variables per Neighbourhood in Collaboration with Hadoks
         - Fix the bivariate cluster size (in the call back function)
-    - Heartfailure: contains infographics of heart failure patients
+    - Heart failure: contains infographics of heart failure patients
         - Add brief infomation cards
         - Add basic demographics bar chart
         - Add multi level sunburst chart
