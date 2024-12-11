@@ -403,7 +403,7 @@ def localise(themes, language):
     Input('session', 'data'),
     Input('cluster_wijk', 'data')
 )
-def update_select_neighbourhoods(munipality, clear_click, language, wijk_cluster):
+def update_select_neighbourhoods(municipality, clear_click, language, wijk_cluster):
     '''
     Present the neighbourhoods of the selected region to the user
     '''      
@@ -412,7 +412,7 @@ def update_select_neighbourhoods(munipality, clear_click, language, wijk_cluster
     else:
         year = 'Jaar'
 
-    if munipality in special_regions.keys():    
+    if municipality in special_regions.keys():    
         dff = df.query("GMN in @special_regions[@munipality]")
     elif municipality == "Hadokscluster":
         dff = df.query("WKC in @wijk_cluster")
@@ -492,8 +492,7 @@ def update_slider(xaxis_column_name, municipality, drop_value, language, wijk_cl
     Input('drop_var_id', 'value'),
     Input('drop_municipality', 'value'),
     Input('drop_municipality_spec_id', 'value'),
-    Input('select_language', 'alt'),
-    Input('cluster_wijk', 'data')
+    Input('select_language', 'alt')
     )
 
 def update_graph_map(year_value, xaxis_column_name, wijk_name, wijk_spec, language, wijk_cluster):
@@ -511,7 +510,7 @@ def update_graph_map(year_value, xaxis_column_name, wijk_name, wijk_spec, langua
         
     dff = df[df[year] == year_value]
 
-    title = '{} - {} - {} - {}'.format(xaxis_column_name, wijk_name, year_value, wijk_cluster)
+    title = '{} - {} - {} - {}'.format(xaxis_column_name, wijk_name, year_value)
 
     dff = dff.query("WKN in @wijk_spec")
     # dff = dff.drop_duplicates(subset='WKN', keep="last")
@@ -523,7 +522,7 @@ def update_graph_map(year_value, xaxis_column_name, wijk_name, wijk_spec, langua
                             mapbox_style="carto-positron", zoom=10, hover_name="WKN",
                             custom_data=['GMN', xaxis_column_name,total_pop, 'WKC'])
     
-    fig.update_traces(hovertemplate='<b><b>Wijk</b>: %{hovertext}</b>'+ '<br><b><b>WKC</b>: %{customdata[3]}</b><br>' + '<br><b><b>Gemeente</b>: %{customdata[0]}</b><br>' +'<br><b>Waarde</b>: %{customdata[1]}<br>' +'<b>Bevolking</b>: %{customdata[2]}')  
+    fig.update_traces(hovertemplate='<b><b>Wijk</b>: %{hovertext}</b>' + '<br><b><b>Gemeente</b>: %{customdata[0]}</b><br>' +'<br><b>Waarde</b>: %{customdata[1]}<br>' +'<b>Bevolking</b>: %{customdata[2]}')  
 
     
     fig.update_layout(geo=dict(bgcolor= 'rgba(0,0,0,0)', lakecolor='#4E5D6C'),
