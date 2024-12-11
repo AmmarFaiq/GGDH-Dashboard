@@ -492,10 +492,11 @@ def update_slider(xaxis_column_name, municipality, drop_value, language, wijk_cl
     Input('drop_var_id', 'value'),
     Input('drop_municipality', 'value'),
     Input('drop_municipality_spec_id', 'value'),
-    Input('select_language', 'alt')
+    Input('select_language', 'alt'),
+    Input('cluster_wijk', 'data')
     )
 
-def update_graph_map(year_value, xaxis_column_name, wijk_name, wijk_spec, language):
+def update_graph_map(year_value, xaxis_column_name, wijk_name, wijk_spec, language, wijk_cluster):
     '''
     Select the appropriate data to display in the map fig
     '''
@@ -510,7 +511,7 @@ def update_graph_map(year_value, xaxis_column_name, wijk_name, wijk_spec, langua
         
     dff = df[df[year] == year_value]
 
-    title = '{} - {} - {}'.format(xaxis_column_name, wijk_name, year_value)
+    title = '{} - {} - {} - {}'.format(xaxis_column_name, wijk_name, year_value, wijk_cluster)
 
     dff = dff.query("WKN in @wijk_spec")
     # dff = dff.drop_duplicates(subset='WKN', keep="last")
