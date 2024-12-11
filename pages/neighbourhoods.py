@@ -282,8 +282,6 @@ layout = html.Div([
                                     clearable=False,
                                     searchable=True, 
                                     multi=True,
-                                    persistence = True,
-                                    persistence_type = 'session',
                                     className="custom_select"
                                 ),
                                 html.Div(html.Button('Clear', id="clear_me_button"), className="clear_me")
