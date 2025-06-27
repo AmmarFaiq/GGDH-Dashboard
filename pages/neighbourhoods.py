@@ -186,8 +186,8 @@ Medicatie_var = [
 Ander_var = ['JGDHULP_user', 
              # '%_GEDETINEERDENTAB', '%_SHNTAB', 
              'HBOPL_Low', 'HBOPL_Mid', 'HBOPL_High', 
-             'HGOPL_Low', 'HGOPL_Mid', 'HGOPL_High',
-             'Primary_care_patients_in_Secondary_care', 'Proxy_Primary_care_refer_to_Secondary_care'
+             'HGOPL_Low', 'HGOPL_Mid', 'HGOPL_High'#,
+             #'Primary_care_patients_in_Secondary_care', 'Proxy_Primary_care_refer_to_Secondary_care'
             ]
 
 var_dict = {'Person':Person_var,
